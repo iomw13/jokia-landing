@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jokia - Gestión de Organizaciones</title>
+    <style>
+        :root {
+            --primary-color: #009EE3;
+            --bg-color: #F0F2F5;
+            --white: #FFFFFF;
+            --text-color: #333333;
+            --text-light: #666666;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .container {
+            background-color: var(--white);
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            max-width: 600px;
+            width: 100%;
+        }
+
+        h1 {
+            color: var(--primary-color);
+            font-size: 3rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .slogan {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: var(--text-color);
+        }
+
+        .description {
+            font-size: 1rem;
+            color: var(--text-light);
+            margin-bottom: 30px;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: var(--white);
+            text-decoration: none;
+            padding: 12px 30px;
+            border-radius: 5px;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+            margin-bottom: 40px;
+        }
+
+        .cta-button:hover {
+            opacity: 0.9;
+        }
+
+        .coming-soon {
+            border-top: 1px solid #eee;
+            padding-top: 20px;
+            margin-bottom: 20px;
+        }
+
+        .coming-soon h2 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: var(--text-color);
+        }
+
+        .coming-soon p {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        footer {
+            margin-top: auto;
+            padding-top: 20px;
+            color: var(--text-light);
+            font-size: 0.8rem;
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            .container {
+                padding: 20px;
+            }
+
+            .slogan {
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Jokia</h1>
+        <p class="slogan">Tu compañero ideal para gestionar tus organizaciones.</p>
+        <p class="description">Jokia es una plataforma intuitiva diseñada para simplificar la administración de tus proyectos, equipos y tareas, permitiéndote enfocarte en lo que realmente importa: crecer.</p>
+        
+        <a href="https://app.jokia.com" class="cta-button">Acceder a Jokia</a>
+        
+        <div class="coming-soon">
+            <h2>Próximamente</h2>
+            <p>Estamos trabajando en nuevas funcionalidades para mejorar tu experiencia.</p>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Jokia. Todos los derechos reservados.</p>
+    </footer>
+</body>
+</html>
