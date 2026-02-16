@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>JOKIA | Agencia Digital</title>
+  <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
 
   <!-- Tailwind + Poppins -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -288,6 +289,20 @@
       position: relative;
       overflow: hidden;
     }
+
+    .parallax-container{position:absolute;width:100%;height:120%;top:-10%;left:0;z-index:0;overflow:hidden;pointer-events:none}
+    .fog-layer{position:absolute;width:200%;height:100%;background-size:cover;opacity:0;animation:fogMove 60s linear infinite}
+    .fog-1{background:linear-gradient(180deg,transparent 0%,rgba(25,41,225,0.03) 30%,rgba(123,92,255,0.05) 60%,transparent 100%);animation-delay:0s;opacity:0.6}
+    .fog-2{background:linear-gradient(180deg,transparent 0%,rgba(168,85,255,0.04) 40%,rgba(25,41,225,0.03) 70%,transparent 100%);animation-delay:-20s;opacity:0.5}
+    .fog-3{background:radial-gradient(ellipse at center,rgba(123,92,255,0.06) 0%,transparent 70%);animation:fogPulse 40s ease-in-out infinite;opacity:0.4}
+    @keyframes fogMove{0%{transform:translateX(0) translateY(0) scale(1)}50%{transform:translateX(-30%) translateY(5%) scale(1.1)}100%{transform:translateX(0) translateY(0) scale(1)}}
+    @keyframes fogPulse{0%,100%{transform:scale(1) translateY(0)}50%{transform:scale(1.15) translateY(-3%)}}
+    .particles-container{position:absolute;width:100%;height:100%;top:0;left:0;overflow:hidden;z-index:1}
+    .particle{position:absolute;width:3px;height:3px;background:radial-gradient(circle,rgba(123,92,255,0.6),transparent);border-radius:50%;animation:particleFloat linear infinite}
+    @keyframes particleFloat{0%{transform:translateY(100vh) translateX(0) scale(0);opacity:0}10%{opacity:1}90%{opacity:1}100%{transform:translateY(-20vh) translateX(var(--drift)) scale(1);opacity:0}}
+    html.light .fog-1{background:linear-gradient(180deg,transparent 0%,rgba(25,41,225,0.04) 30%,rgba(123,92,255,0.06) 60%,transparent 100%)}
+    html.light .fog-2{background:linear-gradient(180deg,transparent 0%,rgba(168,85,255,0.05) 40%,rgba(25,41,225,0.04) 70%,transparent 100%)}
+    html.light .particle{background:radial-gradient(circle,rgba(25,41,225,0.5),transparent)}
 
     .logo-img-large {
       height: 180px;
@@ -1450,18 +1465,24 @@
         <source src="src/fondos/fondo_oscuro.mp4" type="video/mp4" />
       </video>
     </div>
+    <div class="parallax-container">
+      <div class="fog-layer fog-1"></div>
+      <div class="fog-layer fog-2"></div>
+      <div class="fog-layer fog-3"></div>
+      <div class="particles-container" id="particles"></div>
+    </div>
     <div class="home-overlay"></div>
     
     <div class="container mx-auto px-4 flex flex-col items-center justify-center text-center relative z-10">
       
-      <img src="src/logo/logo.png" alt="JOKIA" class="logo-img-large" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+      <img src="src/logo/logo.png" alt="JOKIA" class="logo-img-large" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" data-aos="zoom-in" data-aos-duration="1200" />
       
-      <div class="typing-container">
+      <div class="typing-container" data-aos="fade-up" data-aos-delay="300">
         <span class="typing-text" id="typing-text"></span>
         <span class="cursor" id="cursor"></span>
       </div>
 
-      <div class="carousel-oval mt-6">
+      <div class="carousel-oval mt-6" data-aos="fade-up" data-aos-delay="500">
         <div class="carousel-track">
           <span class="carousel-item">Branding</span>
           <span class="carousel-separator">•</span>
@@ -1502,7 +1523,7 @@
     <div class="container mx-auto">
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto fade-in-section" id="metrics-grid">
         
-        <div class="metric-card text-center">
+        <div class="metric-card text-center" data-aos="flip-up" data-aos-delay="0">
           <div class="progress-circle" id="circle1">
             <span class="progress-value" id="value1">0M+</span>
           </div>
@@ -1510,7 +1531,7 @@
           <p class="metric-description">We have reach more than 13 millions user around the world</p>
         </div>
         
-        <div class="metric-card text-center">
+        <div class="metric-card text-center" data-aos="flip-up" data-aos-delay="150">
           <div class="progress-circle" id="circle2">
             <span class="progress-value" id="value2">0M+</span>
           </div>
@@ -1518,7 +1539,7 @@
           <p class="metric-description">Pagedone is one of most downloaded on Google Play Store & Apple Store</p>
         </div>
         
-        <div class="metric-card text-center">
+        <div class="metric-card text-center" data-aos="flip-up" data-aos-delay="300">
           <div class="progress-circle" id="circle3">
             <span class="progress-value" id="value3">0%</span>
           </div>
@@ -1538,12 +1559,12 @@
        ========================== -->
   <section class="services-section" id="services">
     <div class="container mx-auto px-4">
-      <h2 class="section-title">Nuestros Servicios</h2>
+      <h2 class="section-title" data-aos="fade-down">Nuestros Servicios</h2>
       
       <div class="bento-grid">
         <!-- Columna izquierda - Branding -->
         <div class="bento-left">
-          <div class="service-card card-tall">
+          <div class="service-card card-tall" data-aos="fade-right" data-aos-delay="100">
             <img src="src/imagenes/landing.jpg" alt="Landing pages" onerror="this.src='https://via.placeholder.com/600x900?text=Landing pages'">
             <div class="card-content">
               <h3 class="card-title">Landing pages</h3>
@@ -1556,7 +1577,7 @@
         <div class="bento-right">
           <!-- Fila superior - Marketing -->
           <div class="bento-right-top">
-            <div class="service-card card-wide">
+            <div class="service-card card-wide" data-aos="fade-left" data-aos-delay="200">
               <img src="src/imagenes/marketing.jpg" alt="Marketing" onerror="this.src='https://via.placeholder.com/1050x500?text=Marketing'">
               <div class="card-content">
                 <h3 class="card-title">Marketing</h3>
@@ -1568,7 +1589,7 @@
           <!-- Fila inferior - dos cards -->
           <div class="bento-right-bottom">
             <!-- Card izquierda - Landing Pages -->
-            <div class="service-card card-square">
+            <div class="service-card card-square" data-aos="fade-right" data-aos-delay="300">
               <img src="src/imagenes/branding.jpg" alt="Branding" onerror="this.src='https://via.placeholder.com/500x500?text=Branding'">
               <div class="card-content">
                 <h3 class="card-title">Branding</h3>
@@ -1577,7 +1598,7 @@
             </div>
             
             <!-- Card derecha - POS -->
-            <div class="service-card card-portrait">
+            <div class="service-card card-portrait" data-aos="fade-left" data-aos-delay="400">
               <img src="src/imagenes/pos.jpg" alt="POS" onerror="this.src='https://via.placeholder.com/400x500?text=POS'">
               <div class="card-content">
                 <h3 class="card-title">POS</h3>
@@ -1598,22 +1619,22 @@
        ========================== -->
   <section class="brands-section" id="brands">
     <div class="container mx-auto px-4">
-      <h2 class="section-title">Marcas que confían en nosotros</h2>
+      <h2 class="section-title" data-aos="fade-up">Marcas que confían en nosotros</h2>
       
-      <div class="brands-carousel-container">
+      <div class="brands-carousel-container" data-aos="fade-up">
         <div class="brands-track" id="brands-track">
           <!-- SOLO 5 IMÁGENES DISTINTAS: reemplazá cada src por tu logo -->
-          <img src="src/marcas/essence.png" alt="Marca 1" class="brand-logo">
-          <img src="src/marcas/borcelle.png" alt="Marca 2" class="brand-logo">
-          <img src="src/marcas/laura.png" alt="Marca 3" class="brand-logo">
-          <img src="src/marcas/jomabe.png" alt="Marca 4" class="brand-logo">
-          <img src="src/marcas/bennu.png" alt="Marca 5" class="brand-logo">
+          <img src="src/marcas/essence.png" alt="Marca 1" class="brand-logo" data-aos="zoom-in-up" data-aos-delay="100">
+          <img src="src/marcas/borcelle.png" alt="Marca 2" class="brand-logo" data-aos="zoom-in-up" data-aos-delay="150">
+          <img src="src/marcas/laura.png" alt="Marca 3" class="brand-logo" data-aos="zoom-in-up" data-aos-delay="200">
+          <img src="src/marcas/jomabe.png" alt="Marca 4" class="brand-logo" data-aos="zoom-in-up" data-aos-delay="250">
+          <img src="src/marcas/bennu.png" alt="Marca 5" class="brand-logo" data-aos="zoom-in-up" data-aos-delay="300">
           <!-- Repetición de la misma tira para hacer el carrusel continuo -->
-          <img src="src/marcas/essence.png" alt="Marca 1" class="brand-logo">
-          <img src="src/marcas/borcelle.png" alt="Marca 2" class="brand-logo">
-          <img src="src/marcas/laura.png" alt="Marca 3" class="brand-logo">
-          <img src="src/marcas/jomabe.png" alt="Marca 4" class="brand-logo">
-          <img src="src/marcas/bennu.png" alt="Marca 5" class="brand-logo">
+          <img src="src/marcas/essence.png" alt="Marca 1" class="brand-logo" data-aos="zoom-in-up" data-aos-delay="350">
+          <img src="src/marcas/borcelle.png" alt="Marca 2" class="brand-logo" data-aos="zoom-in-up" data-aos-delay="400">
+          <img src="src/marcas/laura.png" alt="Marca 3" class="brand-logo" data-aos="zoom-in-up" data-aos-delay="450">
+          <img src="src/marcas/jomabe.png" alt="Marca 4" class="brand-logo" data-aos="zoom-in-up" data-aos-delay="500">
+          <img src="src/marcas/bennu.png" alt="Marca 5" class="brand-logo" data-aos="zoom-in-up" data-aos-delay="550">
         </div>
       </div>
     </div>
@@ -1626,10 +1647,10 @@
        SECCIÓN CONTACTO (CON IMAGEN)
        ========================== -->
   <section class="contact-section" id="contact">
-    <div class="contact-grid">
+      <div class="contact-grid">
       
       <!-- IMAGEN A LA IZQUIERDA -->
-      <div class="contact-image-wrapper">
+      <div class="contact-image-wrapper" data-aos="slide-right" data-aos-duration="1000">
         <img src="src/imagenes/contacto.jpg" alt="Contacto JOKIA" onerror="this.src='https://via.placeholder.com/600x800?text=Contacto+JOKIA'">
         <div class="contact-image-overlay">
           <span class="contact-image-text">¡Empecemos!</span>
@@ -1637,7 +1658,7 @@
       </div>
       
       <!-- FORMULARIO A LA DERECHA -->
-      <div class="contact-form">
+      <div class="contact-form" data-aos="slide-left" data-aos-duration="1000">
         <h2 class="form-title">Hablemos de tu proyecto</h2>
         <p class="form-description">
           Cuéntanos sobre tu idea y trabajemos juntos para hacerla realidad. Nuestro equipo está listo para ayudarte a transformar tu visión en una experiencia digital única.
@@ -1679,7 +1700,7 @@
   <!-- ==========================
        FOOTER CON DATOS DE CONTACTO
        ========================== -->
-  <footer class="footer">
+  <footer class="footer" data-aos="fade-up" data-aos-offset="0">
     <div class="footer-content">
       
       <!-- COLUMNA MARCA -->
@@ -1811,158 +1832,6 @@
       
       typeEffect();
     });
-
-    (function() {
-      if (!(window.matchMedia && window.matchMedia('(pointer: fine)').matches)) return;
-      const section = document.getElementById('home');
-      const background = document.querySelector('.home-video-background');
-      if (!section || !background) return;
-      const canvas = document.createElement('canvas');
-      canvas.id = 'home-smoke-canvas';
-      canvas.className = 'home-smoke-canvas';
-      background.appendChild(canvas);
-      const ctx = canvas.getContext('2d');
-      const dpr = window.devicePixelRatio || 1;
-      const bgParticles = [];
-      const trailParticles = [];
-      const mouse = { x: 0, y: 0, active: false };
-      let width = 0;
-      let height = 0;
-
-      function resizeCanvas() {
-        const rect = section.getBoundingClientRect();
-        width = rect.width;
-        height = rect.height;
-        canvas.width = width * dpr;
-        canvas.height = height * dpr;
-        canvas.style.width = width + 'px';
-        canvas.style.height = height + 'px';
-        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      }
-
-      function randomBetween(min, max) {
-        return min + Math.random() * (max - min);
-      }
-
-      function createBgParticles() {
-        bgParticles.length = 0;
-      }
-
-      function addTrail(x, y) {
-        for (let i = 0; i < 2; i++) {
-          trailParticles.push({
-            x: x + randomBetween(-8, 8),
-            y: y + randomBetween(-8, 8),
-            vx: randomBetween(-0.18, 0.18),
-            vy: randomBetween(-0.14, 0.14),
-            size: randomBetween(20, 40),
-            opacity: randomBetween(0.12, 0.2),
-            angle: Math.random() * Math.PI * 2,
-            spin: randomBetween(-0.01, 0.01),
-            life: 0,
-            maxLife: 80 + Math.random() * 30
-          });
-        }
-        if (trailParticles.length > 300) {
-          trailParticles.splice(0, trailParticles.length - 300);
-        }
-      }
-
-      function getFadeColor() {
-        return 'rgba(0,0,0,0.06)';
-      }
-
-      function getSmokeColor(opacity) {
-        const base = Math.min(0.25, Math.max(0.06, opacity));
-        const innerAlpha = Math.min(0.35, base + 0.08);
-        const outerAlpha = base;
-        return {
-          outer: 'rgba(220,220,240,' + outerAlpha + ')',
-          inner: 'rgba(255,255,255,' + innerAlpha + ')'
-        };
-      }
-
-      function drawSmokePatch(x, y, size, angle, opacity) {
-        ctx.save();
-        ctx.translate(x, y);
-        ctx.rotate(angle);
-        const w = size;
-        const h = size * 0.6;
-        const grd = ctx.createLinearGradient(-w / 2, 0, w / 2, 0);
-        const palette = getSmokeColor(opacity);
-        grd.addColorStop(0, 'rgba(0,0,0,0)');
-        grd.addColorStop(0.25, palette.outer);
-        grd.addColorStop(0.55, palette.inner);
-        grd.addColorStop(0.85, palette.outer);
-        grd.addColorStop(1, 'rgba(0,0,0,0)');
-        ctx.fillStyle = grd;
-        ctx.globalAlpha = 1;
-        ctx.beginPath();
-        ctx.moveTo(-w / 2, -h / 2);
-        ctx.quadraticCurveTo(0, -h, w / 2, -h / 2);
-        ctx.quadraticCurveTo(w, 0, w / 2, h / 2);
-        ctx.quadraticCurveTo(0, h, -w / 2, h / 2);
-        ctx.quadraticCurveTo(-w, 0, -w / 2, -h / 2);
-        ctx.closePath();
-        ctx.fill();
-        ctx.restore();
-      }
-
-      function animate() {
-        if (!width || !height) {
-          requestAnimationFrame(animate);
-          return;
-        }
-
-        ctx.globalCompositeOperation = 'source-over';
-        ctx.fillStyle = getFadeColor();
-        ctx.fillRect(0, 0, width, height);
-
-        ctx.globalCompositeOperation = 'source-over';
-
-        const trailFriction = 0.985;
-
-        for (let i = trailParticles.length - 1; i >= 0; i--) {
-          const p = trailParticles[i];
-          p.life++;
-          if (p.life > p.maxLife || p.opacity < 0.01) {
-            trailParticles.splice(i, 1);
-            continue;
-          }
-          p.vx *= trailFriction;
-          p.vy *= trailFriction;
-          p.x += p.vx;
-          p.y += p.vy;
-          p.size *= 1.008;
-          p.opacity *= 0.98;
-          p.angle += p.spin;
-          drawSmokePatch(p.x, p.y, p.size, p.angle, p.opacity);
-        }
-
-        requestAnimationFrame(animate);
-      }
-
-      section.addEventListener('mousemove', function(event) {
-        const rect = section.getBoundingClientRect();
-        mouse.x = event.clientX - rect.left;
-        mouse.y = event.clientY - rect.top;
-        mouse.active = true;
-        addTrail(mouse.x, mouse.y);
-      });
-
-      section.addEventListener('mouseleave', function() {
-        mouse.active = false;
-      });
-
-      resizeCanvas();
-      createBgParticles();
-      animate();
-
-      window.addEventListener('resize', function() {
-        resizeCanvas();
-        createBgParticles();
-      });
-    })();
 
     // ==========================
     // CHAT TOGGLE
@@ -2329,6 +2198,47 @@
     }
 
     f.addEventListener('submit', send);
+  })();
+  </script>
+
+  <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+  <script>
+  AOS.init({
+    duration: 1000,
+    easing: 'ease-in-out-cubic',
+    once: true,
+    offset: 100,
+    delay: 50
+  });
+  </script>
+  <script>
+  (function(){
+  const pc=document.getElementById('particles');
+  if(!pc)return;
+  for(let i=0;i<30;i++){
+  const p=document.createElement('div');
+  p.className='particle';
+  p.style.left=Math.random()*100+'%';
+  p.style.animationDuration=(15+Math.random()*20)+'s';
+  p.style.animationDelay=Math.random()*10+'s';
+  p.style.setProperty('--drift',(Math.random()*200-100)+'px');
+  pc.appendChild(p);
+  }
+  let ticking=false;
+  window.addEventListener('scroll',()=>{
+  if(!ticking){
+  window.requestAnimationFrame(()=>{
+  const scrolled=window.pageYOffset;
+  const fogs=document.querySelectorAll('.fog-layer');
+  fogs.forEach((fog,i)=>{
+  const speed=0.3+(i*0.1);
+  fog.style.transform=`translateY(${scrolled*speed}px)`;
+  });
+  ticking=false;
+  });
+  ticking=true;
+  }
+  });
   })();
   </script>
 </body>
