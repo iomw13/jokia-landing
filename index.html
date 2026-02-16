@@ -1,138 +1,2152 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jokia - Gestión de Organizaciones</title>
-    <style>
-        :root {
-            --primary-color: #009EE3;
-            --bg-color: #F0F2F5;
-            --white: #FFFFFF;
-            --text-color: #333333;
-            --text-light: #666666;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>JOKIA | Agencia Digital</title>
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+  <!-- Tailwind + Poppins -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
 
-        body {
-            font-family: 'Segoe UI', Helvetica, Arial, sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            line-height: 1.6;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            padding: 20px;
-        }
+  <style>
+    /* ==========================
+       VARIABLES Y BASE
+       ========================== */
+    :root {
+      --primary: #1929e1;
+      --secondary: #7b5cff;
+      --light: #f2f4f8;
+      --dark: #070707;
+    }
 
-        .container {
-            background-color: var(--white);
-            padding: 40px;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-            max-width: 600px;
-            width: 100%;
-        }
+    html {
+      color-scheme: light dark;
+      scroll-behavior: smooth;
+    }
 
-        h1 {
-            color: var(--primary-color);
-            font-size: 3rem;
-            margin-bottom: 10px;
-            font-weight: 700;
-        }
+    html.dark {
+      --primary: #1929e1;
+      --secondary: #7b5cff;
+      --light: #f2f4f8;
+      --dark: #070707;
+    }
 
-        .slogan {
-            font-size: 1.25rem;
-            font-weight: 600;
-            margin-bottom: 20px;
-            color: var(--text-color);
-        }
+    html.light {
+      --primary: #1929e1;
+      --secondary: #7b5cff;
+      --light: #f5f7ff;
+      --dark: #070707;
+    }
 
-        .description {
-            font-size: 1rem;
-            color: var(--text-light);
-            margin-bottom: 30px;
-        }
+    body {
+      font-family: 'Poppins', sans-serif;
+      transition: background-color 0.3s, color 0.3s;
+      min-height: 100vh;
+      margin: 0;
+      background-color: var(--dark);
+      position: relative;
+      overflow-x: hidden;
+    }
 
-        .cta-button {
-            display: inline-block;
-            background-color: var(--primary-color);
-            color: var(--white);
-            text-decoration: none;
-            padding: 12px 30px;
-            border-radius: 5px;
-            font-weight: 600;
-            transition: background-color 0.3s ease;
-            margin-bottom: 40px;
-        }
+    html.light body {
+      background-color: var(--light);
+    }
 
-        .cta-button:hover {
-            opacity: 0.9;
-        }
+    /* ==========================
+       FONDO CON DEGRADADOS ANIMADOS
+       ========================== */
+    .animated-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -2;
+      overflow: hidden;
+    }
 
-        .coming-soon {
-            border-top: 1px solid #eee;
-            padding-top: 20px;
-            margin-bottom: 20px;
-        }
+    .gradient-bg {
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background:
+        radial-gradient(circle at 25% 30%, rgba(25, 41, 225, 0.06) 0%, transparent 60%),  /* azul muy leve */
+        radial-gradient(circle at 75% 25%, rgba(168, 85, 255, 0.05) 0%, transparent 60%), /* violeta muy leve */
+        radial-gradient(circle at 20% 80%, rgba(255, 51, 102, 0.06) 0%, transparent 62%), /* rosado leve */
+        radial-gradient(circle at 50% 90%, rgba(255, 51, 153, 0.04) 0%, transparent 62%),
+        radial-gradient(circle at 85% 75%, rgba(25, 41, 225, 0.04) 0%, transparent 60%);
+      animation: moveGradient 30s ease-in-out infinite alternate;
+    }
 
-        .coming-soon h2 {
-            font-size: 1.5rem;
-            margin-bottom: 10px;
-            color: var(--text-color);
-        }
+    html.light .gradient-bg {
+      background:
+        radial-gradient(circle at 25% 30%, rgba(25, 41, 225, 0.10) 0%, transparent 60%),
+        radial-gradient(circle at 75% 25%, rgba(168, 85, 255, 0.08) 0%, transparent 60%),
+        radial-gradient(circle at 20% 80%, rgba(255, 51, 102, 0.09) 0%, transparent 62%),
+        radial-gradient(circle at 50% 92%, rgba(255, 51, 153, 0.06) 0%, transparent 65%),
+        radial-gradient(circle at 85% 75%, rgba(25, 41, 225, 0.07) 0%, transparent 60%);
+    }
 
-        .coming-soon p {
-            color: var(--text-light);
-            font-size: 0.9rem;
-        }
+    @keyframes moveGradient {
+      0%   { transform: translate3d(0, 0, 0) scale(1) rotate(0deg); }
+      25%  { transform: translate3d(3%, 2%, 0) scale(1.03) rotate(1deg); }
+      50%  { transform: translate3d(-2%, 3%, 0) scale(1.05) rotate(-1deg); }
+      75%  { transform: translate3d(2%, -2%, 0) scale(1.03) rotate(0.5deg); }
+      100% { transform: translate3d(-3%, -3%, 0) scale(1.05) rotate(-0.5deg); }
+    }
 
-        footer {
-            margin-top: auto;
-            padding-top: 20px;
-            color: var(--text-light);
-            font-size: 0.8rem;
-        }
+    /* ==========================
+       VIDEO BACKGROUND SOLO PARA HOME
+       ========================== */
+    .home-video-background {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      overflow: hidden;
+    }
 
-        @media (max-width: 480px) {
-            h1 {
-                font-size: 2.5rem;
-            }
-            
-            .container {
-                padding: 20px;
-            }
+    .home-video-background video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: none;
+    }
 
-            .slogan {
-                font-size: 1.1rem;
-            }
-        }
-    </style>
+    .home-video-background video.night-video {
+      display: block;
+    }
+
+    html.light .home-video-background video.night-video {
+      display: none;
+    }
+
+    html.light .home-video-background video.day-video {
+      display: block;
+    }
+
+    .home-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      backdrop-filter: blur(2px);
+      pointer-events: none;
+      transition: background 0.3s;
+    }
+
+    html.dark .home-overlay {
+      background: linear-gradient(to bottom, rgba(0,0,0,0.7), rgba(0,0,0,0.4), rgba(0,0,0,0.7));
+    }
+
+    html.light .home-overlay {
+      background: linear-gradient(
+        to bottom,
+        rgba(255, 255, 255, 0.9),
+        rgba(255, 255, 255, 0.6),
+        rgba(255, 255, 255, 0.9)
+      );
+    }
+
+    /* ==========================
+       SEPARADOR DE SECCIONES
+       ========================== */
+    .section-separator {
+      width: 80%;
+      max-width: 1200px;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--secondary), var(--primary), var(--secondary), transparent);
+      margin: 2rem auto;
+      border-radius: 2px;
+      opacity: 0.5;
+      position: relative;
+      z-index: 10;
+    }
+
+    /* ==========================
+       NAVBAR OVALADO
+       ========================== */
+    .nav-blur {
+      backdrop-filter: blur(16px) saturate(180%);
+      -webkit-backdrop-filter: blur(16px) saturate(180%);
+      border-bottom: 1px solid;
+      transition: box-shadow 0.3s, background 0.3s;
+      position: relative;
+      z-index: 100;
+    }
+
+    html.dark .nav-blur {
+      background: rgba(0, 0, 0, 0.4) !important;
+      border-bottom-color: rgba(255,255,255,0.1) !important;
+    }
+
+    html.light .nav-blur {
+      background: rgba(255, 255, 255, 0.7) !important;
+      border-bottom-color: rgba(0,0,0,0.1) !important;
+    }
+
+    .logo-img {
+      height: 45px;
+      width: auto;
+      object-fit: contain;
+    }
+
+    .nav-link {
+      position: relative;
+      font-weight: 400;
+      font-size: 0.85rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      padding: 0.5rem 0;
+      transition: color 0.3s;
+    }
+
+    html.dark .nav-link { color: var(--light); }
+    html.light .nav-link { color: var(--dark); }
+
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 0 8px var(--secondary);
+    }
+
+    .nav-link:hover {
+      color: var(--secondary) !important;
+      text-shadow: 0 0 12px rgba(123, 92, 255, 0.6);
+    }
+
+    .nav-link:hover::after {
+      width: 70%;
+    }
+
+    /* Botón contacto eliminado del nav, solo queda el azul */
+
+    .theme-toggle-minimal {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-left: 1.5rem;
+    }
+
+    .theme-toggle-minimal button {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      cursor: pointer;
+      border: 1px solid rgba(123, 92, 255, 0.3);
+      background: transparent;
+      color: var(--light);
+      transition: 0.2s;
+      opacity: 0.7;
+    }
+
+    html.light .theme-toggle-minimal button {
+      color: var(--dark);
+      border-color: rgba(25, 41, 225, 0.3);
+    }
+
+    .theme-toggle-minimal button.active {
+      opacity: 1;
+      background: rgba(123, 92, 255, 0.2);
+      border-color: var(--secondary);
+      transform: scale(1.1);
+    }
+
+    /* ==========================
+       HOME SECTION
+       ========================== */
+    .home-section {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding-top: 60px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .logo-img-large {
+      height: 180px;
+      width: auto;
+      object-fit: contain;
+      margin-bottom: 0.5rem;
+      position: relative;
+      z-index: 10;
+    }
+
+    @media (max-width: 768px) {
+      .logo-img-large { height: 150px; }
+    }
+
+    @media (max-width: 640px) {
+      .logo-img-large { height: 120px; }
+    }
+
+    /* TYPING EFFECT */
+    .typing-container {
+      font-weight: 500;
+      font-size: 2.5rem;
+      line-height: 1.3;
+      max-width: 900px;
+      text-align: center;
+      min-height: 120px;
+      margin-top: 0;
+      visibility: visible !important;
+      position: relative;
+      z-index: 10;
+    }
+
+    .typing-text {
+      display: inline-block;
+    }
+
+    .typing-text span {
+      color: var(--primary);
+      font-weight: 600;
+    }
+
+    .cursor {
+      display: inline-block;
+      width: 3px;
+      height: 2.5rem;
+      background-color: var(--primary);
+      margin-left: 4px;
+      animation: blink 0.7s infinite;
+      vertical-align: middle;
+    }
+
+    @keyframes blink {
+      0%, 50% { opacity: 1; }
+      51%, 100% { opacity: 0; }
+    }
+
+    html.dark .typing-container { color: var(--light); }
+    html.light .typing-container { color: var(--dark); }
+
+    @media (max-width: 640px) {
+      .typing-container { font-size: 2rem; }
+      .cursor { height: 2rem; }
+    }
+
+    /* ==========================
+       CARRUSEL HORIZONTAL SERVICIOS
+       ========================== */
+    .carousel-oval {
+      padding: 1rem 2rem;
+      border: 2px solid var(--secondary);
+      border-radius: 60px;
+      background: rgba(123, 92, 255, 0.12);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      box-shadow: 0 8px 28px rgba(123, 92, 255, 0.3), inset 0 1px 2px rgba(255,255,255,0.2);
+      max-width: 800px;
+      width: 90%;
+      margin: 1.5rem auto 0;
+      overflow: hidden;
+      position: relative;
+      z-index: 10;
+    }
+
+    .carousel-track {
+      display: flex;
+      gap: 3rem;
+      white-space: nowrap;
+      width: fit-content;
+      animation: scrollHorizontal 20s linear infinite;
+    }
+
+    .carousel-item {
+      font-weight: 500;
+      font-size: 1.4rem;
+      color: var(--secondary);
+      flex-shrink: 0;
+    }
+
+    .carousel-separator {
+      color: var(--secondary);
+      opacity: 0.5;
+    }
+
+    @media (max-width: 640px) {
+      .carousel-item { font-size: 1.2rem; }
+      .carousel-track { gap: 2rem; }
+    }
+
+    @keyframes scrollHorizontal {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-33.33%); }
+    }
+
+    /* ==========================
+       MÉTRICAS
+       ========================== */
+    .metrics-section {
+      padding: 4rem 1rem 2rem;
+      position: relative;
+      z-index: 10;
+    }
+
+    .metric-card {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-radius: 30px;
+      padding: 2rem 1.5rem;
+      border: 1px solid rgba(123, 92, 255, 0.2);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .metric-card:hover {
+      transform: translateY(-10px);
+      border-color: var(--secondary);
+      box-shadow: 0 0 30px rgba(123, 92, 255, 0.5);
+    }
+
+    html.light .metric-card {
+      background: rgba(255, 255, 255, 0.7);
+      border-color: rgba(123, 92, 255, 0.3);
+    }
+
+    .progress-circle {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      margin: 0 auto 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      background: conic-gradient(var(--secondary) 0deg, rgba(123, 92, 255, 0.2) 0deg);
+      transition: background 1.5s ease-in-out;
+      box-shadow: 0 0 20px rgba(123, 92, 255, 0.3);
+      animation: neonPulse 2s infinite alternate;
+    }
+
+    @keyframes neonPulse {
+      0% { box-shadow: 0 0 20px rgba(123, 92, 255, 0.3); }
+      100% { box-shadow: 0 0 40px rgba(123, 92, 255, 0.8); }
+    }
+
+    .progress-circle::before {
+      content: '';
+      position: absolute;
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      background: var(--dark);
+      box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
+    }
+
+    html.light .progress-circle::before {
+      background: var(--light);
+    }
+
+    .progress-value {
+      position: relative;
+      z-index: 2;
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--secondary);
+      text-shadow: 0 0 15px var(--secondary);
+    }
+
+    .metric-title {
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin: 1rem 0 0.5rem;
+      color: var(--secondary);
+    }
+
+    .metric-description {
+      font-size: 0.9rem;
+      opacity: 0.8;
+      max-width: 250px;
+      margin: 0 auto;
+    }
+
+    html.dark .metric-description { color: var(--light); }
+    html.light .metric-description { color: var(--dark); }
+
+    @media (max-width: 768px) {
+      .progress-circle {
+        width: 120px;
+        height: 120px;
+      }
+      .progress-circle::before {
+        width: 96px;
+        height: 96px;
+      }
+      .progress-value { font-size: 2rem; }
+    }
+
+    .fade-in-section {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+    }
+
+    .fade-in-section.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ==========================
+       BENTO GRID - NUESTROS SERVICIOS
+       ========================== */
+    .services-section {
+      padding: 2rem 1rem 4rem;
+      position: relative;
+      z-index: 10;
+    }
+
+    .section-title {
+      font-size: 3rem;
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 3rem;
+      color: var(--secondary);
+      text-shadow: 0 0 20px rgba(123, 92, 255, 0.5);
+    }
+
+    html.light .section-title {
+      color: var(--primary);
+    }
+
+    .bento-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 1.5rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .bento-left {
+      grid-row: span 2;
+    }
+
+    .service-card {
+      position: relative;
+      border-radius: 30px;
+      overflow: hidden;
+      cursor: pointer;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      transition: transform 0.4s, box-shadow 0.4s;
+    }
+
+    .service-card:hover {
+      transform: scale(1.02);
+      box-shadow: 0 0 40px rgba(123, 92, 255, 0.6);
+    }
+
+    .service-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.2), rgba(0,0,0,0.8));
+      z-index: 1;
+      transition: background 0.4s;
+    }
+
+    .service-card:hover::before {
+      background: linear-gradient(to bottom, rgba(0,0,0,0.4), rgba(0,0,0,0.9));
+    }
+
+    .service-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s;
+    }
+
+    .service-card:hover img {
+      transform: scale(1.1);
+    }
+
+    .card-content {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 2rem;
+      z-index: 2;
+      color: white;
+    }
+
+    .card-title {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+    }
+
+    .card-subtitle {
+      font-size: 1rem;
+      opacity: 0.9;
+    }
+
+    .coming-soon-badge {
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(5px);
+      padding: 0.5rem 1rem;
+      border-radius: 50px;
+      display: inline-block;
+      font-size: 0.9rem;
+      font-weight: 500;
+      border: 1px solid rgba(255,255,255,0.3);
+      margin-top: 1rem;
+    }
+
+    .card-tall {
+      aspect-ratio: 2/3;
+    }
+
+    .card-wide {
+      aspect-ratio: 21/10;
+    }
+
+    .card-square {
+      aspect-ratio: 1/1;
+    }
+
+    .card-portrait {
+      aspect-ratio: 4/5;
+    }
+
+    .bento-right {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .bento-right-top {
+      width: 100%;
+    }
+
+    .bento-right-bottom {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+
+    @media (max-width: 1024px) {
+      .bento-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+      
+      .card-tall {
+        aspect-ratio: 3/4;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .bento-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .bento-right-bottom {
+        grid-template-columns: 1fr;
+      }
+      
+      .section-title {
+        font-size: 2.5rem;
+      }
+      
+      .card-title {
+        font-size: 1.8rem;
+      }
+    }
+
+    /* ==========================
+       CARRUSEL DE MARCAS (FUNCIONANDO)
+       ========================== */
+    .brands-section {
+      padding: 4rem 1rem;
+      position: relative;
+      z-index: 10;
+    }
+
+    .brands-carousel-container {
+      overflow: hidden;
+      padding: 2rem 0;
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .brands-track {
+      display: flex;
+      gap: 4rem;
+      width: fit-content;
+      margin: 0 auto;
+      align-items: center;
+      animation: scrollBrands 20s linear infinite;
+    }
+
+    .brand-logo {
+      height: 130px;
+      width: auto;
+      object-fit: contain;
+      filter: none;
+      transition: transform 0.3s;
+      flex-shrink: 0;
+      background: transparent;
+      padding: 0;
+      border-radius: 0;
+    }
+
+    html.light .brand-logo {
+      filter: none;
+      background: transparent;
+    }
+
+    .brand-logo:hover {
+      transform: scale(1.05);
+    }
+
+    @keyframes scrollBrands {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    @media (max-width: 768px) {
+      .brand-logo {
+        height: 95px;
+      }
+      
+      .brands-track {
+        gap: 3rem;
+      }
+    }
+
+    /* ==========================
+       FORMULARIO DE CONTACTO (CON IMAGEN)
+       ========================== */
+    .contact-section {
+      padding: 4rem 1rem;
+      position: relative;
+      z-index: 10;
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .contact-image-wrapper {
+      position: relative;
+      height: 100%;
+      min-height: 500px;
+      border-radius: 30px;
+      overflow: hidden;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    }
+
+    .contact-image-wrapper img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .contact-image-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, rgba(25, 41, 225, 0.4), rgba(123, 92, 255, 0.4));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .contact-image-wrapper:hover .contact-image-overlay {
+      opacity: 1;
+    }
+
+    .contact-image-text {
+      color: white;
+      font-size: 2rem;
+      font-weight: 700;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+    }
+
+    .contact-form {
+      background: rgba(255, 255, 255, 0.03);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-radius: 30px;
+      padding: 2.5rem;
+      border: 1px solid rgba(123, 92, 255, 0.2);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    }
+
+    html.light .contact-form {
+      background: rgba(255, 255, 255, 0.8);
+      border-color: rgba(123, 92, 255, 0.3);
+    }
+
+    .form-title {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: var(--secondary);
+    }
+
+    .form-description {
+      font-size: 0.95rem;
+      opacity: 0.8;
+      margin-bottom: 2rem;
+      line-height: 1.6;
+    }
+
+    html.dark .form-description { color: var(--light); }
+    html.light .form-description { color: var(--dark); }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .form-group {
+      margin-bottom: 1rem;
+    }
+
+    .form-input,
+    .form-textarea {
+      width: 100%;
+      padding: 1rem 1.5rem;
+      border-radius: 50px;
+      border: 1px solid rgba(123, 92, 255, 0.3);
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--light);
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.95rem;
+      transition: all 0.3s;
+    }
+
+    .form-textarea {
+      border-radius: 20px;
+      resize: vertical;
+      min-height: 120px;
+    }
+
+    html.light .form-input,
+    html.light .form-textarea {
+      background: rgba(255, 255, 255, 0.9);
+      color: var(--dark);
+      border-color: rgba(123, 92, 255, 0.3);
+    }
+
+    .form-input:focus,
+    .form-textarea:focus {
+      outline: none;
+      border-color: var(--secondary);
+      box-shadow: 0 0 20px rgba(123, 92, 255, 0.3);
+    }
+
+    .form-input::placeholder,
+    .form-textarea::placeholder {
+      color: rgba(255, 255, 255, 0.5);
+    }
+
+    html.light .form-input::placeholder,
+    html.light .form-textarea::placeholder {
+      color: rgba(0, 0, 0, 0.5);
+    }
+
+    .form-submit {
+      width: 100%;
+      padding: 1rem 2rem;
+      border-radius: 50px;
+      border: none;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: var(--light);
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.3s;
+      box-shadow: 0 4px 20px rgba(25, 41, 225, 0.4);
+      margin-top: 1rem;
+    }
+
+    .form-submit:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(123, 92, 255, 0.7);
+    }
+
+    @media (max-width: 1024px) {
+      .contact-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .contact-image-wrapper {
+        min-height: 400px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .contact-image-wrapper {
+        display: none;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+      
+      .contact-form {
+        padding: 1.5rem;
+      }
+    }
+
+    /* ==========================
+       FOOTER CON DATOS DE CONTACTO
+       ========================== */
+    .footer {
+      position: relative;
+      z-index: 10;
+      background: #050509;
+      border-top: 1px solid rgba(123, 92, 255, 0.2);
+      padding: 3rem 1rem 1.5rem;
+    }
+
+    html.light .footer {
+      background: #ffffff;
+      border-top-color: rgba(123, 92, 255, 0.3);
+    }
+
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 3rem;
+      margin-bottom: 2rem;
+    }
+
+    .footer-brand {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1rem;
+    }
+
+    .footer-logo {
+      height: 50px;
+      width: auto;
+      object-fit: contain;
+    }
+
+    .footer-description {
+      font-size: 0.9rem;
+      opacity: 0.8;
+      line-height: 1.6;
+      text-align: left;
+    }
+
+    html.dark .footer-description { color: var(--light); }
+    html.light .footer-description { color: var(--dark); }
+
+    .footer-social {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .social-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: rgba(123, 92, 255, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--secondary);
+      text-decoration: none;
+      font-size: 1.2rem;
+      transition: all 0.3s;
+    }
+
+    .social-icon:hover {
+      background: var(--secondary);
+      color: white;
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(123, 92, 255, 0.5);
+    }
+
+    .footer-column h3 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      color: var(--secondary);
+    }
+
+    .footer-links {
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+    }
+
+    .footer-link {
+      font-size: 0.9rem;
+      opacity: 0.8;
+      transition: all 0.3s;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    html.dark .footer-link { color: var(--light); }
+    html.light .footer-link { color: var(--dark); }
+
+    .footer-link:hover {
+      opacity: 1;
+      color: var(--secondary);
+      transform: translateX(5px);
+    }
+
+    .footer-icon {
+      font-size: 1.1rem;
+    }
+
+    .footer-bottom {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding-top: 2rem;
+      border-top: 1px solid rgba(123, 92, 255, 0.2);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.85rem;
+      opacity: 0.7;
+    }
+
+    html.dark .footer-bottom { color: var(--light); }
+    html.light .footer-bottom { color: var(--dark); }
+
+    .footer-bottom-links {
+      display: flex;
+      gap: 2rem;
+    }
+
+    .footer-bottom-link {
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    html.dark .footer-bottom-link { color: var(--light); }
+    html.light .footer-bottom-link { color: var(--dark); }
+
+    .footer-bottom-link:hover {
+      color: var(--secondary);
+    }
+
+    @media (max-width: 1024px) {
+      .footer-content {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .footer-content {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+      
+      .footer-bottom {
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
+      }
+      
+      .footer-bottom-links {
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+    }
+
+    /* ==========================
+       BOTONES FLOTANTES Y CHAT
+       ========================== */
+    .floating-buttons {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      z-index: 100;
+    }
+
+    .back-to-top {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 1.5rem;
+      box-shadow: 0 4px 20px rgba(25, 41, 225, 0.4);
+      transition: all 0.3s ease;
+      text-decoration: none;
+    }
+
+    .back-to-top:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 0 30px rgba(123, 92, 255, 0.8);
+    }
+
+    .chat-button {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 1.5rem;
+      box-shadow: 0 4px 20px rgba(25, 41, 225, 0.4);
+      transition: all 0.3s ease;
+      cursor: pointer;
+      border: none;
+    }
+
+    .chat-button:hover {
+      transform: scale(1.1);
+      box-shadow: 0 0 40px rgba(123, 92, 255, 0.8);
+    }
+
+    #chat-panel {
+      position: fixed;
+      bottom: 30px;
+      right: 90px;
+      width: 260px;
+      background: rgba(7, 7, 7, 0.95);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-radius: 24px;
+      border: 1px solid rgba(123, 92, 255, 0.3);
+      box-shadow: 0 0 40px rgba(123, 92, 255, 0.3);
+      z-index: 99;
+      transform: translateY(0) scale(0.9);
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+      overflow: hidden;
+    }
+
+    #chat-panel.visible {
+      transform: translateY(0) scale(1);
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .chat-header {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      padding: 0.9rem 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .chat-header-icon {
+      font-size: 1.6rem;
+    }
+
+    .chat-header-title {
+      font-size: 1rem;
+      font-weight: 600;
+      color: white;
+    }
+
+    .chat-messages {
+      padding: 1rem;
+      min-height: 180px;
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+    }
+
+    .chat-message {
+      padding: 0.7rem 0.9rem;
+      border-radius: 16px;
+      max-width: 80%;
+      font-size: 0.9rem;
+    }
+
+    .chat-message.bot {
+      background: rgba(123, 92, 255, 0.2);
+      border: 1px solid rgba(123, 92, 255, 0.3);
+      align-self: flex-start;
+      color: white;
+    }
+
+    .chat-message.user {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      align-self: flex-end;
+      color: white;
+    }
+
+    .chat-input-area {
+      padding: 0.9rem 1rem 1rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .chat-input {
+      width: 100%;
+      padding: 0.7rem 1rem;
+      border-radius: 50px;
+      border: 1px solid rgba(123, 92, 255, 0.3);
+      background: rgba(255, 255, 255, 0.05);
+      color: white;
+      font-size: 0.9rem;
+    }
+
+    .chat-input::placeholder {
+      color: rgba(255, 255, 255, 0.5);
+    }
+
+    html.light #chat-panel {
+      background: rgba(255, 255, 255, 0.96);
+      border-color: rgba(123, 92, 255, 0.2);
+      box-shadow: 0 0 25px rgba(0, 0, 0, 0.08);
+    }
+
+    html.light .chat-message.bot {
+      background: rgba(123, 92, 255, 0.08);
+      border-color: rgba(123, 92, 255, 0.25);
+      color: #000;
+    }
+
+    html.light .chat-message.user {
+      background: rgba(255, 255, 255, 1);
+      border-color: rgba(0, 0, 0, 0.05);
+      color: #000;
+    }
+
+    html.light .chat-input-area {
+      border-top-color: rgba(0, 0, 0, 0.05);
+    }
+
+    html.light .chat-input {
+      background: rgba(255, 255, 255, 0.9);
+      color: #000;
+      border-color: rgba(123, 92, 255, 0.25);
+    }
+
+    html.light .chat-input::placeholder {
+      color: rgba(0, 0, 0, 0.4);
+    }
+
+    @media (max-width: 640px) {
+      #chat-panel {
+        width: 240px;
+        right: 80px;
+        bottom: 20px;
+      }
+    }
+
+    /* ==========================
+       MOBILE MENU
+       ========================== */
+    #mobile-menu-toggle { display: none; }
+
+    .mobile-menu {
+      position: fixed;
+      top: 80px;
+      left: 5%;
+      right: 5%;
+      background: rgba(0,0,0,0.9);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-radius: 30px;
+      border: 1px solid rgba(255,255,255,0.15);
+      padding: 1.8rem 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+      transform: translateY(-150%);
+      opacity: 0;
+      transition: transform 0.4s cubic-bezier(0.2, 0.9, 0.3, 1), opacity 0.3s;
+      z-index: 40;
+      pointer-events: none;
+    }
+
+    .mobile-nav-link {
+      font-size: 1.1rem;
+      font-weight: 500;
+      padding: 0.5rem 1rem;
+      border-radius: 40px;
+      transition: background 0.2s;
+      color: white !important;
+    }
+
+    .mobile-nav-link:hover {
+      background: rgba(123, 92, 255, 0.3);
+      color: var(--secondary) !important;
+    }
+
+    .mobile-cta-btn {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+      padding: 0.8rem 2rem;
+      border-radius: 40px;
+      text-align: center;
+      font-weight: 500;
+      margin-top: 0.8rem;
+    }
+
+    #mobile-menu-toggle:checked ~ .mobile-menu {
+      transform: translateY(0);
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .hamburger-icon {
+      color: var(--primary) !important;
+      font-size: 2rem !important;
+      transition: color 0.3s;
+    }
+
+    .hamburger-icon:hover {
+      color: var(--secondary) !important;
+    }
+
+    @media (min-width: 1024px) {
+      .mobile-menu { display: none; }
+    }
+
+    .nav-container {
+      max-width: 1400px !important;
+      padding-left: 2rem !important;
+      padding-right: 2rem !important;
+    }
+
+    .desktop-menu {
+      gap: 3rem !important;
+    }
+
+    .right-actions {
+      gap: 1.5rem !important;
+    }
+  </style>
 </head>
-<body>
-    <div class="container">
-        <h1>Jokia</h1>
-        <p class="slogan">Tu compañero ideal para gestionar tus organizaciones.</p>
-        <p class="description">Jokia es una plataforma intuitiva diseñada para simplificar la administración de tus proyectos, equipos y tareas, permitiéndote enfocarte en lo que realmente importa: crecer.</p>
-        
-        <a href="https://app.jokia.com" class="cta-button">Acceder a Jokia</a>
-        
-        <div class="coming-soon">
-            <h2>Próximamente</h2>
-            <p>Estamos trabajando en nuevas funcionalidades para mejorar tu experiencia.</p>
-        </div>
-    </div>
+<body class="dark">
 
-    <footer>
-        <p>&copy; 2024 Jokia. Todos los derechos reservados.</p>
-    </footer>
+  <!-- FONDO CON DEGRADADOS ANIMADOS -->
+  <div class="animated-bg">
+    <div class="gradient-bg"></div>
+  </div>
+
+  <!-- ==========================
+       NAVBAR (SIN BOTÓN CONTACTO)
+       ========================== -->
+  <nav class="fixed top-0 left-0 w-full z-50 flex justify-center px-4 sm:px-6 py-3">
+    <div class="nav-blur w-full max-w-6xl rounded-full px-8 py-2 flex items-center justify-between border border-white/10 shadow-lg transition-all nav-container">
+      
+      <img src="jokia.png" alt="JOKIA" class="logo-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" />
+      <span class="logo-text text-2xl font-bold tracking-wider hidden" style="color: var(--primary); text-shadow: 0 4px 12px rgba(25, 41, 225, 0.5);">JOKIA</span>
+
+      <div class="hidden lg:flex items-center gap-12 absolute left-1/2 transform -translate-x-1/2 desktop-menu">
+        <a href="#home" class="nav-link">Inicio</a>
+        <a href="#metrics" class="nav-link">Resultados</a>
+        <a href="#services" class="nav-link">Servicios</a>
+        <a href="#brands" class="nav-link">Marcas</a>
+        <a href="#contact" class="nav-link">Contacto</a>
+      </div>
+
+      <div class="hidden lg:flex items-center gap-6 right-actions">
+        <!-- Botón contacto eliminado -->
+        <div class="theme-toggle-minimal">
+          <button class="dark-btn" onclick="setTheme('dark')" title="Modo oscuro">🌙</button>
+          <button class="light-btn" onclick="setTheme('light')" title="Modo claro">☀️</button>
+        </div>
+      </div>
+
+      <div class="lg:hidden flex items-center gap-3">
+        <div class="theme-toggle-minimal">
+          <button class="dark-btn" onclick="setTheme('dark')" title="Modo oscuro">🌙</button>
+          <button class="light-btn" onclick="setTheme('light')" title="Modo claro">☀️</button>
+        </div>
+        <label for="mobile-menu-toggle" class="hamburger-icon">☰</label>
+      </div>
+    </div>
+  </nav>
+
+  <input type="checkbox" id="mobile-menu-toggle" class="hidden" />
+
+  <div class="mobile-menu lg:hidden">
+    <a href="#home" class="mobile-nav-link">Inicio</a>
+    <a href="#metrics" class="mobile-nav-link">Resultados</a>
+    <a href="#services" class="mobile-nav-link">Servicios</a>
+    <a href="#brands" class="mobile-nav-link">Marcas</a>
+    <a href="#contact" class="mobile-cta-btn">Contacto</a>
+  </div>
+
+  <!-- ==========================
+       SECCIÓN HOME (CON VIDEO BACKGROUND)
+       ========================== -->
+  <section class="home-section" id="home">
+    
+    <!-- VIDEO BACKGROUND SOLO PARA HOME -->
+    <div class="home-video-background">
+      <video class="day-video" autoplay muted loop playsinline>
+        <source src="src/fondos/fondo_claro.mp4" type="video/mp4" />
+      </video>
+      <video class="night-video" autoplay muted loop playsinline>
+        <source src="src/fondos/fondo_oscuro.mp4" type="video/mp4" />
+      </video>
+    </div>
+    <div class="home-overlay"></div>
+    
+    <div class="container mx-auto px-4 flex flex-col items-center justify-center text-center relative z-10">
+      
+      <img src="src/logo/logo.png" alt="JOKIA" class="logo-img-large" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+      
+      <div class="typing-container">
+        <span class="typing-text" id="typing-text"></span>
+        <span class="cursor" id="cursor"></span>
+      </div>
+
+      <div class="carousel-oval mt-6">
+        <div class="carousel-track">
+          <span class="carousel-item">Branding</span>
+          <span class="carousel-separator">•</span>
+          <span class="carousel-item">Manejo de redes</span>
+          <span class="carousel-separator">•</span>
+          <span class="carousel-item">Landing pages</span>
+          <span class="carousel-separator">•</span>
+          <span class="carousel-item">POS (Próximamente)</span>
+          <span class="carousel-separator">•</span>
+          <span class="carousel-item">Branding</span>
+          <span class="carousel-separator">•</span>
+          <span class="carousel-item">Manejo de redes</span>
+          <span class="carousel-separator">•</span>
+          <span class="carousel-item">Landing pages</span>
+          <span class="carousel-separator">•</span>
+          <span class="carousel-item">POS (Próximamente)</span>
+          <span class="carousel-separator">•</span>
+          <span class="carousel-item">Branding</span>
+          <span class="carousel-separator">•</span>
+          <span class="carousel-item">Manejo de redes</span>
+          <span class="carousel-separator">•</span>
+          <span class="carousel-item">Landing pages</span>
+          <span class="carousel-separator">•</span>
+          <span class="carousel-item">POS (Próximamente)</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- SEPARADOR -->
+  <div class="section-separator"></div>
+
+  <!-- ==========================
+       SECCIÓN MÉTRICAS
+       ========================== -->
+  <section class="metrics-section" id="metrics">
+    <div class="container mx-auto">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto fade-in-section" id="metrics-grid">
+        
+        <div class="metric-card text-center">
+          <div class="progress-circle" id="circle1">
+            <span class="progress-value" id="value1">0M+</span>
+          </div>
+          <h3 class="metric-title">13M+</h3>
+          <p class="metric-description">We have reach more than 13 millions user around the world</p>
+        </div>
+        
+        <div class="metric-card text-center">
+          <div class="progress-circle" id="circle2">
+            <span class="progress-value" id="value2">0M+</span>
+          </div>
+          <h3 class="metric-title">50M+</h3>
+          <p class="metric-description">Pagedone is one of most downloaded on Google Play Store & Apple Store</p>
+        </div>
+        
+        <div class="metric-card text-center">
+          <div class="progress-circle" id="circle3">
+            <span class="progress-value" id="value3">0%</span>
+          </div>
+          <h3 class="metric-title">98%</h3>
+          <p class="metric-description">Our user are satisfied using our services in their daily site</p>
+        </div>
+        
+      </div>
+    </div>
+  </section>
+
+  <!-- SEPARADOR -->
+  <div class="section-separator"></div>
+
+  <!-- ==========================
+       SECCIÓN NUESTROS SERVICIOS
+       ========================== -->
+  <section class="services-section" id="services">
+    <div class="container mx-auto px-4">
+      <h2 class="section-title">Nuestros Servicios</h2>
+      
+      <div class="bento-grid">
+        <!-- Columna izquierda - Branding -->
+        <div class="bento-left">
+          <div class="service-card card-tall">
+            <img src="src/imagenes/landing.jpg" alt="Landing pages" onerror="this.src='https://via.placeholder.com/600x900?text=Landing pages'">
+            <div class="card-content">
+              <h3 class="card-title">Landing pages</h3>
+              <p class="card-subtitle">Conversión garantizada</p>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Columna derecha -->
+        <div class="bento-right">
+          <!-- Fila superior - Marketing -->
+          <div class="bento-right-top">
+            <div class="service-card card-wide">
+              <img src="src/imagenes/marketing.jpg" alt="Marketing" onerror="this.src='https://via.placeholder.com/1050x500?text=Marketing'">
+              <div class="card-content">
+                <h3 class="card-title">Marketing</h3>
+                <p class="card-subtitle">Estrategias digitales</p>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Fila inferior - dos cards -->
+          <div class="bento-right-bottom">
+            <!-- Card izquierda - Landing Pages -->
+            <div class="service-card card-square">
+              <img src="src/imagenes/branding.jpg" alt="Branding" onerror="this.src='https://via.placeholder.com/500x500?text=Branding'">
+              <div class="card-content">
+                <h3 class="card-title">Branding</h3>
+                <p class="card-subtitle">Identidad de marca única</p>
+              </div>
+            </div>
+            
+            <!-- Card derecha - POS -->
+            <div class="service-card card-portrait">
+              <img src="src/imagenes/pos.jpg" alt="POS" onerror="this.src='https://via.placeholder.com/400x500?text=POS'">
+              <div class="card-content">
+                <h3 class="card-title">POS</h3>
+                <span class="coming-soon-badge">Próximamente</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SEPARADOR -->
+  <div class="section-separator"></div>
+
+  <!-- ==========================
+       SECCIÓN MARCAS QUE CONFÍAN (FUNCIONANDO)
+       ========================== -->
+  <section class="brands-section" id="brands">
+    <div class="container mx-auto px-4">
+      <h2 class="section-title">Marcas que confían en nosotros</h2>
+      
+      <div class="brands-carousel-container">
+        <div class="brands-track" id="brands-track">
+          <!-- SOLO 5 IMÁGENES DISTINTAS: reemplazá cada src por tu logo -->
+          <img src="src/marcas/essence.png" alt="Marca 1" class="brand-logo">
+          <img src="src/marcas/borcelle.png" alt="Marca 2" class="brand-logo">
+          <img src="src/marcas/laura.png" alt="Marca 3" class="brand-logo">
+          <img src="src/marcas/jomabe.png" alt="Marca 4" class="brand-logo">
+          <img src="src/marcas/bennu.png" alt="Marca 5" class="brand-logo">
+          <!-- Repetición de la misma tira para hacer el carrusel continuo -->
+          <img src="src/marcas/essence.png" alt="Marca 1" class="brand-logo">
+          <img src="src/marcas/borcelle.png" alt="Marca 2" class="brand-logo">
+          <img src="src/marcas/laura.png" alt="Marca 3" class="brand-logo">
+          <img src="src/marcas/jomabe.png" alt="Marca 4" class="brand-logo">
+          <img src="src/marcas/bennu.png" alt="Marca 5" class="brand-logo">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SEPARADOR -->
+  <div class="section-separator"></div>
+
+  <!-- ==========================
+       SECCIÓN CONTACTO (CON IMAGEN)
+       ========================== -->
+  <section class="contact-section" id="contact">
+    <div class="contact-grid">
+      
+      <!-- IMAGEN A LA IZQUIERDA -->
+      <div class="contact-image-wrapper">
+        <img src="src/imagenes/contacto.jpg" alt="Contacto JOKIA" onerror="this.src='https://via.placeholder.com/600x800?text=Contacto+JOKIA'">
+        <div class="contact-image-overlay">
+          <span class="contact-image-text">¡Empecemos!</span>
+        </div>
+      </div>
+      
+      <!-- FORMULARIO A LA DERECHA -->
+      <div class="contact-form">
+        <h2 class="form-title">Hablemos de tu proyecto</h2>
+        <p class="form-description">
+          Cuéntanos sobre tu idea y trabajemos juntos para hacerla realidad. Nuestro equipo está listo para ayudarte a transformar tu visión en una experiencia digital única.
+        </p>
+        
+        <form>
+          <div class="form-row">
+            <div class="form-group">
+              <input type="text" class="form-input" placeholder="Nombre" required>
+            </div>
+            <div class="form-group">
+              <input type="text" class="form-input" placeholder="Apellido" required>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <input type="email" class="form-input" placeholder="Email" required>
+          </div>
+          
+          <div class="form-group">
+            <input type="tel" class="form-input" placeholder="Teléfono">
+          </div>
+          
+          <div class="form-group">
+            <input type="text" class="form-input" placeholder="Empresa">
+          </div>
+          
+          <div class="form-group">
+            <textarea class="form-textarea" placeholder="Cuéntanos sobre tu proyecto..." required></textarea>
+          </div>
+          
+          <button type="submit" class="form-submit">Enviar mensaje</button>
+        </form>
+      </div>
+      
+    </div>
+  </section>
+
+  <!-- ==========================
+       FOOTER CON DATOS DE CONTACTO
+       ========================== -->
+  <footer class="footer">
+    <div class="footer-content">
+      
+      <!-- COLUMNA MARCA -->
+      <div class="footer-brand">
+        <img src="src/logo/logo.png" alt="JOKIA" class="footer-logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+        <span class="footer-logo hidden text-2xl font-bold" style="color: var(--primary);">JOKIA</span>
+        <p class="footer-description">
+          Agencia digital especializada en transformar ideas en experiencias digitales únicas. Branding, marketing y desarrollo web de alto impacto.
+        </p>
+        <div class="footer-social">
+          <a href="#" class="social-icon" title="Instagram">📷</a>
+          <a href="#" class="social-icon" title="LinkedIn">💼</a>
+          <a href="#" class="social-icon" title="Facebook">📘</a>
+          <a href="#" class="social-icon" title="Twitter">🐦</a>
+        </div>
+      </div>
+      
+      <!-- COLUMNA SERVICIOS -->
+      <div class="footer-column">
+        <h3>Servicios</h3>
+        <div class="footer-links">
+          <a href="#services" class="footer-link">Branding</a>
+          <a href="#services" class="footer-link">Marketing Digital</a>
+          <a href="#services" class="footer-link">Landing Pages</a>
+          <a href="#services" class="footer-link">POS (Próximamente)</a>
+        </div>
+      </div>
+      
+      <!-- COLUMNA EMPRESA -->
+      <div class="footer-column">
+        <h3>Empresa</h3>
+        <div class="footer-links">
+          <a href="#" class="footer-link">Sobre nosotros</a>
+          <a href="#brands" class="footer-link">Marcas</a>
+          <a href="#metrics" class="footer-link">Resultados</a>
+          <a href="#" class="footer-link">Blog</a>
+        </div>
+      </div>
+      
+      <!-- COLUMNA CONTACTO (DATOS DE CONTACTO) -->
+      <div class="footer-column">
+        <h3>Contacto</h3>
+        <div class="footer-links">
+          <a href="#" class="footer-link">
+            <span class="footer-icon">📍</span> Av. Siempre Viva 123
+          </a>
+          <a href="mailto:info@jokia.com" class="footer-link">
+            <span class="footer-icon">📧</span> info@jokia.com
+          </a>
+          <a href="tel:+5491112345678" class="footer-link">
+            <span class="footer-icon">📱</span> +54 9 11 1234-5678
+          </a>
+          <a href="#" class="footer-link">
+            <span class="footer-icon">⏰</span> Lun-Vie 9:00-18:00
+          </a>
+        </div>
+      </div>
+      
+    </div>
+    
+    <!-- FOOTER BOTTOM -->
+    <div class="footer-bottom">
+      <div>© 2026 JOKIA. Todos los derechos reservados.</div>
+      <div class="footer-bottom-links">
+        <a href="#" class="footer-bottom-link">Privacidad</a>
+        <a href="#" class="footer-bottom-link">Términos</a>
+        <a href="#" class="footer-bottom-link">Cookies</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- BOTONES FLOTANTES -->
+  <div class="floating-buttons">
+    <a href="#home" class="back-to-top" title="Subir al inicio">↑</a>
+    <button class="chat-button" id="chat-toggle-btn" title="Asistente JOKIA">🤖</button>
+  </div>
+
+  <!-- CHAT PANEL -->
+  <div id="chat-panel">
+    <div class="chat-header">
+      <span class="chat-header-icon">🤖</span>
+      <span class="chat-header-title">Asistente JOKIA</span>
+    </div>
+    <div class="chat-messages">
+      <div class="chat-message bot">
+        ¡Hola! Soy tu asistente virtual. ¿En qué puedo ayudarte hoy?
+      </div>
+      <div class="chat-message user">
+        Me gustaría conocer sus servicios
+      </div>
+      <div class="chat-message bot">
+        Claro! Ofrecemos branding, marketing digital, landing pages y más. ¿Qué te interesa?
+      </div>
+    </div>
+    <div class="chat-input-area">
+      <input type="text" class="chat-input" placeholder="Escribe tu mensaje..." disabled>
+    </div>
+  </div>
+
+  <script>
+    // ==========================
+    // TYPING EFFECT
+    // ==========================
+    document.addEventListener('DOMContentLoaded', function() {
+      const textElement = document.getElementById('typing-text');
+      const cursorElement = document.getElementById('cursor');
+      
+      let charIndex = 0;
+      let isDone = false;
+      const plainPhrase = 'Transformamos ideas en experiencias digitales';
+      
+      function typeEffect() {
+        if (isDone) return;
+        
+        const currentText = plainPhrase.substring(0, charIndex);
+        
+        if (charIndex === plainPhrase.length) {
+          textElement.innerHTML = 'Transformamos ideas en <span>experiencias digitales</span>';
+          isDone = true;
+          cursorElement.style.animation = 'none';
+          cursorElement.style.opacity = '0';
+          return;
+        }
+        
+        textElement.innerHTML = currentText;
+        charIndex++;
+        setTimeout(typeEffect, 50);
+      }
+      
+      typeEffect();
+    });
+
+    // ==========================
+    // CHAT TOGGLE
+    // ==========================
+    const chatBtn = document.getElementById('chat-toggle-btn');
+    const chatPanel = document.getElementById('chat-panel');
+    
+    if (chatBtn && chatPanel) {
+      chatBtn.addEventListener('click', function() {
+        chatPanel.classList.toggle('visible');
+      });
+      
+      document.addEventListener('click', function(e) {
+        if (!chatPanel.contains(e.target) && !chatBtn.contains(e.target)) {
+          chatPanel.classList.remove('visible');
+        }
+      });
+    }
+
+    // ==========================
+    // ANIMACIÓN CÍRCULOS
+    // ==========================
+    function animateCircle(circleId, valueId, percentage, finalText) {
+      const circle = document.getElementById(circleId);
+      const valueEl = document.getElementById(valueId);
+      if (!circle || !valueEl) return;
+      
+      let currentPercent = 0;
+      
+      const interval = setInterval(() => {
+        if (currentPercent >= percentage) {
+          clearInterval(interval);
+          valueEl.textContent = finalText;
+          return;
+        }
+        
+        currentPercent += 1;
+        const degrees = (currentPercent / 100) * 360;
+        circle.style.background = `conic-gradient(var(--secondary) ${degrees}deg, rgba(123, 92, 255, 0.2) 0deg)`;
+        
+        if (circleId === 'circle3') {
+          valueEl.textContent = currentPercent + '%';
+        } else {
+          valueEl.textContent = currentPercent + 'M+';
+        }
+      }, 20);
+    }
+
+    // ==========================
+    // INTERSECCIÓN OBSERVER
+    // ==========================
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          
+          animateCircle('circle1', 'value1', 100, '13M+');
+          animateCircle('circle2', 'value2', 100, '50M+');
+          animateCircle('circle3', 'value3', 98, '98%');
+          
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.3 });
+
+    const metricsGrid = document.getElementById('metrics-grid');
+    if (metricsGrid) {
+      observer.observe(metricsGrid);
+    }
+
+    // ==========================
+    // CERRAR MENÚ MÓVIL AL HACER CLIC EN UNA OPCIÓN
+    // ==========================
+    (function() {
+      const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+      const mobileLinks = document.querySelectorAll('.mobile-menu a');
+      
+      if (mobileMenuToggle && mobileLinks.length) {
+        mobileLinks.forEach(link => {
+          link.addEventListener('click', () => {
+            mobileMenuToggle.checked = false;
+          });
+        });
+      }
+    })();
+
+    // ==========================
+    // TOGGLE TEMA
+    // ==========================
+    window.setTheme = function(theme) {
+      document.documentElement.className = theme;
+      
+      document.querySelectorAll('.theme-toggle-minimal button').forEach(btn => {
+        btn.classList.remove('active');
+      });
+      
+      if (theme === 'dark') {
+        document.querySelectorAll('.dark-btn').forEach(btn => btn.classList.add('active'));
+      } else {
+        document.querySelectorAll('.light-btn').forEach(btn => btn.classList.add('active'));
+      }
+    };
+
+    (function() {
+      if (!document.documentElement.classList.contains('dark') && !document.documentElement.classList.contains('light')) {
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+          setTheme('dark');
+        } else {
+          setTheme('light');
+        }
+      } else {
+        const currentTheme = document.documentElement.classList.contains('dark') ? 'dark' : 'light';
+        if (currentTheme === 'dark') {
+          document.querySelectorAll('.dark-btn').forEach(btn => btn.classList.add('active'));
+        } else {
+          document.querySelectorAll('.light-btn').forEach(btn => btn.classList.add('active'));
+        }
+      }
+    })();
+
+  </script>
+
+  <script>
+  (function() {
+    const WEBHOOK_URL = 'https://jokia-n8n.5rasmy.easypanel.host/webhook-test/jokia-chat';
+    const chatMessages = document.querySelector('.chat-messages');
+    const chatInput = document.querySelector('.chat-input');
+    let conversationHistory = [];
+    let isWaiting = false;
+    
+    function init() {
+      chatMessages.innerHTML = '';
+      addBot('¡Hola! 👋 Soy el asistente de JOKIA. ¿En qué puedo ayudarte?');
+      chatInput.disabled = false;
+      chatInput.placeholder = 'Escribe tu mensaje...';
+      chatInput.addEventListener('keypress', e => {
+        if (e.key === 'Enter' && !e.shiftKey) {
+          e.preventDefault();
+          send();
+        }
+      });
+      addBtn();
+    }
+    
+    function addBtn() {
+      const area = document.querySelector('.chat-input-area');
+      if (!area || document.querySelector('.chat-send-btn')) return;
+      const btn = document.createElement('button');
+      btn.className = 'chat-send-btn';
+      btn.innerHTML = '➤';
+      btn.onclick = send;
+      area.appendChild(btn);
+      if (!document.getElementById('chat-s')) {
+        const s = document.createElement('style');
+        s.id = 'chat-s';
+        s.textContent = `.chat-input-area{display:flex;gap:8px;align-items:center}.chat-send-btn{background:var(--primary);color:#fff;border:none;border-radius:50%;width:40px;height:40px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:18px;transition:.3s;flex-shrink:0}.chat-send-btn:hover{background:var(--secondary);transform:scale(1.1)}.chat-send-btn:disabled{opacity:.5;cursor:not-allowed}.chat-message{animation:fadeIn .3s}@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}.chat-typing{display:inline-block;padding:12px 16px;background:rgba(123,92,255,.1);border-radius:12px;margin:8px 0}.chat-typing span{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--secondary);margin:0 2px;animation:typing 1.4s infinite}.chat-typing span:nth-child(2){animation-delay:.2s}.chat-typing span:nth-child(3){animation-delay:.4s}@keyframes typing{0%,60%,100%{transform:translateY(0);opacity:.5}30%{transform:translateY(-10px);opacity:1}}`;
+        document.head.appendChild(s);
+      }
+    }
+    
+    async function send() {
+      const msg = chatInput.value.trim();
+      if (!msg || isWaiting) return;
+      addUser(msg);
+      chatInput.value = '';
+      const typing = showTyping();
+      isWaiting = true;
+      toggleBtn(true);
+      try {
+        const res = await fetch(WEBHOOK_URL, {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({message: msg, history: conversationHistory})
+        });
+        if (!res.ok) throw new Error('Error');
+        const data = await res.json();
+        removeTyping(typing);
+        if (data.success && data.response) {
+          addBot(data.response);
+          conversationHistory.push(
+            {role: 'user', content: msg},
+            {role: 'assistant', content: data.response}
+          );
+        } else {
+          addBot('Error al procesar. Intenta de nuevo.');
+        }
+      } catch (e) {
+        console.error(e);
+        removeTyping(typing);
+        addBot('❌ Error de conexión. Verifica que n8n esté activo.');
+      } finally {
+        isWaiting = false;
+        toggleBtn(false);
+        chatInput.focus();
+      }
+    }
+    
+    function addUser(t) {
+      const d = document.createElement('div');
+      d.className = 'chat-message user';
+      d.textContent = t;
+      chatMessages.appendChild(d);
+      scroll();
+    }
+    
+    function addBot(t) {
+      const d = document.createElement('div');
+      d.className = 'chat-message bot';
+      d.textContent = t;
+      chatMessages.appendChild(d);
+      scroll();
+    }
+    
+    function showTyping() {
+      const d = document.createElement('div');
+      d.className = 'chat-typing';
+      d.innerHTML = '<span></span><span></span><span></span>';
+      chatMessages.appendChild(d);
+      scroll();
+      return d;
+    }
+    
+    function removeTyping(el) {
+      if (el?.parentNode) el.parentNode.removeChild(el);
+    }
+    
+    function toggleBtn(dis) {
+      const b = document.querySelector('.chat-send-btn');
+      if (b) b.disabled = dis;
+      chatInput.disabled = dis;
+    }
+    
+    function scroll() {
+      setTimeout(() => chatMessages.scrollTop = chatMessages.scrollHeight, 100);
+    }
+    
+    if (chatMessages && chatInput) {
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+      } else {
+        init();
+      }
+    }
+  })();
+  </script>
+
+  <script>
+  (function(){
+    const W = 'https://jokia-n8n.5rasmy.easypanel.host/webhook-test/jokia-formulario';
+    const f = document.querySelector('#contact form');
+    if (!f) return;
+    const inp = f.querySelectorAll('.form-input');
+    const ta = f.querySelector('.form-textarea');
+    const btn = f.querySelector('.form-submit');
+    let n, a, e, t, emp;
+
+    inp.forEach(i => {
+      const p = i.placeholder.toLowerCase();
+      if (p.includes('nombre') && !p.includes('apellido')) n = i;
+      else if (p.includes('apellido')) a = i;
+      else if (p.includes('email')) e = i;
+      else if (p.includes('teléfono') || p.includes('telefono')) t = i;
+      else if (p.includes('empresa')) emp = i;
+    });
+
+    const m = ta;
+    const bTxt = btn?.textContent || 'Enviar mensaje';
+
+    function vEmail(em) {
+      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em);
+    }
+
+    function msg(txt, tipo = 'success') {
+      const d = document.createElement('div');
+      d.textContent = txt;
+      d.style.cssText = `position:fixed;top:20px;right:20px;padding:16px 24px;border-radius:8px;color:white;font-weight:500;z-index:10000;max-width:400px;box-shadow:0 4px 12px rgba(0,0,0,0.3);background:${tipo === 'success' ? 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)' : 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)'};animation:slideIn .3s ease-out`;
+      const s = document.createElement('style');
+      s.textContent = '@keyframes slideIn{from{transform:translateX(400px);opacity:0}to{transform:translateX(0);opacity:1}}@keyframes slideOut{from{transform:translateX(0);opacity:1}to{transform:translateX(400px);opacity:0}}';
+      document.head.appendChild(s);
+      document.body.appendChild(d);
+      setTimeout(() => {
+        d.style.animation = 'slideOut .3s ease-out';
+        setTimeout(() => d.remove(), 300);
+      }, 5000);
+    }
+
+    async function send(ev) {
+      ev.preventDefault();
+      const d = {
+        nombre: n?.value?.trim() || '',
+        apellido: a?.value?.trim() || '',
+        email: e?.value?.trim() || '',
+        telefono: t?.value?.trim() || '',
+        empresa: emp?.value?.trim() || '',
+        mensaje: m?.value?.trim() || ''
+      };
+
+      if (!d.nombre) {
+        msg('❌ Ingresa tu nombre', 'error');
+        n?.focus();
+        return;
+      }
+      if (!d.email) {
+        msg('❌ Ingresa tu email', 'error');
+        e?.focus();
+        return;
+      }
+      if (!vEmail(d.email)) {
+        msg('❌ Email inválido', 'error');
+        e?.focus();
+        return;
+      }
+      if (!d.mensaje) {
+        msg('❌ Cuéntanos sobre tu proyecto', 'error');
+        m?.focus();
+        return;
+      }
+
+      btn.disabled = true;
+      btn.textContent = 'Enviando...';
+      btn.style.opacity = '0.7';
+
+      try {
+        const r = await fetch(W, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(d)
+        });
+
+        if (!r.ok) throw new Error('HTTP error');
+        const res = await r.json();
+
+        if (res.success) {
+          msg('✅ ¡Mensaje enviado! Nos contactaremos pronto.', 'success');
+          f.reset();
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        } else {
+          throw new Error('Error');
+        }
+      } catch (err) {
+        console.error(err);
+        msg('❌ Error al enviar. Intenta de nuevo.', 'error');
+      } finally {
+        btn.disabled = false;
+        btn.textContent = bTxt;
+        btn.style.opacity = '1';
+      }
+    }
+
+    f.addEventListener('submit', send);
+  })();
+  </script>
 </body>
 </html>
