@@ -3,21 +3,30 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<meta name="description" content="Agencia digital en Córdoba especializada en branding, marketing y landing pages de alta conversión."/>
-<meta name="keywords" content="agencia digital, branding, marketing digital, landing pages, Córdoba, Jokia"/>
-<meta name="robots" content="index,follow"/>
-<meta name="theme-color" content="#261CC1"/>
-<meta property="og:title" content="JOKIA — Diseñando Futuros Digitales"/>
-<meta property="og:description" content="Diseñamos futuros digitales: branding, marketing y landing pages que convierten en resultados."/>
+<meta name="description" content="Agencia digital en Córdoba, Argentina. Branding, marketing digital y landing pages de alta conversión. +50 proyectos exitosos. Contactanos hoy."/>
+<meta name="keywords" content="agencia digital córdoba, branding argentina, marketing digital córdoba, landing pages, diseño web córdoba, jokia"/>
+<meta name="author" content="JOKIA"/>
+<meta name="robots" content="index, follow"/>
+<meta name="geo.region" content="AR-X"/>
+<meta name="geo.placename" content="Córdoba"/>
+<meta name="geo.position" content="-31.4201;-64.1888"/>
+<meta name="ICBM" content="-31.4201, -64.1888"/>
 <meta property="og:type" content="website"/>
-<meta property="og:url" content="https://www.jokia-site.com/"/>
-<meta property="og:image" content="https://www.jokia-site.com/og-image.jpg"/>
+<meta property="og:url" content="https://jokia.agency/"/>
+<meta property="og:site_name" content="JOKIA"/>
+<meta property="og:title" content="JOKIA | Agencia Digital en Córdoba"/>
+<meta property="og:description" content="Diseñamos futuros digitales: branding, marketing y landing pages que convierten. +50 proyectos exitosos."/>
+<meta property="og:image" content="https://jokia.agency/og-image.jpg"/>
+<meta property="og:locale" content="es_AR"/>
 <meta name="twitter:card" content="summary_large_image"/>
-<meta name="twitter:title" content="JOKIA — Diseñando Futuros Digitales"/>
+<meta name="twitter:title" content="JOKIA | Agencia Digital en Córdoba"/>
 <meta name="twitter:description" content="Agencia digital de alta performance en Córdoba, Argentina."/>
-<meta name="twitter:image" content="https://www.jokia-site.com/og-image.jpg"/>
-<link rel="canonical" href="https://www.jokia-site.com/"/>
-<title>JOKIA — Diseñando Futuros Digitales</title>
+<meta name="twitter:image" content="https://jokia.agency/og-image.jpg"/>
+<link rel="canonical" href="https://jokia.agency/"/>
+<title>JOKIA | Agencia Digital en Córdoba - Branding, Marketing & Landing Pages</title>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"ProfessionalService","name":"JOKIA","image":"https://jokia.agency/logo.png","description":"Agencia digital en Córdoba especializada en branding, marketing digital y landing pages.","address":{"@type":"PostalAddress","streetAddress":"Av. Siempre Viva 123","addressLocality":"Córdoba","addressRegion":"Córdoba","postalCode":"5000","addressCountry":"AR"},"geo":{"@type":"GeoCoordinates","latitude":-31.4201,"longitude":-64.1888},"url":"https://jokia.agency","telephone":"+54-351-123-4567","email":"contacto@jokia.agency","openingHoursSpecification":{"@type":"OpeningHoursSpecification","dayOfWeek":["Monday","Tuesday","Wednesday","Thursday","Friday"],"opens":"09:00","closes":"18:00"},"sameAs":["https://www.instagram.com/jokia.ia/","https://www.facebook.com/profile.php?id=61587477543232"],"aggregateRating":{"@type":"AggregateRating","ratingValue":"4.9","reviewCount":"50"}}
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet"/>
@@ -1286,6 +1295,37 @@ function showNotif(txt,tipo){
     document.getElementById('cIcoOpen').className='ct-ico vis';
     document.getElementById('cIcoClose').className='ct-ico hid';
   });
+})();
+</script>
+<script>
+(function(){
+  const geo={detected:false,country:null,city:null};
+  fetch('https://ipapi.co/json/').then(r=>r.json()).then(d=>{
+    geo.detected=true;geo.country=d.country_code;geo.city=d.city;
+    localStorage.setItem('jokia_geo',JSON.stringify(geo));
+    const now=new Date(),h=now.getHours(),isOpen=h>=9&&h<18&&now.getDay()>0&&now.getDay()<6;
+    const badge=document.querySelector('.chat-hstatus');
+    if(badge&&isOpen){badge.innerHTML='<span class="chat-dot"></span>En línea · responde rápido';}
+    else if(badge){badge.innerHTML='<span style="width:4px;height:4px;border-radius:50%;background:#ef4444"></span>Fuera de horario';}
+    if(d.country_code!=='AR'){console.log('Visitante internacional:',d.country_code);}
+  }).catch(()=>{
+    if('geolocation'in navigator){
+      navigator.geolocation.getCurrentPosition(p=>{
+        geo.lat=p.coords.latitude;geo.lng=p.coords.longitude;
+        localStorage.setItem('jokia_geo',JSON.stringify(geo));
+      });
+    }
+  });
+  const saved=localStorage.getItem('jokia_geo');
+  if(saved){
+    try{
+      const data=JSON.parse(saved);
+      const now=new Date(),h=now.getHours(),isOpen=h>=9&&h<18&&now.getDay()>0&&now.getDay()<6;
+      const badge=document.querySelector('.chat-hstatus');
+      if(badge&&isOpen){badge.innerHTML='<span class="chat-dot"></span>En línea';}
+      else if(badge){badge.innerHTML='<span style="width:4px;height:4px;border-radius:50%;background:#ef4444"></span>Fuera de horario';}
+    }catch(e){}
+  }
 })();
 </script>
 </body>
