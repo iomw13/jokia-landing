@@ -1,0 +1,83 @@
+@import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --color-jokia-primary: #3A9AFF;
+  --color-jokia-secondary: #B517FF;
+  --color-jokia-accent: #00ff00;
+  --color-jokia-dark: #0A0A0F;
+  --color-jokia-darker: #050509;
+}
+
+@layer base {
+  :root {
+    --jokia-primary: 58, 154, 255;
+    --jokia-secondary: 181, 23, 255;
+    --jokia-accent: 0, 255, 0;
+  }
+
+  body {
+    @apply bg-white text-gray-900 transition-colors duration-300;
+  }
+
+  html.dark body {
+    @apply bg-jokia-darker text-white;
+  }
+}
+
+@layer utilities {
+  /* Animated Gradient for Text */
+  .animate-gradient {
+    animation: gradient 8s linear infinite;
+    background-size: 200% auto;
+  }
+
+  @keyframes gradient {
+    0%,
+    100% {
+      background-position: 0% center;
+    }
+    50% {
+      background-position: 100% center;
+    }
+  }
+
+  /* Custom Scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-gray-100 dark:bg-jokia-darker;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply rounded-full bg-jokia-primary/30 hover:bg-jokia-primary/50;
+  }
+
+  /* Smooth Scrolling */
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* Selection Color */
+  ::selection {
+    @apply bg-jokia-primary/20 text-jokia-primary;
+  }
+}
+
+/* Glass morphism helper classes */
+.glass {
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+.glass-light {
+  background: rgba(255, 255, 255, 0.6);
+  border: 1px solid rgba(200, 200, 200, 0.2);
+}
+
+.glass-dark {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
