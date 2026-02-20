@@ -161,16 +161,15 @@ export default function HeroSection() {
             <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-jokia-primary/20 via-jokia-secondary/20 to-transparent blur-3xl" />
             
             {/* Spline Container */}
-            <div className="pointer-events-auto relative h-full w-full translate-y-4 sm:translate-y-6 lg:translate-y-8">
+            <div className="pointer-events-auto relative h-full w-full -translate-y-4 sm:-translate-y-2 lg:-translate-y-6">
               <Spline scene="https://prod.spline.design/bOR60Mh9yorxS7qm/scene.splinecode" />
             </div>
           </div>
         </motion.div>
       </div>
 
-      {/* Gradient Orbs */}
+      {/* Gradient Orb */}
       <div className="pointer-events-none absolute left-0 top-1/4 h-96 w-96 rounded-full bg-jokia-primary/10 blur-[120px] dark:bg-jokia-primary/20" />
-      <div className="pointer-events-none absolute bottom-0 right-0 h-[28rem] w-[28rem] rounded-full bg-jokia-secondary/10 blur-[150px] dark:bg-jokia-secondary/25" />
     </section>
   );
 }
