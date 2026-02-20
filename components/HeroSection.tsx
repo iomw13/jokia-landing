@@ -22,7 +22,7 @@ export default function HeroSection() {
       />
 
       {/* Content Container */}
-      <div className="container relative z-20 mx-auto grid items-center gap-8 px-4 sm:px-6 lg:grid-cols-2 lg:gap-12 lg:px-8">
+      <div className="container relative z-0 mx-auto grid items-center gap-8 px-4 sm:px-6 lg:grid-cols-2 lg:gap-12 lg:px-8">
         {/* Left: Text Content */}
         <div className="max-w-2xl">
           {/* Badge */}
@@ -161,7 +161,7 @@ export default function HeroSection() {
             <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-jokia-primary/20 via-jokia-secondary/20 to-transparent blur-3xl" />
             
             {/* Spline Container */}
-            <div className="pointer-events-auto relative h-full w-full -translate-y-4 sm:-translate-y-2 lg:-translate-y-6">
+            <div className="pointer-events-auto relative h-full w-full translate-y-3 sm:translate-y-4 lg:translate-y-5">
               <Spline scene="https://prod.spline.design/bOR60Mh9yorxS7qm/scene.splinecode" />
             </div>
           </div>

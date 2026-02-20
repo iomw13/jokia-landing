@@ -7,7 +7,7 @@ import ResultsSection from "@/components/ResultsSection";
 import BrandsSection from "@/components/BrandsSection";
 import ContactSection from "@/components/ContactSection";
 import Footer from "@/components/Footer";
-import Chatbot from "@/components/Chatbot";
+import ChatbotClient from "@/components/ChatbotClient";
 
 export default function Home() {
   return (
@@ -21,7 +21,7 @@ export default function Home() {
       <BrandsSection />
       <ContactSection />
       <Footer />
-      <Chatbot />
+      <ChatbotClient />
     </main>
   );
 }

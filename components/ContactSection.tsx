@@ -79,10 +79,10 @@ export default function ContactSection() {
 
             <h2 className="mb-6 text-4xl font-bold text-gray-900 dark:text-white lg:text-5xl">
               ¿Listo para diseñar tu{" "}
-              <span className="bg-gradient-to-r from-jokia-primary via-jokia-secondary to-jokia-primary bg-clip-text italic text-transparent">
-                futuro digital?
-              </span>{" "}
-              Escribinos.
+              <span className="bg-gradient-to-r from-jokia-primary via-jokia-secondary to-jokia-primary bg-clip-text text-transparent">
+                futuro digital
+              </span>
+              ? Escribinos.
             </h2>
 
             <p className="mb-8 text-lg text-gray-600 dark:text-white/70">
@@ -91,7 +91,10 @@ export default function ContactSection() {
             </p>
 
             <div className="space-y-4">
-              <div className="flex items-start gap-4 rounded-xl border border-gray-200 bg-white/60 p-4 backdrop-blur-sm dark:border-white/10 dark:bg-white/5">
+              <a
+                href="mailto:contacto@jokia.agency"
+                className="flex items-start gap-4 rounded-xl border border-gray-200 bg-white/60 p-4 backdrop-blur-sm transition hover:border-jokia-primary/40 hover:bg-white/80 dark:border-white/10 dark:bg-white/5 dark:hover:border-jokia-primary/40 dark:hover:bg-white/10"
+              >
                 <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg bg-jokia-primary/10 text-jokia-primary">
                   ✉️
                 </div>
@@ -103,9 +106,14 @@ export default function ContactSection() {
                     contacto@jokia.agency
                   </div>
                 </div>
-              </div>
+              </a>
 
-              <div className="flex items-start gap-4 rounded-xl border border-gray-200 bg-white/60 p-4 backdrop-blur-sm dark:border-white/10 dark:bg-white/5">
+              <a
+                href="https://wa.me/5493547656447"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-start gap-4 rounded-xl border border-gray-200 bg-white/60 p-4 backdrop-blur-sm transition hover:border-jokia-primary/40 hover:bg-white/80 dark:border-white/10 dark:bg-white/5 dark:hover:border-jokia-primary/40 dark:hover:bg-white/10"
+              >
                 <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg bg-jokia-primary/10 text-jokia-primary">
                   📱
                 </div>
@@ -117,7 +125,7 @@ export default function ContactSection() {
                     +54 9 3547 656-447
                   </div>
                 </div>
-              </div>
+              </a>
 
               <div className="flex items-start gap-4 rounded-xl border border-gray-200 bg-white/60 p-4 backdrop-blur-sm dark:border-white/10 dark:bg-white/5">
                 <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg bg-jokia-primary/10 text-jokia-primary">

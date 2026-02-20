@@ -3,6 +3,8 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useRef, useEffect } from "react";
 
+const LOCAL_STORAGE_KEY = "jokia-chat-history";
+
 interface Message {
   role: "user" | "assistant";
   content: string;
@@ -10,15 +12,10 @@ interface Message {
 
 export default function Chatbot() {
   const [isOpen, setIsOpen] = useState(false);
-  const [messages, setMessages] = useState<Message[]>([
-    {
-      role: "assistant",
-      content:
-        "¡Hola! 👋 Soy el asistente de Jokia. ¿En qué puedo ayudarte hoy?",
-    },
-  ]);
+  const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [showScrollTop, setShowScrollTop] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = () => {
@@ -29,12 +26,64 @@ export default function Chatbot() {
     scrollToBottom();
   }, [messages]);
 
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    try {
+      const stored = window.localStorage.getItem(LOCAL_STORAGE_KEY);
+      if (stored) {
+        const parsed = JSON.parse(stored) as Message[];
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          setMessages(parsed);
+          return;
+        }
+      }
+
+      setMessages([
+        {
+          role: "assistant",
+          content:
+            "¡Hola! 👋 Soy el asistente de Jokia. ¿En qué puedo ayudarte hoy?",
+        },
+      ]);
+    } catch {
+      /* ignore */
+    }
+  }, []);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const handleScroll = () => {
+      setShowScrollTop(window.scrollY > 400);
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll();
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const handleScrollTop = () => {
+    if (typeof window === "undefined") return;
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    try {
+      window.localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(messages));
+    } catch {
+      /* ignore */
+    }
+  }, [messages]);
+
   const handleSend = async () => {
     if (!input.trim() || isLoading) return;
 
     const userMessage = input.trim();
     setInput("");
-    setMessages((prev) => [...prev, { role: "user", content: userMessage }]);
+    const nextHistory: Message[] = [
+      ...messages,
+      { role: "user", content: userMessage },
+    ];
+    setMessages(nextHistory);
     setIsLoading(true);
 
     try {
@@ -45,7 +94,7 @@ export default function Chatbot() {
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             message: userMessage,
-            history: messages,
+            history: nextHistory,
           }),
         },
       );
@@ -79,46 +128,29 @@ export default function Chatbot() {
   return (
     <>
       {/* Chat trigger button */}
-      <motion.button
+      <button
         onClick={() => setIsOpen(!isOpen)}
-        className="fixed bottom-6 right-6 z-50 flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-jokia-primary to-jokia-secondary text-white shadow-lg transition-all hover:scale-105 hover:shadow-xl"
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.95 }}
+        className="fixed bottom-6 right-6 z-50 flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-jokia-primary to-jokia-secondary text-white shadow-glow transition-transform duration-200 hover:scale-105"
+        aria-label={isOpen ? "Cerrar chat" : "Abrir chat"}
       >
-        <AnimatePresence mode="wait">
-          {isOpen ? (
-            <motion.span
-              key="close"
-              initial={{ rotate: -90, opacity: 0 }}
-              animate={{ rotate: 0, opacity: 1 }}
-              exit={{ rotate: 90, opacity: 0 }}
-              transition={{ duration: 0.2 }}
-              className="text-2xl"
-            >
-              ✕
-            </motion.span>
-          ) : (
-            <motion.span
-              key="chat"
-              initial={{ rotate: 90, opacity: 0 }}
-              animate={{ rotate: 0, opacity: 1 }}
-              exit={{ rotate: -90, opacity: 0 }}
-              transition={{ duration: 0.2 }}
-              className="text-2xl"
-            >
-              💬
-            </motion.span>
-          )}
-        </AnimatePresence>
-
-        {/* Notification dot */}
+        <span className="text-2xl">{isOpen ? "✕" : "💬"}</span>
         {!isOpen && (
           <span className="absolute -right-1 -top-1 flex h-4 w-4">
             <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-400 opacity-75" />
             <span className="relative inline-flex h-4 w-4 rounded-full bg-green-500" />
           </span>
         )}
-      </motion.button>
+      </button>
+
+      {showScrollTop && (
+        <button
+          onClick={handleScrollTop}
+          className="fixed bottom-6 right-24 z-40 flex h-11 w-11 items-center justify-center rounded-2xl border border-white/30 bg-white/10 text-white shadow-glass backdrop-blur-xl transition-transform duration-200 hover:scale-105 dark:bg-white/5"
+          aria-label="Volver arriba"
+        >
+          ↑
+        </button>
+      )}
 
       {/* Chat panel */}
       <AnimatePresence>
@@ -128,7 +160,7 @@ export default function Chatbot() {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.9, y: 20 }}
             transition={{ type: "spring", damping: 20, stiffness: 300 }}
-            className="fixed bottom-24 right-6 z-50 flex w-96 max-w-[calc(100vw-3rem)] flex-col overflow-hidden rounded-2xl border border-gray-200 bg-white/90 shadow-2xl backdrop-blur-xl dark:border-white/10 dark:bg-gray-900/90"
+            className="fixed bottom-24 right-6 z-40 flex w-96 max-w-[calc(100vw-3rem)] flex-col overflow-hidden rounded-3xl border border-white/20 bg-white/10 shadow-glass backdrop-blur-2xl dark:border-white/15 dark:bg-white/5"
             style={{ height: "600px", maxHeight: "calc(100vh - 8rem)" }}
           >
             {/* Header */}
@@ -150,8 +182,7 @@ export default function Chatbot() {
               </div>
             </div>
 
-            {/* Messages */}
-            <div className="flex-1 space-y-4 overflow-y-auto p-4">
+            <div className="flex-1 space-y-4 overflow-y-auto p-4 bg-gradient-to-b from-white/10 via-white/5 to-transparent dark:from-jokia-dark/40 dark:via-jokia-dark/60 dark:to-jokia-darker/80">
               {messages.map((message, index) => (
                 <motion.div
                   key={index}
@@ -169,8 +200,8 @@ export default function Chatbot() {
                   <div
                     className={`max-w-[80%] rounded-2xl px-4 py-2.5 ${
                       message.role === "user"
-                        ? "bg-gradient-to-r from-jokia-primary to-jokia-secondary text-white"
-                        : "border border-gray-200 bg-white/50 text-gray-900 dark:border-white/10 dark:bg-white/5 dark:text-white"
+                        ? "bg-gradient-to-r from-jokia-primary to-jokia-secondary text-white shadow-glow"
+                        : "border border-white/20 bg-white/15 text-gray-900 shadow-sm backdrop-blur-md dark:border-white/20 dark:bg-white/10 dark:text-white"
                     }`}
                   >
                     <p className="text-sm leading-relaxed">{message.content}</p>
@@ -242,4 +273,3 @@ export default function Chatbot() {
     </>
   );
 }
-
