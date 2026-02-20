@@ -11,7 +11,7 @@ const services = [
     description:
       "Diseñamos sistemas de marketing basados en datos, automatización e IA para atraer, calificar y convertir clientes de forma eficiente.",
     tags: ["Campañas", "Funnels", "IA", "Automatización", "Reporting"],
-    image: "https://jokia.agency/src/imagenes/marketing.avif",
+    image: "/servicios/marketing.avif",
     gradient: "from-blue-500/20 to-purple-500/20",
   },
   {
@@ -20,7 +20,7 @@ const services = [
     description:
       "Creamos sitios y landing pages rápidas, claras y enfocadas en una sola acción: generar resultados reales.",
     tags: ["Landing pages", "UX/UI", "Copywriting", "Optimización"],
-    image: "https://jokia.agency/src/imagenes/landing.avif",
+    image: "/servicios/landing.avif",
     gradient: "from-purple-500/20 to-pink-500/20",
   },
   {
@@ -29,7 +29,7 @@ const services = [
     description:
       "Implementamos sistemas de punto de venta y gestión para ordenar ventas, stock y reportes en tiempo real.",
     tags: ["POS", "Stock", "Ventas", "Integraciones"],
-    image: "https://jokia.agency/src/imagenes/pos.avif",
+    image: "/servicios/pos.avif",
     gradient: "from-green-500/20 to-emerald-500/20",
   },
   {
@@ -38,7 +38,7 @@ const services = [
     description:
       "Construimos identidades sólidas y coherentes que se reconocen en todos los puntos de contacto.",
     tags: ["Branding", "Logo", "Sistema visual", "Manual de marca"],
-    image: "https://jokia.agency/src/imagenes/branding.avif",
+    image: "/servicios/branding.avif",
     gradient: "from-orange-500/20 to-red-500/20",
   },
   {
@@ -47,7 +47,7 @@ const services = [
     description:
       "Diseñamos menús digitales claros, rápidos y adaptados a mobile para mejorar la experiencia del cliente.",
     tags: ["QR", "Multi-sucursal", "Edición simple"],
-    image: "https://jokia.agency/src/imagenes/menu.avif",
+    image: "/servicios/menu.avif",
     gradient: "from-pink-500/20 to-purple-500/20",
   },
 ];
