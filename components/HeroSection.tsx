@@ -161,7 +161,7 @@ export default function HeroSection() {
             <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-jokia-primary/20 via-jokia-secondary/20 to-transparent blur-3xl" />
             
             {/* Spline Container */}
-            <div className="pointer-events-auto relative h-full w-full translate-y-3 sm:translate-y-4 lg:translate-y-5">
+            <div className="pointer-events-auto relative h-full w-full translate-y-3 sm:translate-y-4 lg:translate-y-5 scale-90 sm:scale-95 lg:scale-100">
               <Spline scene="https://prod.spline.design/bOR60Mh9yorxS7qm/scene.splinecode" />
             </div>
           </div>
