@@ -133,12 +133,7 @@ export default function Navbar() {
         </div>
 
         {isMobileMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            className="mt-2 rounded-2xl border border-gray-200 bg-white/90 p-4 backdrop-blur-xl dark:border-white/10 dark:bg-white/5 md:hidden"
-          >
+          <div className="mt-2 rounded-2xl border border-gray-200 bg-white/90 p-4 backdrop-blur-xl animate-fade-in dark:border-white/10 dark:bg-white/5 md:hidden">
             <div className="flex flex-col space-y-3">
               {navItems.map((item) => (
                 <a
@@ -158,7 +153,7 @@ export default function Navbar() {
                 Iniciar proyecto →
               </a>
             </div>
-          </motion.div>
+          </div>
         )}
       </div>
     </nav>
