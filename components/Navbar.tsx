@@ -49,10 +49,10 @@ export default function Navbar() {
               <a
                 key={item.href}
                 href={item.href}
-                className="relative text-[1rem] font-medium text-gray-700 transition-colors hover:text-jokia-primary dark:text-white/70 dark:hover:text-white"
+                className="group relative text-[1rem] font-medium text-gray-700 transition-colors hover:text-jokia-primary dark:text-white/70 dark:hover:text-white"
               >
                 {item.label}
-                <span className="absolute -bottom-1 left-0 h-px w-0 bg-gradient-to-r from-jokia-primary to-jokia-secondary transition-all duration-300 hover:w-full" />
+                <span className="absolute -bottom-1 left-0 h-px w-0 bg-gradient-to-r from-jokia-primary to-jokia-secondary transition-all duration-300 group-hover:w-full" />
               </a>
             ))}
           </div>

@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
-import { useRef, MouseEvent } from "react";
+import { useRef, MouseEvent, useEffect, useState } from "react";
 
 const services = [
   {
@@ -56,6 +56,7 @@ interface ServiceCardProps {
 }
 
 function ServiceCardPremium({ service, index }: ServiceCardProps) {
+  const [isMobile, setIsMobile] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
   // 3D Tilt effect
@@ -88,6 +89,104 @@ function ServiceCardPremium({ service, index }: ServiceCardProps) {
     x.set(0);
     y.set(0);
   };
+
+  useEffect(() => {
+    const checkMobile = () => {
+      if (typeof window === "undefined") return;
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    checkMobile();
+
+    if (typeof window === "undefined") return;
+    window.addEventListener("resize", checkMobile);
+
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
+  if (isMobile) {
+    return (
+      <div className="group relative h-full">
+        <div
+          className={`absolute -inset-1 rounded-3xl bg-gradient-to-r ${service.gradient} opacity-0 blur-xl transition-opacity duration-500 group-hover:opacity-30`}
+        />
+
+        <div
+          className="relative h-full overflow-hidden rounded-3xl border border-gray-200 bg-white/80 backdrop-blur-2xl transition-all duration-500 group-hover:border-gray-300 group-hover:shadow-2xl dark:border-white/10 dark:bg-white/5"
+          style={{ transform: "translateZ(20px)" }}
+        >
+          <div className="relative p-8 pb-4">
+            <div
+              className={`mb-4 inline-flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br ${service.gradient} text-3xl shadow-lg`}
+              style={{ transform: "translateZ(40px)" }}
+            >
+              {service.icon}
+            </div>
+
+            <span className="mb-2 block font-mono text-xs uppercase tracking-widest text-gray-500 dark:text-white/50">
+              {service.category}
+            </span>
+
+            <h3 className="mb-3 text-2xl font-bold text-gray-900 dark:text-white">
+              {service.title}
+            </h3>
+
+            <p className="mb-6 text-sm text-gray-600 dark:text-white/70">
+              {service.description}
+            </p>
+
+            <div className="inline-flex items-center gap-2 rounded-full border border-gray-200 bg-white/60 px-4 py-2 backdrop-blur-sm dark:border-white/10 dark:bg-white/5">
+              <span
+                className={`bg-gradient-to-r ${service.gradient} bg-clip-text text-2xl font-bold text-transparent`}
+              >
+                {service.stat.value}
+              </span>
+              <span className="text-xs text-gray-600 dark:text-white/60">
+                {service.stat.label}
+              </span>
+            </div>
+          </div>
+
+          <div className="border-t border-gray-200 p-6 dark:border-white/10">
+            <div className="flex flex-wrap gap-2">
+              {service.tags.map((tag) => (
+                <span
+                  key={tag}
+                  className="rounded-lg bg-gray-100 px-3 py-1.5 text-xs font-medium text-gray-700 transition-all hover:bg-gray-200 dark:bg-white/5 dark:text-white/80 dark:hover:bg-white/10"
+                >
+                  {tag}
+                </span>
+              ))}
+            </div>
+          </div>
+
+          <div className="absolute bottom-4 right-4 translate-y-4 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
+            <a
+              href="#contacto"
+              className="inline-flex items-center gap-2 rounded-xl bg-gray-900 px-4 py-2 text-sm font-medium text-white transition-all hover:gap-3 dark:bg-white dark:text-gray-900"
+            >
+              Más info
+              <svg
+                className="h-4 w-4"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M17 8l4 4m0 0l-4 4m4-4H3"
+                />
+              </svg>
+            </a>
+          </div>
+
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-white/50 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+        </div>
+      </div>
+    );
+  }
 
   return (
     <motion.div

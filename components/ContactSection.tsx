@@ -56,9 +56,7 @@ export default function ContactSection() {
       className="relative overflow-hidden py-24 lg:py-32"
       id="contacto"
     >
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-[#f8e3ff] via-[#f5f3ff] to-[#e0f0ff] dark:from-jokia-darker dark:via-jokia-dark dark:to-jokia-darker" />
-
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(181,23,255,0.18),_transparent_55%),_radial-gradient(circle_at_bottom,_rgba(58,154,255,0.2),_transparent_55%)] opacity-80 dark:opacity-60" />
+      <div className="pointer-events-none absolute inset-0 bg-transparent" />
 
       <div className="container relative z-10 mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid gap-12 lg:grid-cols-2 lg:gap-16">
@@ -220,13 +218,14 @@ export default function ContactSection() {
                     onChange={(e) =>
                       setFormData({ ...formData, empresa: e.target.value })
                     }
-                    className="w-full rounded-full border border-gray-200 bg-white/60 px-4 py-3 text-gray-900 shadow-sm transition-all focus:border-jokia-primary focus:outline-none focus:ring-2 focus:ring-jokia-primary/20 dark:border-white/10 dark:bg-white/10 dark:text-white"
+                    className="w-full rounded-full border border-gray-200 bg-white/80 px-4 py-3 text-gray-900 shadow-sm transition-all focus:border-jokia-primary focus:outline-none focus:ring-2 focus:ring-jokia-primary/20"
                   >
                     <option value="">Seleccionar...</option>
                     <option>Branding & Identidad</option>
                     <option>Marketing Digital</option>
                     <option>Landing Page</option>
                     <option>Sistema POS</option>
+                    <option>Automatización de procesos</option>
                     <option>Múltiples servicios</option>
                   </select>
                 </div>

@@ -64,7 +64,7 @@ export default function ServicesHorizontalSection() {
       className="relative -mt-8 overflow-hidden py-24 lg:py-32"
       id="servicios"
     >
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent via-[#f5f3ff] to-white dark:from-transparent dark:via-jokia-darker dark:to-jokia-dark" />
+      <div className="pointer-events-none absolute inset-0 bg-transparent" />
 
       <div className="container relative z-10 mx-auto -mt-8 px-2 sm:px-4 lg:px-6">
         <div className="mb-16 text-center animate-fade-in">

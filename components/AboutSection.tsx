@@ -9,21 +9,78 @@ const codeLines = [
   { num: 6, code: "}; // Córdoba · est. 2026", indent: 0 },
 ];
 
+const baseTickerItems = [
+  "• LANDING PAGES",
+  "• IDENTIDAD VISUAL",
+  "• ESTRATEGIA DIGITAL",
+  "• WEB DESIGN",
+  "• IA APLICADA",
+  "• INTELIGENCIA ARTIFICIAL",
+  "• BRANDING",
+  "• MARKETING DIGITAL",
+];
+
+const tickerItems = [
+  ...baseTickerItems,
+  ...baseTickerItems,
+  ...baseTickerItems,
+];
+
 const features = [
   {
-    icon: "⚡",
+    icon: (
+      <svg
+        viewBox="0 0 24 24"
+        className="h-5 w-5"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth={2}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <path d="M13 3L6 14h5l-1 7 7-11h-5l1-7z" />
+      </svg>
+    ),
     title: "Performance-first",
     description:
       "Cada pixel tiene un propósito. Decisiones respaldadas por datos reales.",
   },
   {
-    icon: "🎯",
+    icon: (
+      <svg
+        viewBox="0 0 24 24"
+        className="h-5 w-5"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth={2}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <circle cx="12" cy="12" r="7" />
+        <circle cx="12" cy="12" r="3" />
+        <path d="M19 5l-3.5 3.5" />
+      </svg>
+    ),
     title: "Conversión garantizada",
     description:
       "Diseñamos para resultados medibles, no solo para premios de diseño.",
   },
   {
-    icon: "🚀",
+    icon: (
+      <svg
+        viewBox="0 0 24 24"
+        className="h-5 w-5"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth={2}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <path d="M5 15c4-1 7-4 8-8l2-2 1 1 1 1-2 2c-4 1-7 4-8 8L5 15z" />
+        <path d="M9 19l1.5-1.5" />
+        <path d="M13 5l2 2" />
+      </svg>
+    ),
     title: "Escala contigo",
     description:
       "Soluciones que crecen junto a tu negocio, con bases sólidas.",
@@ -34,27 +91,20 @@ export default function AboutSection() {
   return (
     <section className="relative overflow-hidden py-24 lg:py-32" id="jokia">
       {/* Background gradient */}
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-white via-[#f5f3ff] to-white dark:from-jokia-darker dark:via-jokia-dark dark:to-jokia-darker" />
+      <div className="pointer-events-none absolute inset-0 bg-transparent" />
 
       {/* Ticker tape */}
-      <div className="pointer-events-none absolute top-0 left-0 right-0 h-10 overflow-hidden border-b border-jokia-primary/20 bg-jokia-primary/5 dark:bg-jokia-primary/10">
+      <div className="absolute top-0 left-0 right-0 z-20 h-10 overflow-hidden bg-[#050b1a]">
         <div className="flex animate-scroll whitespace-nowrap py-2 text-xs font-mono uppercase tracking-wider text-jokia-primary/60">
-          <span className="px-4">• LANDING PAGES</span>
-          <span className="px-4">• IDENTIDAD VISUAL</span>
-          <span className="px-4">• ESTRATEGIA DIGITAL</span>
-          <span className="px-4">• WEB DESIGN</span>
-          <span className="px-4">• IA APLICADA</span>
-          <span className="px-4">• INTELIGENCIA ARTIFICIAL</span>
-          <span className="px-4">• BRANDING</span>
-          <span className="px-4">• MARKETING DIGITAL</span>
-          <span className="px-4">• LANDING PAGES</span>
-          <span className="px-4">• IDENTIDAD VISUAL</span>
-          <span className="px-4">• ESTRATEGIA DIGITAL</span>
-          <span className="px-4">• WEB DESIGN</span>
-          <span className="px-4">• IA APLICADA</span>
-          <span className="px-4">• INTELIGENCIA ARTIFICIAL</span>
-          <span className="px-4">• BRANDING</span>
-          <span className="px-4">• MARKETING DIGITAL</span>
+          {[0, 1].map((loopIndex) => (
+            <div key={loopIndex} className="flex">
+              {tickerItems.map((item, index) => (
+                <span key={`${loopIndex}-${index}`} className="px-4">
+                  {item}
+                </span>
+              ))}
+            </div>
+          ))}
         </div>
       </div>
 
@@ -185,14 +235,15 @@ export default function AboutSection() {
       <style jsx>{`
         @keyframes scroll {
           0% {
-            transform: translateX(0);
+            transform: translate3d(0, 0, 0);
           }
           100% {
-            transform: translateX(-50%);
+            transform: translate3d(-50%, 0, 0);
           }
         }
         .animate-scroll {
-          animation: scroll 30s linear infinite;
+          animation: scroll 45s linear infinite;
+          will-change: transform;
         }
       `}</style>
     </section>

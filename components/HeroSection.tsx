@@ -13,10 +13,30 @@ const Spline = dynamic(() => import("@splinetool/react-spline"), {
 });
 
 export default function HeroSection() {
+  const [isMobile, setIsMobile] = useState(false);
   const [shouldLoadSpline, setShouldLoadSpline] = useState(false);
   const splineContainerRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
+    const checkMobile = () => {
+      if (typeof window === "undefined") return;
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    checkMobile();
+
+    if (typeof window === "undefined") return;
+    window.addEventListener("resize", checkMobile);
+
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
+  useEffect(() => {
+    if (isMobile) {
+      setShouldLoadSpline(false);
+      return;
+    }
+
     if (!splineContainerRef.current || typeof window === "undefined") return;
 
     const observer = new IntersectionObserver(
@@ -31,25 +51,10 @@ export default function HeroSection() {
     observer.observe(splineContainerRef.current);
 
     return () => observer.disconnect();
-  }, []);
+  }, [isMobile]);
 
   return (
     <section className="relative flex min-h-screen items-center pt-20 pb-0 lg:pt-24">
-      {/* Background */}
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-white via-[#f5f3ff] to-white dark:from-jokia-darker dark:via-jokia-dark dark:to-jokia-darker" />
-      
-      {/* Animated Grid */}
-      <div
-        className="pointer-events-none absolute inset-0 opacity-20 dark:opacity-30"
-        style={{
-          backgroundImage:
-            "linear-gradient(rgba(58, 154, 255, 0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(58, 154, 255, 0.04) 1px, transparent 1px)",
-          backgroundSize: "64px 64px",
-          maskImage:
-            "radial-gradient(ellipse 75% 75% at 50% 50%, black 20%, transparent 100%)",
-        }}
-      />
-
       <div className="container relative z-0 mx-auto grid items-center gap-8 px-4 sm:px-6 lg:grid-cols-2 lg:gap-12 lg:px-8">
         <div className="max-w-2xl">
           <div className="mb-4 animate-fade-in">
@@ -64,7 +69,7 @@ export default function HeroSection() {
 
           <h1 className="mb-3 text-4xl font-bold leading-[1.1] animate-fade-in delay-100 sm:text-5xl lg:text-6xl">
             <span className="block text-gray-900 dark:text-white">Sistemas e IA</span>
-            <span className="block animate-gradient bg-gradient-to-r from-[#B517FF] via-[#3A9AFF] to-[#00ff00] bg-[length:200%_auto] bg-clip-text text-transparent">
+            <span className="block animate-gradient bg-gradient-to-r from-[#B517FF] via-[#1929e1] to-[#00ff00] bg-[length:200%_auto] bg-clip-text text-transparent">
               que convierten
             </span>
           </h1>
@@ -138,24 +143,35 @@ export default function HeroSection() {
           </div>
         </div>
         <div className="relative flex items-end justify-center px-3 sm:px-4 lg:justify-end">
-          <div
-            ref={splineContainerRef}
-            className="relative h-[500px] w-full max-w-[540px] sm:h-[560px] sm:max-w-[560px] md:h-[620px] md:max-w-[620px] lg:h-[80vh] lg:max-w-[680px] xl:h-[88vh] xl:max-w-[760px]"
-          >
-            <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-jokia-primary/20 via-jokia-secondary/20 to-transparent blur-3xl" />
+          {isMobile ? (
+            <div className="flex h-[300px] w-full items-center justify-center rounded-2xl bg-gradient-to-br from-jokia-primary/10 to-jokia-secondary/10">
+              <div className="text-center">
+                <div className="mb-4 text-6xl">🤖</div>
+                <p className="text-sm text-white/70">
+                  Robot 3D disponible en desktop
+                </p>
+              </div>
+            </div>
+          ) : (
+            <div
+              ref={splineContainerRef}
+              className="relative h-[500px] w-full sm:h-[560px] md:h-[620px] lg:h-[80vh] xl:h-[88vh]"
+            >
+              <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-jokia-primary/20 via-jokia-secondary/20 to-transparent blur-3xl" />
 
-            {shouldLoadSpline ? (
-              <div className="pointer-events-auto relative h-full w-full translate-y-3 sm:translate-y-4 lg:translate-y-5">
-                <Spline scene="https://prod.spline.design/bOR60Mh9yorxS7qm/scene.splinecode" />
-              </div>
-            ) : (
-              <div className="pointer-events-none relative flex h-full w-full items-center justify-center translate-y-3 rounded-3xl bg-gradient-to-br from-jokia-primary/10 to-jokia-secondary/20 sm:translate-y-4 lg:translate-y-5">
-                <div className="flex h-16 w-16 items-center justify-center rounded-full bg-black/10 shadow-glow">
-                  <div className="h-10 w-10 animate-spin rounded-full border-4 border-jokia-primary/20 border-t-jokia-primary" />
+              {shouldLoadSpline ? (
+                <div className="pointer-events-auto relative h-full w-full translate-y-3 sm:translate-y-4 lg:translate-y-5 scale-90 sm:scale-95 lg:scale-100">
+                  <Spline scene="https://prod.spline.design/bOR60Mh9yorxS7qm/scene.splinecode" />
                 </div>
-              </div>
-            )}
-          </div>
+              ) : (
+                <div className="pointer-events-none relative flex h-full w-full items-center justify-center translate-y-3 rounded-3xl bg-gradient-to-br from-jokia-primary/10 to-jokia-secondary/20 sm:translate-y-4 lg:translate-y-5 scale-90 sm:scale-95 lg:scale-100">
+                  <div className="flex h-16 w-16 items-center justify-center rounded-full bg-black/10 shadow-glow">
+                    <div className="h-10 w-10 animate-spin rounded-full border-4 border-jokia-primary/20 border-t-jokia-primary" />
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
         </div>
       </div>
 

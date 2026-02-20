@@ -145,7 +145,7 @@ export default function Chatbot() {
       {showScrollTop && (
         <button
           onClick={handleScrollTop}
-          className="fixed bottom-6 right-24 z-40 flex h-11 w-11 items-center justify-center rounded-2xl border border-white/30 bg-white/10 text-white shadow-glass backdrop-blur-xl transition-transform duration-200 hover:scale-105 dark:bg-white/5"
+          className="fixed bottom-6 right-24 z-40 flex h-11 w-11 items-center justify-center rounded-2xl border border-gray-300 bg-gray-900 text-white shadow-glass backdrop-blur-xl transition-transform duration-200 hover:scale-105 dark:border-white/30 dark:bg-white/5"
           aria-label="Volver arriba"
         >
           ↑

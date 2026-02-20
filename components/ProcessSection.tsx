@@ -34,7 +34,7 @@ export default function ProcessSection() {
       id="proceso"
     >
       {/* Background */}
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-white via-[#faf9fc] to-white dark:from-jokia-darker dark:via-jokia-dark dark:to-jokia-darker" />
+      <div className="pointer-events-none absolute inset-0 bg-transparent" />
 
       <div className="container relative z-10 mx-auto px-4 sm:px-6 lg:px-8">
         <div className="mb-16 text-center animate-fade-in">
