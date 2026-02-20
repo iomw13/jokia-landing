@@ -1,7 +1,5 @@
 "use client";
 
-import { motion, useScroll } from "framer-motion";
-import { useRef } from "react";
 import Image from "next/image";
 
 const services = [
@@ -53,35 +51,23 @@ const services = [
 ];
 
 const layoutClasses = [
-  "md:col-span-2",
-  "md:col-span-2 md:row-span-2",
-  "md:col-span-1",
-  "md:col-span-1",
-  "md:col-span-4",
+  "md:col-span-2 md:row-span-1 md:col-start-1 md:row-start-1",
+  "md:col-span-2 md:row-span-2 md:col-start-3 md:row-start-1",
+  "md:col-span-2 md:row-span-1 md:col-start-1 md:row-start-2",
+  "md:col-span-2 md:row-span-1 md:col-start-1 md:row-start-3",
+  "md:col-span-2 md:row-span-1 md:col-start-3 md:row-start-3",
 ];
 
 export default function ServicesHorizontalSection() {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start end", "end start"],
-  });
-
   return (
     <section
-      ref={containerRef}
       className="relative -mt-8 overflow-hidden py-24 lg:py-32"
       id="servicios"
     >
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent via-[#f5f3ff] to-white dark:from-transparent dark:via-jokia-darker dark:to-jokia-dark" />
 
       <div className="container relative z-10 mx-auto -mt-8 px-2 sm:px-4 lg:px-6">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="mb-16 text-center"
-        >
+        <div className="mb-16 text-center animate-fade-in">
           <span className="mb-4 inline-block text-xs font-mono uppercase tracking-wider text-jokia-primary">
             // SERVICIOS
           </span>
@@ -97,22 +83,15 @@ export default function ServicesHorizontalSection() {
             Cada servicio diseñado para maximizar el impacto de tu marca en el
             ecosistema digital.
           </p>
-        </motion.div>
+        </div>
 
         <div className="mx-auto max-w-7xl p-4 sm:p-6 lg:p-8">
           <div className="grid auto-rows-[260px] gap-4 md:auto-rows-[320px] md:grid-cols-4 md:gap-6">
             {services.map((service, index) => (
-              <motion.div
+              <div
                 key={service.title}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-100px" }}
-                transition={{
-                  duration: 0.5,
-                  delay: index * 0.1,
-                  ease: [0.22, 1, 0.36, 1],
-                }}
-                className={`group relative h-full ${layoutClasses[index] ?? "md:col-span-2"}`}
+                className={`group relative h-full animate-fade-in ${layoutClasses[index] ?? "md:col-span-2"}`}
+                style={{ animationDelay: `${index * 0.1}s` }}
               >
                 <div className="relative h-full w-full rounded-3xl border border-gray-200 bg-transparent shadow-sm transition-all duration-500 hover:border-gray-300 hover:shadow-2xl dark:border-white/10 dark:hover:border-white/20 [perspective:1600px]">
                   <div className="relative h-full w-full rounded-3xl [transform-style:preserve-3d] transition-transform duration-700 group-hover:[transform:rotateY(180deg)]">
@@ -180,7 +159,7 @@ export default function ServicesHorizontalSection() {
                     </div>
                   </div>
                 </div>
-              </motion.div>
+              </div>
             ))}
           </div>
         </div>

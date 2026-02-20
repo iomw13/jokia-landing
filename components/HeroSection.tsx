@@ -1,9 +1,38 @@
 "use client";
 
-import { motion } from "framer-motion";
-import Spline from "@splinetool/react-spline";
+import { useEffect, useRef, useState } from "react";
+import dynamic from "next/dynamic";
+
+const Spline = dynamic(() => import("@splinetool/react-spline"), {
+  ssr: false,
+  loading: () => (
+    <div className="flex h-full w-full items-center justify-center">
+      <div className="h-12 w-12 animate-spin rounded-full border-4 border-jokia-primary/20 border-t-jokia-primary" />
+    </div>
+  ),
+});
 
 export default function HeroSection() {
+  const [shouldLoadSpline, setShouldLoadSpline] = useState(false);
+  const splineContainerRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    if (!splineContainerRef.current || typeof window === "undefined") return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0]?.isIntersecting) {
+          setShouldLoadSpline(true);
+        }
+      },
+      { rootMargin: "500px" },
+    );
+
+    observer.observe(splineContainerRef.current);
+
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <section className="relative flex min-h-screen items-center pt-20 pb-0 lg:pt-24">
       {/* Background */}
@@ -21,17 +50,9 @@ export default function HeroSection() {
         }}
       />
 
-      {/* Content Container */}
       <div className="container relative z-0 mx-auto grid items-center gap-8 px-4 sm:px-6 lg:grid-cols-2 lg:gap-12 lg:px-8">
-        {/* Left: Text Content */}
         <div className="max-w-2xl">
-          {/* Badge */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            className="mb-4"
-          >
+          <div className="mb-4 animate-fade-in">
             <span className="inline-flex items-center gap-2 rounded-full border border-jokia-primary/20 bg-jokia-primary/10 px-3 py-1 text-xs font-medium uppercase tracking-wider text-jokia-primary backdrop-blur-sm">
               <span className="relative flex h-2 w-2">
                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-jokia-primary opacity-75"></span>
@@ -39,51 +60,25 @@ export default function HeroSection() {
               </span>
               Agencia Digital · Córdoba, Argentina
             </span>
-          </motion.div>
+          </div>
 
-          {/* Main Title */}
-          <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            className="mb-3 text-4xl font-bold leading-[1.1] sm:text-5xl lg:text-6xl"
-          >
-            <span className="block text-gray-900 dark:text-white">
-              Sistemas e IA
-            </span>
+          <h1 className="mb-3 text-4xl font-bold leading-[1.1] animate-fade-in delay-100 sm:text-5xl lg:text-6xl">
+            <span className="block text-gray-900 dark:text-white">Sistemas e IA</span>
             <span className="block animate-gradient bg-gradient-to-r from-[#B517FF] via-[#3A9AFF] to-[#00ff00] bg-[length:200%_auto] bg-clip-text text-transparent">
               que convierten
             </span>
-          </motion.h1>
+          </h1>
 
-          {/* Tagline */}
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.25 }}
-            className="mb-4 font-mono text-sm text-jokia-primary"
-          >
+          <p className="mb-4 font-mono text-sm text-jokia-primary animate-fade-in delay-200">
             $jokia → diseñando futuros digitales
-          </motion.p>
+          </p>
 
-          {/* Subtitle */}
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.3 }}
-            className="mb-6 max-w-xl text-base leading-relaxed text-gray-600 dark:text-white/70"
-          >
+          <p className="mb-6 max-w-xl text-base leading-relaxed text-gray-600 animate-fade-in delay-300 dark:text-white/70">
             Creamos experiencias digitales que no solo se ven extraordinarias —
             generan resultados medibles para marcas que se niegan a ser ordinarias.
-          </motion.p>
+          </p>
 
-          {/* CTA Buttons */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.4 }}
-            className="flex flex-wrap gap-3"
-          >
+          <div className="flex flex-wrap gap-3 animate-fade-in delay-300">
             <a
               href="#contacto"
               className="group relative inline-flex items-center gap-2 overflow-hidden rounded-xl bg-gradient-to-r from-jokia-primary to-jokia-secondary px-6 py-3 text-sm font-semibold text-white shadow-lg transition-all hover:scale-105 hover:shadow-xl"
@@ -123,15 +118,9 @@ export default function HeroSection() {
                 />
               </svg>
             </a>
-          </motion.div>
+          </div>
 
-          {/* Stats */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.5 }}
-            className="mt-10 flex flex-wrap gap-6 border-t border-gray-200 pt-6 dark:border-white/10"
-          >
+          <div className="mt-10 flex flex-wrap gap-6 border-t border-gray-200 pt-6 animate-fade-in delay-300 dark:border-white/10">
             {[
               { value: "10+", label: "proyectos completados" },
               { value: "25K+", label: "impresiones generadas" },
@@ -146,26 +135,28 @@ export default function HeroSection() {
                 </span>
               </div>
             ))}
-          </motion.div>
-        </div>
-
-        {/* Right: Spline 3D Robot */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.7, delay: 0.3 }}
-          className="relative flex items-end justify-center lg:justify-end"
-        >
-          <div className="relative h-[500px] w-full max-w-[560px] sm:h-[560px] md:h-[620px] lg:h-[80vh] lg:max-w-[680px] xl:h-[88vh] xl:max-w-[760px]">
-            {/* Glow effect */}
-            <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-jokia-primary/20 via-jokia-secondary/20 to-transparent blur-3xl" />
-            
-            {/* Spline Container */}
-            <div className="pointer-events-auto relative h-full w-full translate-y-3 sm:translate-y-4 lg:translate-y-5 scale-90 sm:scale-95 lg:scale-100">
-              <Spline scene="https://prod.spline.design/bOR60Mh9yorxS7qm/scene.splinecode" />
-            </div>
           </div>
-        </motion.div>
+        </div>
+        <div className="relative flex items-end justify-center px-3 sm:px-4 lg:justify-end">
+          <div
+            ref={splineContainerRef}
+            className="relative h-[500px] w-full max-w-[540px] sm:h-[560px] sm:max-w-[560px] md:h-[620px] md:max-w-[620px] lg:h-[80vh] lg:max-w-[680px] xl:h-[88vh] xl:max-w-[760px]"
+          >
+            <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-jokia-primary/20 via-jokia-secondary/20 to-transparent blur-3xl" />
+
+            {shouldLoadSpline ? (
+              <div className="pointer-events-auto relative h-full w-full translate-y-3 sm:translate-y-4 lg:translate-y-5">
+                <Spline scene="https://prod.spline.design/bOR60Mh9yorxS7qm/scene.splinecode" />
+              </div>
+            ) : (
+              <div className="pointer-events-none relative flex h-full w-full items-center justify-center translate-y-3 rounded-3xl bg-gradient-to-br from-jokia-primary/10 to-jokia-secondary/20 sm:translate-y-4 lg:translate-y-5">
+                <div className="flex h-16 w-16 items-center justify-center rounded-full bg-black/10 shadow-glow">
+                  <div className="h-10 w-10 animate-spin rounded-full border-4 border-jokia-primary/20 border-t-jokia-primary" />
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
       </div>
 
       {/* Gradient Orb */}

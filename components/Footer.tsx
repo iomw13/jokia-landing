@@ -1,18 +1,11 @@
 "use client";
 
-import { motion } from "framer-motion";
-
 export default function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
     <footer className="relative overflow-hidden border-t border-gray-200 bg-white/60 backdrop-blur-xl dark:border-white/10 dark:bg-gray-900/60">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        className="container mx-auto px-4 py-12 sm:px-6 lg:px-8"
-      >
+      <div className="container mx-auto px-4 py-12 animate-fade-in sm:px-6 lg:px-8">
         <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
           {/* Brand */}
           <div>
@@ -198,7 +191,7 @@ export default function Footer() {
             </a>
           </div>
         </div>
-      </motion.div>
+      </div>
     </footer>
   );
 }

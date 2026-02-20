@@ -1,7 +1,5 @@
 "use client";
 
-import { motion } from "framer-motion";
-
 const steps = [
   {
     number: "01",
@@ -39,13 +37,7 @@ export default function ProcessSection() {
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-white via-[#faf9fc] to-white dark:from-jokia-darker dark:via-jokia-dark dark:to-jokia-darker" />
 
       <div className="container relative z-10 mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="mb-16 text-center"
-        >
+        <div className="mb-16 text-center animate-fade-in">
           <span className="mb-4 inline-block text-xs font-mono uppercase tracking-wider text-jokia-primary">
             // PROCESO
           </span>
@@ -53,22 +45,14 @@ export default function ProcessSection() {
           <h2 className="mb-6 text-4xl font-bold text-gray-900 dark:text-white lg:text-5xl">
             Cómo convertimos ideas en impacto
           </h2>
-        </motion.div>
+        </div>
 
-        {/* Steps Grid */}
         <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
           {steps.map((step, index) => (
-            <motion.div
+            <div
               key={step.number}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{
-                duration: 0.5,
-                delay: index * 0.1,
-                ease: [0.22, 1, 0.36, 1],
-              }}
-              className="relative"
+              className="relative animate-fade-in"
+              style={{ animationDelay: `${index * 0.1}s` }}
             >
               {/* Number circle */}
               <div className="mb-6 flex items-center">
@@ -92,13 +76,11 @@ export default function ProcessSection() {
                 {step.description}
               </p>
 
-              {/* Decorative dot */}
               <div className="mt-4 h-1 w-12 rounded-full bg-gradient-to-r from-jokia-primary to-jokia-secondary opacity-50" />
-            </motion.div>
+            </div>
           ))}
         </div>
       </div>
     </section>
   );
 }
-

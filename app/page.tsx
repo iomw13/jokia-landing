@@ -1,13 +1,41 @@
+"use client";
+
+import dynamic from "next/dynamic";
 import HeroSection from "@/components/HeroSection";
 import Navbar from "@/components/Navbar";
-import AboutSection from "@/components/AboutSection";
-import ServicesHorizontalSection from "@/components/ServicesHorizontalSection";
-import ProcessSection from "@/components/ProcessSection";
-import ResultsSection from "@/components/ResultsSection";
-import BrandsSection from "@/components/BrandsSection";
-import ContactSection from "@/components/ContactSection";
-import Footer from "@/components/Footer";
-import ChatbotClient from "@/components/ChatbotClient";
+
+const AboutSection = dynamic(() => import("@/components/AboutSection"), {
+  ssr: false,
+});
+
+const ServicesHorizontalSection = dynamic(
+  () => import("@/components/ServicesHorizontalSection"),
+  { ssr: false },
+);
+
+const ProcessSection = dynamic(() => import("@/components/ProcessSection"), {
+  ssr: false,
+});
+
+const ResultsSection = dynamic(() => import("@/components/ResultsSection"), {
+  ssr: false,
+});
+
+const BrandsSection = dynamic(() => import("@/components/BrandsSection"), {
+  ssr: false,
+});
+
+const ContactSection = dynamic(() => import("@/components/ContactSection"), {
+  ssr: false,
+});
+
+const Footer = dynamic(() => import("@/components/Footer"), {
+  ssr: false,
+});
+
+const Chatbot = dynamic(() => import("@/components/Chatbot"), {
+  ssr: false,
+});
 
 export default function Home() {
   return (
@@ -21,7 +49,7 @@ export default function Home() {
       <BrandsSection />
       <ContactSection />
       <Footer />
-      <ChatbotClient />
+      <Chatbot />
     </main>
   );
 }

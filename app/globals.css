@@ -26,7 +26,6 @@
 }
 
 @layer utilities {
-  /* Animated Gradient for Text */
   .animate-gradient {
     animation: gradient 8s linear infinite;
     background-size: 200% auto;
@@ -42,7 +41,6 @@
     }
   }
 
-  /* Custom Scrollbar */
   ::-webkit-scrollbar {
     width: 8px;
   }
@@ -55,14 +53,28 @@
     @apply rounded-full bg-jokia-primary/30 hover:bg-jokia-primary/50;
   }
 
-  /* Smooth Scrolling */
   html {
     scroll-behavior: smooth;
   }
 
-  /* Selection Color */
   ::selection {
     @apply bg-jokia-primary/20 text-jokia-primary;
+  }
+
+  .animate-fade-in {
+    animation: fade-in 0.5s ease-out forwards;
+  }
+
+  .delay-100 {
+    animation-delay: 0.1s;
+  }
+
+  .delay-200 {
+    animation-delay: 0.2s;
+  }
+
+  .delay-300 {
+    animation-delay: 0.3s;
   }
 }
 

@@ -1,7 +1,5 @@
 "use client";
 
-import { motion } from "framer-motion";
-
 const codeLines = [
   { num: 1, code: "const jokia = {", indent: 0 },
   { num: 2, code: '  mission: "diseñar futuros",', indent: 1 },
@@ -62,13 +60,7 @@ export default function AboutSection() {
 
       <div className="container relative z-10 mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
-          {/* Left: Text content */}
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-          >
+          <div className="animate-fade-in">
             <span className="mb-4 inline-block text-xs font-mono uppercase tracking-wider text-jokia-primary">
               {/* // SOBRE JOKIA */}
               // SOBRE JOKIA
@@ -86,16 +78,12 @@ export default function AboutSection() {
               ejecutamos sistemas digitales pensados para escalar marcas.
             </p>
 
-            {/* Features */}
             <div className="space-y-6">
               {features.map((feature, index) => (
-                <motion.div
+                <div
                   key={feature.title}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.1 }}
-                  className="flex gap-4"
+                  className="flex gap-4 animate-fade-in"
+                  style={{ animationDelay: `${index * 0.1}s` }}
                 >
                   <div className="flex-shrink-0">
                     <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-jokia-primary/10 text-xl dark:bg-jokia-primary/20">
@@ -110,19 +98,12 @@ export default function AboutSection() {
                       {feature.description}
                     </p>
                   </div>
-                </motion.div>
+                </div>
               ))}
             </div>
-          </motion.div>
+          </div>
 
-          {/* Right: Code visualizer */}
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-          >
-            {/* Glass card with code */}
+          <div className="animate-fade-in">
             <div className="group relative overflow-hidden rounded-2xl border border-gray-200 bg-white/60 p-6 backdrop-blur-xl dark:border-white/10 dark:bg-white/5">
               {/* Window controls */}
               <div className="mb-4 flex items-center gap-2">
@@ -134,17 +115,9 @@ export default function AboutSection() {
                 </span>
               </div>
 
-              {/* Code block */}
               <div className="space-y-1 font-mono text-sm">
                 {codeLines.map((line) => (
-                  <motion.div
-                    key={line.num}
-                    initial={{ opacity: 0, x: -10 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: line.num * 0.05 }}
-                    className="flex gap-4"
-                  >
+                  <div key={line.num} className="flex gap-4 animate-fade-in">
                     <span className="select-none text-gray-400 dark:text-white/30">
                       {line.num}
                     </span>
@@ -167,7 +140,7 @@ export default function AboutSection() {
                         line.code
                       )}
                     </span>
-                  </motion.div>
+                  </div>
                 ))}
               </div>
 
@@ -205,7 +178,7 @@ export default function AboutSection() {
                 </div>
               </div>
             </div>
-          </motion.div>
+          </div>
         </div>
       </div>
 
@@ -225,4 +198,3 @@ export default function AboutSection() {
     </section>
   );
 }
-

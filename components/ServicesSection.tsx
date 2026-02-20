@@ -92,14 +92,7 @@ function ServiceCardPremium({ service, index }: ServiceCardProps) {
   return (
     <motion.div
       ref={ref}
-      initial={{ opacity: 0, y: 50 }}
-      whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-50px" }}
-      transition={{
-        duration: 0.6,
-        delay: index * 0.1,
-        ease: [0.22, 1, 0.36, 1],
-      }}
       style={{
         rotateX,
         rotateY,
@@ -214,13 +207,7 @@ export default function ServicesSectionPremium() {
       <div className="pointer-events-none absolute left-1/2 top-1/2 h-[600px] w-[600px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-jokia-primary/5 blur-[100px]" />
 
       <div className="container relative z-10 mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="mb-16 text-center"
-        >
+        <div className="mb-16 text-center animate-fade-in">
           <span className="mb-4 inline-block font-mono text-xs uppercase tracking-wider text-jokia-primary">
             // SERVICIOS
           </span>
@@ -236,7 +223,7 @@ export default function ServicesSectionPremium() {
             Cada servicio diseñado para maximizar el impacto de tu marca en el
             ecosistema digital.
           </p>
-        </motion.div>
+        </div>
 
         {/* Services Grid */}
         <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">

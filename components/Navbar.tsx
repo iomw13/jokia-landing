@@ -1,6 +1,5 @@
  "use client";
 
-import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
 import { useTheme } from "./ThemeProvider";
 
@@ -27,7 +26,7 @@ export default function Navbar() {
   ];
 
   return (
-    <motion.nav
+    <nav
       className={`fixed left-0 right-0 top-0 z-50 transition-all duration-300 ${
         isScrolled ? "py-2" : "py-4"
       }`}
@@ -162,6 +161,6 @@ export default function Navbar() {
           </motion.div>
         )}
       </div>
-    </motion.nav>
+    </nav>
   );
 }

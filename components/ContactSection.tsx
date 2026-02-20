@@ -1,8 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
 import { useState } from "react";
-
 type SubmitStatus = "idle" | "success" | "error";
 
 export default function ContactSection() {
@@ -58,17 +56,13 @@ export default function ContactSection() {
       className="relative overflow-hidden py-24 lg:py-32"
       id="contacto"
     >
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-white via-[#f5f3ff] to-white dark:from-jokia-darker dark:via-jokia-dark dark:to-jokia-darker" />
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-[#f8e3ff] via-[#f5f3ff] to-[#e0f0ff] dark:from-jokia-darker dark:via-jokia-dark dark:to-jokia-darker" />
 
-      <div className="pointer-events-none absolute right-0 top-0 h-96 w-96 rounded-full bg-jokia-primary/20 blur-[120px]" />
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(181,23,255,0.18),_transparent_55%),_radial-gradient(circle_at_bottom,_rgba(58,154,255,0.2),_transparent_55%)] opacity-80 dark:opacity-60" />
 
       <div className="container relative z-10 mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid gap-12 lg:grid-cols-2 lg:gap-16">
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-          >
+          <div className="animate-fade-in">
             <span className="mb-4 inline-flex items-center gap-2 rounded-full border border-jokia-primary/20 bg-jokia-primary/10 px-4 py-1.5 text-sm font-medium uppercase tracking-wider text-jokia-primary">
               <span className="flex h-2 w-2">
                 <span className="absolute inline-flex h-2 w-2 animate-ping rounded-full bg-jokia-primary opacity-75" />
@@ -141,14 +135,10 @@ export default function ContactSection() {
                 </div>
               </div>
             </div>
-          </motion.div>
+          </div>
 
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-          >
-            <div className="rounded-2xl border border-gray-200 bg-white/60 p-8 backdrop-blur-xl dark:border-white/10 dark:bg-white/5">
+          <div className="animate-fade-in">
+            <div className="rounded-3xl border border-white/30 bg-white/60 p-6 shadow-glass backdrop-blur-2xl dark:border-white/10 dark:bg-white/5 sm:p-8">
               <h3 className="mb-2 text-xl font-bold text-gray-900 dark:text-white">
                 Hablemos de tu proyecto
               </h3>
@@ -156,7 +146,7 @@ export default function ContactSection() {
                 Completá el formulario y te respondemos en menos de 24hs.
               </p>
 
-              <form onSubmit={handleSubmit} className="space-y-4">
+              <form onSubmit={handleSubmit} className="space-y-5">
                 <div className="grid gap-4 sm:grid-cols-2">
                   <div>
                     <label className="mb-2 block text-sm font-medium uppercase tracking-wider text-gray-700 dark:text-white/70">
@@ -169,7 +159,7 @@ export default function ContactSection() {
                       onChange={(e) =>
                         setFormData({ ...formData, nombre: e.target.value })
                       }
-                      className="w-full rounded-xl border border-gray-200 bg-white/50 px-4 py-3 text-gray-900 placeholder-gray-400 transition-all focus:border-jokia-primary focus:outline-none focus:ring-2 focus:ring-jokia-primary/20 dark:border-white/10 dark:bg-white/5 dark:text-white dark:placeholder-white/30"
+                      className="w-full rounded-full border border-gray-200 bg-white/60 px-4 py-3 text-gray-900 placeholder-gray-400 shadow-sm transition-all focus:border-jokia-primary focus:outline-none focus:ring-2 focus:ring-jokia-primary/20 dark:border-white/10 dark:bg-white/10 dark:text-white dark:placeholder-white/30"
                       placeholder="Tu nombre"
                     />
                   </div>
@@ -184,7 +174,7 @@ export default function ContactSection() {
                       onChange={(e) =>
                         setFormData({ ...formData, apellido: e.target.value })
                       }
-                      className="w-full rounded-xl border border-gray-200 bg-white/50 px-4 py-3 text-gray-900 placeholder-gray-400 transition-all focus:border-jokia-primary focus:outline-none focus:ring-2 focus:ring-jokia-primary/20 dark:border-white/10 dark:bg-white/5 dark:text-white dark:placeholder-white/30"
+                      className="w-full rounded-full border border-gray-200 bg-white/60 px-4 py-3 text-gray-900 placeholder-gray-400 shadow-sm transition-all focus:border-jokia-primary focus:outline-none focus:ring-2 focus:ring-jokia-primary/20 dark:border-white/10 dark:bg-white/10 dark:text-white dark:placeholder-white/30"
                       placeholder="Tu apellido"
                     />
                   </div>
@@ -201,7 +191,7 @@ export default function ContactSection() {
                     onChange={(e) =>
                       setFormData({ ...formData, email: e.target.value })
                     }
-                    className="w-full rounded-xl border border-gray-200 bg-white/50 px-4 py-3 text-gray-900 placeholder-gray-400 transition-all focus:border-jokia-primary focus:outline-none focus:ring-2 focus:ring-jokia-primary/20 dark:border-white/10 dark:bg-white/5 dark:text-white dark:placeholder-white/30"
+                    className="w-full rounded-full border border-gray-200 bg-white/60 px-4 py-3 text-gray-900 placeholder-gray-400 shadow-sm transition-all focus:border-jokia-primary focus:outline-none focus:ring-2 focus:ring-jokia-primary/20 dark:border-white/10 dark:bg-white/10 dark:text-white dark:placeholder-white/30"
                     placeholder="tu@email.com"
                   />
                 </div>
@@ -230,7 +220,7 @@ export default function ContactSection() {
                     onChange={(e) =>
                       setFormData({ ...formData, empresa: e.target.value })
                     }
-                    className="w-full rounded-xl border border-gray-200 bg-white/50 px-4 py-3 text-gray-900 transition-all focus:border-jokia-primary focus:outline-none focus:ring-2 focus:ring-jokia-primary/20 dark:border-white/10 dark:bg-white/5 dark:text-white"
+                    className="w-full rounded-full border border-gray-200 bg-white/60 px-4 py-3 text-gray-900 shadow-sm transition-all focus:border-jokia-primary focus:outline-none focus:ring-2 focus:ring-jokia-primary/20 dark:border-white/10 dark:bg-white/10 dark:text-white"
                   >
                     <option value="">Seleccionar...</option>
                     <option>Branding & Identidad</option>
@@ -252,7 +242,7 @@ export default function ContactSection() {
                       setFormData({ ...formData, mensaje: e.target.value })
                     }
                     rows={4}
-                    className="w-full rounded-xl border border-gray-200 bg-white/50 px-4 py-3 text-gray-900 placeholder-gray-400 transition-all focus:border-jokia-primary focus:outline-none focus:ring-2 focus:ring-jokia-primary/20 dark:border-white/10 dark:bg-white/5 dark:text-white dark:placeholder-white/30"
+                    className="w-full rounded-3xl border border-gray-200 bg-white/60 px-4 py-3 text-gray-900 placeholder-gray-400 shadow-sm transition-all focus:border-jokia-primary focus:outline-none focus:ring-2 focus:ring-jokia-primary/20 dark:border-white/10 dark:bg-white/10 dark:text-white dark:placeholder-white/30"
                     placeholder="Contanos sobre tu proyecto, objetivos y timeline..."
                   />
                 </div>
@@ -260,7 +250,7 @@ export default function ContactSection() {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full rounded-xl bg-gradient-to-r from-jokia-primary to-jokia-secondary px-8 py-4 font-semibold text-white shadow-lg transition-all hover:scale-[1.02] hover:shadow-xl disabled:cursor-not-allowed disabled:opacity-50"
+                  className="w-full rounded-full bg-gradient-to-r from-jokia-primary to-jokia-secondary px-8 py-3.5 text-sm font-semibold text-white shadow-glow transition-all hover:translate-y-0.5 hover:shadow-glow-lg disabled:cursor-not-allowed disabled:opacity-60"
                 >
                   {isSubmitting
                     ? "Enviando..."
@@ -276,7 +266,7 @@ export default function ContactSection() {
                 )}
               </form>
             </div>
-          </motion.div>
+          </div>
         </div>
       </div>
     </section>

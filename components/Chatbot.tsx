@@ -188,6 +188,7 @@ export default function Chatbot() {
                   key={index}
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
                   className={`flex ${
                     message.role === "user" ? "justify-end" : "justify-start"
                   }`}
