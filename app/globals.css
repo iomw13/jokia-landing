@@ -1,0 +1,204 @@
+@import 'tailwindcss';
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+    --color-jokia-primary: #c23bff;
+    --color-jokia-secondary: #7850ff;
+    --color-jokia-accent: #00ff00;
+    --color-jokia-dark: #0a0a0f;
+    --color-jokia-darker: #050509;
+}
+
+@layer base {
+    :root {
+        --jokia-primary: 194, 59, 255;
+        --jokia-secondary: 120, 80, 255;
+        --jokia-accent: 0, 255, 0;
+    }
+
+    /*
+     * Fondo global — fixed para que no se corte entre secciones.
+     * Cada sección debe tener background: transparent para que
+     * el fondo del body sea visible a través de toda la página.
+     */
+    body {
+        background-color: #050509;
+
+        /* Degradados fluidos anclados al viewport — no se cortan */
+        background-image:
+            /* Orb principal — arriba izquierda, color primario fuerte */ radial-gradient(
+                ellipse 70% 50% at -5% 5%,
+                rgba(194, 59, 255, 0.22) 0%,
+                transparent 65%
+            ),
+            /* Orb secundario — arriba derecha */
+                radial-gradient(
+                    ellipse 55% 45% at 105% 8%,
+                    rgba(120, 80, 255, 0.18) 0%,
+                    transparent 60%
+                ),
+            /* Orb centro-izquierda — punto medio de la página */
+                radial-gradient(
+                    ellipse 50% 40% at 0% 50%,
+                    rgba(194, 59, 255, 0.1) 0%,
+                    transparent 60%
+                ),
+            /* Orb inferior derecha */
+                radial-gradient(
+                    ellipse 60% 45% at 100% 85%,
+                    rgba(120, 80, 255, 0.14) 0%,
+                    transparent 60%
+                ),
+            /* Orb inferior izquierda */
+                radial-gradient(
+                    ellipse 45% 35% at 5% 95%,
+                    rgba(194, 59, 255, 0.1) 0%,
+                    transparent 55%
+                ),
+            /* Tinte azul-medio en el centro para romper monotonía */
+                radial-gradient(
+                    ellipse 40% 30% at 50% 55%,
+                    rgba(59, 130, 246, 0.06) 0%,
+                    transparent 60%
+                );
+
+        background-repeat: no-repeat;
+        background-size: cover;
+
+        /*
+         * background-attachment: fixed ancla los degradados al viewport.
+         * Resultado: el fondo NO se reinicia en cada sección, 
+         * se ve como una sola capa continua detrás de todo el contenido.
+         */
+        background-attachment: fixed;
+
+        color: white;
+        transition: none;
+    }
+
+    html,
+    body,
+    body * {
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        -webkit-touch-callout: none;
+    }
+
+    input,
+    textarea,
+    [contenteditable='true'] {
+        -webkit-user-select: text;
+        -moz-user-select: text;
+        -ms-user-select: text;
+        user-select: text;
+        -webkit-touch-callout: default;
+    }
+}
+
+@layer utilities {
+    .animate-gradient {
+        animation: gradient 8s linear infinite;
+        background-size: 200% auto;
+    }
+
+    @keyframes gradient {
+        0%,
+        100% {
+            background-position: 0% center;
+        }
+        50% {
+            background-position: 100% center;
+        }
+    }
+
+    ::-webkit-scrollbar {
+        width: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+        background-color: #050509;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        border-radius: 9999px;
+        background-color: rgba(194, 59, 255, 0.3);
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+        background-color: rgba(194, 59, 255, 0.5);
+    }
+
+    html {
+        scroll-behavior: smooth;
+    }
+
+    ::selection {
+        background-color: rgba(194, 59, 255, 0.2);
+        color: #c23bff;
+    }
+
+    .animate-fade-in {
+        animation: fade-in 0.5s ease-out forwards;
+        opacity: 0;
+    }
+
+    @keyframes fade-in {
+        from {
+            opacity: 0;
+            transform: translateY(8px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .delay-100 {
+        animation-delay: 0.1s;
+    }
+    .delay-200 {
+        animation-delay: 0.2s;
+    }
+    .delay-300 {
+        animation-delay: 0.3s;
+    }
+}
+
+/* ─────────────────────────────────────────────────────────
+   Glass morphism helpers
+───────────────────────────────────────────────────────── */
+.glass {
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+}
+
+.glass-light {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.glass-dark {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* ─────────────────────────────────────────────────────────
+   .page-gradient-dark — se mantiene por compatibilidad,
+   pero ya no es necesaria si usás background-attachment: fixed.
+   Si alguna sección la usa, sobreescribe con transparent.
+───────────────────────────────────────────────────────── */
+.page-gradient-dark {
+    background: transparent;
+}
+
+/* ─────────────────────────────────────────────────────────
+   IMPORTANTE: cualquier sección con fondo sólido romperá
+   la continuidad del degradado global. Asegurate de que
+   todas las secciones tengan:
+     background: transparent  (o ningún background)
+   
+   Si una sección necesita su propio overlay (ej: glassmorphism),
+   usá background con rgba y sin background-color sólido.
+───────────────────────────────────────────────────────── */
