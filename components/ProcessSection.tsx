@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useRef } from "react";
+import { motion, useInView } from "framer-motion";
 
 const steps = [
   {
@@ -42,358 +42,287 @@ const steps = [
   },
 ];
 
-export default function ProcessSection() {
-
-  const [current, setCurrent] = useState(0);
-
-  const handleNext = () => {
-    setCurrent(prev => (prev + 1) % steps.length);
-  };
-
-  const step = steps[current];
-  const progress = ((current + 1) / steps.length) * 100;
-
-  const transition = {
-    duration: 0.6,
-    ease: [0.22, 1, 0.36, 1] as const
-  }
+function StepRow({ step, index }: { step: typeof steps[0]; index: number }) {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-80px" });
+  const isEven = index % 2 === 0;
 
   return (
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 40 }}
+      animate={isInView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1], delay: index * 0.1 }}
+      className={`ps-row ${isEven ? "ps-row--normal" : "ps-row--reverse"}`}
+    >
+      {/* Image */}
+      <div className="ps-img-wrap">
+        <img
+          src={step.image}
+          alt={step.title}
+          className="ps-img"
+          loading="lazy"
+          decoding="async"
+        />
+      </div>
 
+      {/* Content */}
+      <div className="ps-content">
+        <div className="ps-top">
+          <span className="ps-number">{step.number}</span>
+          <span className="ps-tag">{step.tag}</span>
+        </div>
+        <h3 className="ps-step-title">{step.title}</h3>
+        <p className="ps-desc">{step.description}</p>
+        <div className="ps-badges">
+          {step.detail.split(" · ").map((d) => (
+            <span key={d} className="ps-badge">{d}</span>
+          ))}
+        </div>
+      </div>
+
+      {/* Connector line (not on last) */}
+      {index < steps.length - 1 && (
+        <div className="ps-connector" aria-hidden="true" />
+      )}
+    </motion.div>
+  );
+}
+
+export default function ProcessSection() {
+  return (
     <section id="proceso" className="py-28">
-
       <style>{`
-
-      .ps-container{
-        max-width:1200px;
-        margin:auto;
-        padding:0 24px;
-      }
-
-      /* HEADER */
-
-      .ps-header{
-        text-align:center;
-        margin-bottom:80px;
-      }
-
-      .ps-mono{
-        font-size:12px;
-        letter-spacing:.2em;
-        margin-bottom:16px;
-        display:block;
-        color:#111827;
-        opacity:.8;
-      }
-      .dark .ps-mono{ color:rgba(255,255,255,0.7); opacity:.65; }
-
-      .ps-title-main{
-        font-size:clamp(2.2rem,4vw,3rem);
-        font-weight:800;
-      }
-
-      .ps-title-main .black-light{ color:#111827; }
-      .dark .ps-title-main .black-light{ color:#ffffff; }
-
-      .ps-title-main .gradient{
-        background:linear-gradient(90deg,#7c3aed,#a764ff);
-        -webkit-background-clip:text;
-        -webkit-text-fill-color:transparent;
-      }
-
-      /* LAYOUT */
-
-      .ps-layout{
-        display:grid;
-        justify-content:center;
-        align-items:center;
-        gap:40px;
-      }
-
-      @media(min-width:1024px){
-
-        .ps-layout{
-          grid-template-columns:480px 480px;
-          gap:60px; /* espacio correcto entre card e imagen */
+        .ps-container {
+          max-width: 1100px;
+          margin: auto;
+          padding: 0 24px;
         }
 
-      }
+        /* HEADER */
+        .ps-header {
+          text-align: center;
+          margin-bottom: 72px;
+        }
+        .ps-mono {
+          font-size: 12px;
+          letter-spacing: .2em;
+          margin-bottom: 16px;
+          display: block;
+          color: #111827;
+          opacity: .8;
+        }
+        .dark .ps-mono { color: rgba(255,255,255,0.65); }
+        .ps-title-main {
+          font-size: clamp(2.2rem, 4vw, 3rem);
+          font-weight: 800;
+        }
+        .ps-title-main .black-light { color: #111827; }
+        .dark .ps-title-main .black-light { color: #ffffff; }
+        .ps-title-main .gradient {
+          background: linear-gradient(90deg, #7c3aed, #a764ff);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+        }
 
-      /* CARD */
+        /* ROWS */
+        .ps-steps {
+          display: flex;
+          flex-direction: column;
+          gap: 0;
+          position: relative;
+        }
 
-      .ps-deck{
-        width:480px;
-        height:500px;
-        position:relative;
-      }
+        /* Vertical line connecting all steps */
+        .ps-steps::before {
+          content: "";
+          position: absolute;
+          left: 50%;
+          top: 0;
+          bottom: 0;
+          width: 1px;
+          background: linear-gradient(180deg,
+            transparent,
+            rgba(124,58,237,0.25) 10%,
+            rgba(124,58,237,0.25) 90%,
+            transparent
+          );
+          transform: translateX(-50%);
+          pointer-events: none;
+        }
 
-      .ps-card{
-        position:absolute;
-        inset:0;
-        border-radius:28px;
-        background:#ffffff;
-        color:#111827;
-        border:1px solid rgba(30,58,138,0.15);
-        box-shadow:0 20px 60px rgba(99,102,241,0.18);
-        backdrop-filter: blur(4px);
-        transition: box-shadow .25s, transform .25s, border-color .25s;
-      }
-      .ps-card::before{
-        content:"";
-        position:absolute;
-        inset:-10%;
-        border-radius:32px;
-        background:radial-gradient(120% 120% at 0% 0%, rgba(99,165,255,0.28), transparent 60%);
-        filter: blur(18px);
-        z-index:0;
-        pointer-events:none;
-      }
-      .ps-card:hover{
-        box-shadow:0 30px 80px rgba(96,165,250,0.35), 0 12px 30px rgba(139,92,246,0.25);
-        border-color: rgba(124,58,237,0.35);
-        transform: translateY(-3px);
-      }
-      .dark .ps-card{
-        background:#1b1528;
-        color:#ffffff;
-        border:1px solid rgba(124,58,237,0.5);
-        box-shadow:0 20px 60px rgba(124,58,237,0.35);
-      }
+        .ps-row {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 60px;
+          align-items: center;
+          padding: 56px 0;
+          position: relative;
+        }
 
-      .ps-inner{
-        padding:40px;
-        height:100%;
-        display:flex;
-        flex-direction:column;
-        position:relative;
-        z-index:1;
-      }
+        .ps-row--reverse {
+          direction: rtl;
+        }
+        .ps-row--reverse > * {
+          direction: ltr;
+        }
 
-      .ps-card-title{
-        font-size:42px;
-        font-weight:800;
-        margin-bottom:16px;
-        color:#7c3aed;
-      }
-      .dark .ps-card-title{ color:#ffffff; }
+        /* Dot on the center line */
+        .ps-row::after {
+          content: "";
+          position: absolute;
+          left: 50%;
+          top: 50%;
+          transform: translate(-50%, -50%);
+          width: 10px;
+          height: 10px;
+          border-radius: 50%;
+          background: linear-gradient(135deg, #7c3aed, #3B82F6);
+          box-shadow: 0 0 0 4px rgba(124,58,237,0.12);
+          z-index: 1;
+        }
 
-      .ps-touch{
-        padding:10px 18px;
-        font-size:13px;
-        border-radius:10px;
-        margin-top:16px;
-        margin-bottom:16px;
-        width:fit-content;
-        background:linear-gradient(135deg, rgba(59,130,246,0.18), rgba(99,102,241,0.12));
-        border:2px solid #3B82F6;
-        cursor:pointer;
-        color:#2563EB;
-        box-shadow:0 0 12px rgba(59,130,246,0.35);
-        transition:transform .2s ease, box-shadow .2s ease, border-color .2s ease, color .2s ease;
-      }
-      .dark .ps-touch{
-        background:linear-gradient(135deg, rgba(59,130,246,0.22), rgba(99,102,241,0.18));
-        border:2px solid #60A5FA;
-        color:#ffffff;
-        box-shadow:0 0 12px rgba(59,130,246,0.45);
-      }
-      .ps-touch:hover{
-        transform:translateY(-2px);
-        box-shadow:0 0 18px rgba(59,130,246,0.55), 0 0 12px rgba(99,102,241,0.45);
-        border-color:#1D4ED8;
-        color:#1D4ED8;
-      }
+        /* Divider between steps */
+        .ps-row + .ps-row {
+          border-top: 1px solid rgba(124,58,237,0.08);
+        }
+        .dark .ps-row + .ps-row {
+          border-top: 1px solid rgba(124,58,237,0.15);
+        }
 
-      .ps-progress{
-        height:6px;
-        border-radius:999px;
-        background:rgba(99,102,241,.18);
-        overflow:hidden;
-      }
+        /* IMAGE */
+        .ps-img-wrap {
+          border-radius: 20px;
+          overflow: hidden;
+          aspect-ratio: 4/3;
+          box-shadow: 0 12px 40px rgba(0,0,0,0.08);
+        }
+        .dark .ps-img-wrap {
+          box-shadow: 0 12px 40px rgba(0,0,0,0.3);
+        }
+        .ps-img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          border-radius: 20px;
+          transition: transform 0.4s ease;
+        }
+        .ps-img-wrap:hover .ps-img {
+          transform: scale(1.03);
+        }
 
-      .ps-progress-fill{
-        height:100%;
-        background:linear-gradient(90deg,#3B82F6,#8B5CF6);
-        box-shadow:0 0 14px rgba(139,92,246,0.35), 0 0 10px rgba(59,130,246,0.30) inset;
-        will-change: width;
-        border-radius:999px;
-      }
+        /* CONTENT */
+        .ps-content {
+          display: flex;
+          flex-direction: column;
+          gap: 14px;
+        }
 
-      /* IMAGE */
+        .ps-top {
+          display: flex;
+          align-items: center;
+          gap: 12px;
+        }
 
-      .ps-image-wrap{
-        width:480px;
-        height:500px;
-        position:relative;
-        border-radius:28px;
-        overflow:hidden;
-        box-shadow:none;
-      }
+        .ps-number {
+          font-size: 13px;
+          font-weight: 800;
+          letter-spacing: .18em;
+          color: #7c3aed;
+        }
 
-      .ps-image{
-        width:100%;
-        height:100%;
-        object-fit:cover;
-        border-radius:28px;
-        box-shadow:none;
-      }
+        .ps-tag {
+          display: inline-block;
+          padding: 4px 10px;
+          font-size: 11px;
+          font-weight: 700;
+          letter-spacing: .08em;
+          border-radius: 10px;
+          color: #7c3aed;
+          background: rgba(139,92,246,0.08);
+          border: 1px solid #A78BFA;
+        }
+        .dark .ps-tag {
+          color: #c4b5fd;
+          background: rgba(139,92,246,0.16);
+          border-color: rgba(167,139,250,0.5);
+        }
 
-      /* TAGS */
-      .ps-tag{
-        display:inline-block;
-        margin-top:6px;
-        margin-bottom:10px;
-        padding:6px 12px;
-        font-size:12px;
-        font-weight:700;
-        letter-spacing:.08em;
-        border-radius:14px;
-        color:#7c3aed;
-        background:rgba(139,92,246,0.08);
-        border:1px solid #A78BFA;
-        box-shadow:0 0 6px rgba(139,92,246,0.22);
-        width:fit-content;
-      }
-      .dark .ps-tag{ color:#ffffff; background:rgba(139,92,246,0.16); border-color:#A78BFA; box-shadow:0 0 8px rgba(139,92,246,0.28); }
-      .ps-badges{ display:flex; flex-wrap:wrap; gap:8px; margin-top:12px; }
-      .ps-badge{
-        display:inline-flex; align-items:center;
-        padding:6px 12px;
-        border-radius:14px;
-        font-size:12px; font-weight:700;
-        color:#7c3aed;
-        background:rgba(139,92,246,0.08);
-        border:1px solid #A78BFA;
-        box-shadow:0 0 6px rgba(139,92,246,0.22);
-      }
-      .dark .ps-badge{ color:#ffffff; background:rgba(139,92,246,0.16); border-color:#A78BFA; box-shadow:0 0 8px rgba(139,92,246,0.28); }
+        .ps-step-title {
+          font-size: clamp(1.8rem, 3vw, 2.4rem);
+          font-weight: 800;
+          color: #111827;
+          line-height: 1.1;
+          margin: 0;
+        }
+        .dark .ps-step-title { color: #ffffff; }
 
-      .ps-number{
-        font-size:14px;
-        font-weight:800;
-        letter-spacing:.18em;
-        color:#7c3aed;
-      }
+        .ps-desc {
+          font-size: 16px;
+          line-height: 1.65;
+          color: #4B5563;
+          margin: 0;
+        }
+        .dark .ps-desc { color: rgba(255,255,255,0.65); }
 
+        .ps-badges {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 8px;
+          margin-top: 4px;
+        }
+
+        .ps-badge {
+          display: inline-flex;
+          align-items: center;
+          padding: 5px 12px;
+          border-radius: 12px;
+          font-size: 12px;
+          font-weight: 600;
+          color: #6D28D9;
+          background: rgba(139,92,246,0.07);
+          border: 1px solid rgba(167,139,250,0.4);
+        }
+        .dark .ps-badge {
+          color: #c4b5fd;
+          background: rgba(139,92,246,0.14);
+          border-color: rgba(167,139,250,0.35);
+        }
+
+        /* MOBILE */
+        @media (max-width: 768px) {
+          .ps-steps::before { display: none; }
+          .ps-row {
+            grid-template-columns: 1fr;
+            gap: 24px;
+            padding: 40px 0;
+          }
+          .ps-row::after { display: none; }
+          .ps-row--reverse { direction: ltr; }
+          .ps-img-wrap { aspect-ratio: 16/9; }
+          .ps-row + .ps-row {
+            border-top: 1px solid rgba(124,58,237,0.1);
+          }
+        }
       `}</style>
 
       <div className="ps-container">
-
-        {/* HEADER */}
-
+        {/* Header */}
         <div className="ps-header">
-
-          <span className="ps-mono">
-            // proceso
-          </span>
-
+          <span className="ps-mono">// proceso</span>
           <h2 className="ps-title-main">
-            <span className="black-light">
-              De la idea al
-            </span>{" "}
-            <span className="gradient">
-              resultado real
-            </span>
+            <span className="black-light">De la idea al</span>{" "}
+            <span className="gradient">resultado real</span>
           </h2>
-
         </div>
 
-
-        {/* CONTENT */}
-
-        <div className="ps-layout">
-
-
-          {/* CARD */}
-
-          <div className="ps-deck">
-
-            <AnimatePresence mode="wait" initial={false}>
-
-              <motion.div
-                key={current}
-                className="ps-card"
-                initial={{ x: 80, opacity: 0 }}
-                animate={{ x: 0, opacity: 1 }}
-                exit={{ x: -80, opacity: 0 }}
-                transition={transition}
-              >
-
-                <div className="ps-inner">
-
-                  <div className="ps-number">{step.number}</div>
-
-                  <div className="ps-tag">{step.tag}</div>
-
-                  <div className="ps-card-title">
-                    {step.title}
-                  </div>
-
-                  <div style={{flex:1}}>
-                    {step.description}
-                  </div>
-
-                  <div className="ps-badges">
-                    {step.detail.split(" · ").map((d) => (
-                      <span key={d} className="ps-badge">{d}</span>
-                    ))}
-                  </div>
-
-                  <button
-                    className="ps-touch"
-                    onClick={handleNext}
-                  >
-                    click aquí →
-                  </button>
-
-                  <div className="ps-progress">
-
-                    <motion.div
-                      className="ps-progress-fill"
-                      animate={{ width: `${progress}%` }}
-                      transition={{ duration: .4 }}
-                    />
-
-                  </div>
-
-                </div>
-
-              </motion.div>
-
-            </AnimatePresence>
-
-          </div>
-
-
-          {/* IMAGE */}
-
-          <div className="ps-image-wrap">
-
-            <AnimatePresence mode="wait" initial={false}>
-
-              <motion.img
-                key={current}
-                src={step.image}
-                className="ps-image"
-                initial={{ x: -80, opacity: 0 }}
-                animate={{ x: 0, opacity: 1 }}
-                exit={{ x: 80, opacity: 0 }}
-                transition={transition}
-                loading="eager"
-                decoding="async"
-              />
-
-            </AnimatePresence>
-
-          </div>
-
-
+        {/* Steps */}
+        <div className="ps-steps">
+          {steps.map((step, i) => (
+            <StepRow key={step.number} step={step} index={i} />
+          ))}
         </div>
-
       </div>
-
     </section>
-
   );
-
 }
