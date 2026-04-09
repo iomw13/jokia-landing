@@ -176,8 +176,7 @@ export default function StatsSection() {
       <div className="mx-auto w-full max-w-6xl px-6" ref={containerRef}>
         <div className="text-center">
           <p
-            className="mx-auto max-w-5xl text-[clamp(1.6rem,3.2vw,2.6rem)] font-medium leading-[1.18] tracking-[-0.02em] text-[#070707]/85 dark:text-white/85"
-            style={{ fontFamily: "'DM Sans', ui-sans-serif, system-ui, -apple-system, sans-serif" }}
+            className="font-dm mx-auto max-w-5xl text-[clamp(1.6rem,3.2vw,2.6rem)] font-medium leading-[1.18] tracking-[-0.02em] text-[#070707]/85 dark:text-white/85"
           >
             <span className="font-semibold text-[#070707] dark:text-white">Páginas web</span> que convierten y{" "}
             <span className="font-semibold text-[#070707] dark:text-white">automatizaciones</span> que liberan tu tiempo.{" "}
@@ -219,8 +218,7 @@ export default function StatsSection() {
                   {icon}
                 </div>
                 <div
-                  className="text-left"
-                  style={{ fontFamily: "'DM Sans', ui-sans-serif, system-ui, -apple-system, sans-serif" }}
+                  className="font-dm text-left"
                 >
                   <div className="text-[clamp(1.15rem,1.6vw,1.5rem)] font-semibold leading-[1.15] tracking-[-0.02em] text-[#070707] transition-colors duration-300 group-hover:text-[#ff5fb4] dark:text-white dark:group-hover:text-[#ff5fb4]">
                     {label}

@@ -37,8 +37,8 @@ export default function HeroSection() {
           <div className="relative z-10 flex h-full items-center">
             <div className="w-full max-w-[680px] px-8 md:px-12">
               <h1
-                className="hero-fade hero-delay-1 font-semibold leading-[0.98] tracking-[-0.04em] text-white"
-                style={{ fontFamily: "'DM Sans', ui-sans-serif, system-ui, -apple-system, sans-serif" }}
+                className="hero-fade hero-delay-1 font-dm font-semibold leading-[0.98] tracking-[-0.04em] text-white"
+                suppressHydrationWarning
               >
                 <span className="block text-[clamp(2.1rem,3.2vw,3.2rem)] text-white/90">
                   Recuperá tu tiempo.

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { DM_Sans, Inter } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
@@ -9,6 +9,13 @@ const inter = Inter({
   display: "swap",
   preload: true,
   variable: "--font-inter",
+});
+
+const dmSans = DM_Sans({
+  subsets: ["latin"],
+  display: "swap",
+  preload: true,
+  variable: "--font-dm-sans",
 });
 
 export const metadata: Metadata = {
@@ -41,7 +48,7 @@ export default function RootLayout({
   return (
     <html
       lang="es"
-      className={`${inter.variable}`}
+      className={`${inter.variable} ${dmSans.variable}`}
       suppressHydrationWarning
     >
       <head>
@@ -61,12 +68,6 @@ export default function RootLayout({
               gtag('config', 'G-WQ90V15W50');
             `,
           }}
-        />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link
-          rel="preconnect"
-          href="https://fonts.gstatic.com"
-          crossOrigin="anonymous"
         />
         <link rel="dns-prefetch" href="https://prod.spline.design" />
       </head>

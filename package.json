@@ -8,6 +8,9 @@
     "start": "next start",
     "lint": "eslint"
   },
+  "browserslist": [
+    "defaults and supports es6-module"
+  ],
   "dependencies": {
     "framer-motion": "^12.34.3",
     "next": "16.1.6",
