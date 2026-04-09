@@ -1,4 +1,6 @@
-const nextConfig = {
+import type { NextConfig } from "next";
+
+const nextConfig: NextConfig = {
   compress: true,
   productionBrowserSourceMaps: false,
   images: {
@@ -43,17 +45,23 @@ const nextConfig = {
     ];
   },
   webpack: (
-    config: any,
+    config,
     { dev, isServer }: { dev: boolean; isServer: boolean },
   ) => {
     if (!dev && !isServer) {
-      config.optimization = config.optimization || {};
-      config.optimization.usedExports = true;
-      config.optimization.splitChunks = {
-        ...(config.optimization.splitChunks || {}),
+      const cfg = config as unknown as {
+        optimization?: {
+          usedExports?: boolean;
+          splitChunks?: Record<string, unknown> & { cacheGroups?: Record<string, unknown> };
+        };
+      };
+      cfg.optimization = cfg.optimization || {};
+      cfg.optimization.usedExports = true;
+      cfg.optimization.splitChunks = {
+        ...(cfg.optimization.splitChunks || {}),
         chunks: "all",
         cacheGroups: {
-          ...(config.optimization.splitChunks?.cacheGroups || {}),
+          ...(cfg.optimization.splitChunks?.cacheGroups || {}),
           default: false,
           vendors: false,
           vendor: {

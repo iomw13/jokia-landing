@@ -13,11 +13,11 @@ const config: Config = {
         extend: {
             colors: {
                 jokia: {
-                    primary: '#C23BFF', // violeta neon (consistente con los componentes)
-                    secondary: '#7850FF',
+                    primary: '#7b5cff',
+                    secondary: '#1929e1',
                     accent: '#00ff00',
                     dark: '#0A0A0F',
-                    darker: '#050509',
+                    darker: '#070707',
                 },
             },
             backdropBlur: {

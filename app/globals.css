@@ -1,18 +1,19 @@
+@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@700;800&family=DM+Sans:wght@400;500;600&display=swap');
 @import 'tailwindcss';
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
-    --color-jokia-primary: #c23bff;
-    --color-jokia-secondary: #7850ff;
+    --color-jokia-primary: #7b5cff;
+    --color-jokia-secondary: #1929e1;
     --color-jokia-accent: #00ff00;
     --color-jokia-dark: #0a0a0f;
-    --color-jokia-darker: #050509;
+    --color-jokia-darker: #070707;
 }
 
 @layer base {
     :root {
-        --jokia-primary: 194, 59, 255;
-        --jokia-secondary: 120, 80, 255;
+        --jokia-primary: 123, 92, 255;
+        --jokia-secondary: 25, 41, 225;
         --jokia-accent: 0, 255, 0;
     }
 
@@ -22,58 +23,17 @@
      * el fondo del body sea visible a través de toda la página.
      */
     body {
-        background-color: #050509;
-
-        /* Degradados fluidos anclados al viewport — no se cortan */
-        background-image:
-            /* Orb principal — arriba izquierda, color primario fuerte */ radial-gradient(
-                ellipse 70% 50% at -5% 5%,
-                rgba(194, 59, 255, 0.22) 0%,
-                transparent 65%
-            ),
-            /* Orb secundario — arriba derecha */
-                radial-gradient(
-                    ellipse 55% 45% at 105% 8%,
-                    rgba(120, 80, 255, 0.18) 0%,
-                    transparent 60%
-                ),
-            /* Orb centro-izquierda — punto medio de la página */
-                radial-gradient(
-                    ellipse 50% 40% at 0% 50%,
-                    rgba(194, 59, 255, 0.1) 0%,
-                    transparent 60%
-                ),
-            /* Orb inferior derecha */
-                radial-gradient(
-                    ellipse 60% 45% at 100% 85%,
-                    rgba(120, 80, 255, 0.14) 0%,
-                    transparent 60%
-                ),
-            /* Orb inferior izquierda */
-                radial-gradient(
-                    ellipse 45% 35% at 5% 95%,
-                    rgba(194, 59, 255, 0.1) 0%,
-                    transparent 55%
-                ),
-            /* Tinte azul-medio en el centro para romper monotonía */
-                radial-gradient(
-                    ellipse 40% 30% at 50% 55%,
-                    rgba(59, 130, 246, 0.06) 0%,
-                    transparent 60%
-                );
-
+        background-color: #f2f4f8;
         background-repeat: no-repeat;
         background-size: cover;
-
-        /*
-         * background-attachment: fixed ancla los degradados al viewport.
-         * Resultado: el fondo NO se reinicia en cada sección, 
-         * se ve como una sola capa continua detrás de todo el contenido.
-         */
         background-attachment: fixed;
-
-        color: white;
+        color: #070707;
         transition: none;
+    }
+
+    html.dark body {
+        background-color: #070707;
+        color: white;
     }
 
     html,
@@ -118,16 +78,19 @@
     }
 
     ::-webkit-scrollbar-track {
+        background-color: rgba(15, 23, 42, 0.06);
+    }
+    html.dark ::-webkit-scrollbar-track {
         background-color: #050509;
     }
 
     ::-webkit-scrollbar-thumb {
         border-radius: 9999px;
-        background-color: rgba(194, 59, 255, 0.3);
+        background-color: rgba(123, 92, 255, 0.35);
     }
 
     ::-webkit-scrollbar-thumb:hover {
-        background-color: rgba(194, 59, 255, 0.5);
+        background-color: rgba(123, 92, 255, 0.55);
     }
 
     html {
@@ -135,8 +98,8 @@
     }
 
     ::selection {
-        background-color: rgba(194, 59, 255, 0.2);
-        color: #c23bff;
+        background-color: rgba(123, 92, 255, 0.2);
+        color: #7b5cff;
     }
 
     .animate-fade-in {

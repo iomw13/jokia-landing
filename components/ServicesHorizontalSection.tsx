@@ -6,44 +6,20 @@ import { useScrollReveal } from "@/hooks/useScrollReveal";
 
 const services = [
   {
-    title: "Estrategias que crecen solas",
-    subtitle: "MARKETING INTELIGENTE & AUTOMATIZACIÓN",
+    title: "Automatizaciones para negocios",
+    subtitle: "AUTOMATIZACIÓN · n8n · NOTION · IA",
     description:
-      "Diseñamos sistemas de marketing basados en datos, automatización e IA para atraer, calificar y convertir clientes de forma eficiente.",
-    tags: ["Campañas", "Funnels", "IA", "Automatización", "Reporting"],
+      "Integramos tus herramientas y automatizamos tareas repetitivas para que tu equipo gane tiempo y tu operación sea más eficiente.",
+    tags: ["Integraciones", "Workflows", "IA", "n8n", "Notion"],
     image: "/servicios/marketing.avif",
   },
   {
-    title: "Páginas pensadas para convertir",
-    subtitle: "WEB & CONVERSIÓN",
+    title: "Desarrollo de páginas web",
+    subtitle: "WEB · PERFORMANCE · CONVERSIÓN",
     description:
-      "Creamos sitios y landing pages rápidas, claras y enfocadas en una sola acción: generar resultados reales.",
-    tags: ["Landing pages", "UX/UI", "Copywriting", "Optimización"],
+      "Creamos sitios rápidos, modernos y minimalistas, diseñados para que el usuario entienda tu propuesta en segundos y tome acción.",
+    tags: ["Landing", "UX/UI", "Copy", "Performance"],
     image: "/servicios/landing.avif",
-  },
-  {
-    title: "Control total de tu negocio",
-    subtitle: "POS & SISTEMAS DE GESTIÓN",
-    description:
-      "Implementamos sistemas de punto de venta y gestión para ordenar ventas, stock y reportes en tiempo real.",
-    tags: ["POS", "Stock", "Ventas", "Integraciones"],
-    image: "/servicios/pos.avif",
-  },
-  {
-    title: "Marcas memorables",
-    subtitle: "IDENTIDAD DE MARCA",
-    description:
-      "Construimos identidades sólidas y coherentes que se reconocen en todos los puntos de contacto.",
-    tags: ["Branding", "Logo", "Sistema visual", "Manual de marca"],
-    image: "/servicios/branding.avif",
-  },
-  {
-    title: "Experiencias modernas en la mesa",
-    subtitle: "MENÚS DIGITALES",
-    description:
-      "Diseñamos menús digitales claros, rápidos y adaptados a mobile para mejorar la experiencia del cliente.",
-    tags: ["QR", "Multi-sucursal", "Edición simple"],
-    image: "/servicios/menu.avif",
   },
 ];
 
@@ -165,17 +141,16 @@ export default function ServicesHorizontalSection() {
             className="mb-16 text-center"
           >
             <span className="mb-4 inline-block text-xs font-mono uppercase tracking-wider text-jokia-primary">
-              // SERVICIOS
+              {"// SERVICIOS"}
             </span>
             <h2 className="mb-6 text-4xl font-bold text-gray-900 dark:text-white lg:text-5xl">
-              Lo que hacemos{" "}
+              Soluciones{" "}
               <span className="bg-gradient-to-r from-jokia-primary via-jokia-secondary to-jokia-primary bg-clip-text text-transparent">
-                extraordinariamente bien
+                para crecer
               </span>
             </h2>
             <p className="mx-auto max-w-2xl text-lg text-gray-600 dark:text-white/70">
-              Cada servicio diseñado para maximizar el impacto de tu marca en el
-              ecosistema digital.
+              Dos focos, sin ruido: automatización operativa y páginas web orientadas a conversión.
             </p>
           </motion.div>
 

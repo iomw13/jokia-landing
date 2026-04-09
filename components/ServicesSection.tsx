@@ -308,7 +308,7 @@ export default function ServicesSectionPremium() {
       <div className="container relative z-10 mx-auto px-4 sm:px-6 lg:px-8">
         <div className="mb-16 text-center animate-fade-in">
           <span className="mb-4 inline-block font-mono text-xs uppercase tracking-wider text-jokia-primary">
-            // SERVICIOS
+            {"// SERVICIOS"}
           </span>
 
           <h2 className="mb-6 text-4xl font-bold text-gray-900 dark:text-white lg:text-5xl">
