@@ -13,7 +13,7 @@ export default function StatsSection() {
   const hasAnimatedRef = useRef(false);
 
   const targets = useMemo<Record<StatKey, number>>(
-    () => ({ projects: 34, clients: 27, satisfaction: 99, automations: 120 }),
+    () => ({ projects: 34, clients: 27, satisfaction: 99, automations: 20 }),
     [],
   );
 
