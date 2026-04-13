@@ -25,6 +25,9 @@ export const metadata: Metadata = {
   keywords:
     "agencia digital córdoba, branding argentina, marketing digital, automatización IA, landing pages, jokia",
   authors: [{ name: "JOKIA" }],
+  verification: {
+    google: "googlea7e65877761c7c38.html",
+  },
   openGraph: {
     title: "JOKIA | Agencia Digital Premium",
     description: "Diseñamos futuros digitales con IA y automatización",

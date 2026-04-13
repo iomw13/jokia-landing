@@ -56,7 +56,7 @@ export default function Footer() {
               </a>
 
               <a
-                href="https://www.tiktok.com/@jokia.ia"
+                href="https://www.tiktok.com/@jokia.agency"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="TikTok"

@@ -35,7 +35,7 @@ const SOCIALS = [
   { label: "WhatsApp", href: "https://wa.me/5493547656447", icon: <IconWhatsApp /> },
   { label: "Instagram", href: "https://www.instagram.com/jokia.ia/", icon: <IconInstagram /> },
   { label: "Facebook", href: "https://www.facebook.com/profile.php?id=61587477543232", icon: <IconFacebook /> },
-  { label: "TikTok", href: "https://www.tiktok.com/@jokia.ia", icon: <IconTikTok /> },
+  { label: "TikTok", href: "https://www.tiktok.com/@jokia.agency", icon: <IconTikTok /> },
 ];
 
 export default function ContactSection() {

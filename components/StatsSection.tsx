@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState, type CSSProperties } from "react";
 
 type StatKey = "projects" | "clients" | "satisfaction" | "automations";
 
@@ -167,7 +167,7 @@ export default function StatsSection() {
           <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83" />
         </svg>
       ),
-      accent: "#1929e1",
+      accent: "#7b5cff",
     },
   ];
 
@@ -205,7 +205,7 @@ export default function StatsSection() {
           {SERVICES.map(({ label, desc, icon, accent }) => (
             <div
               key={label}
-              className="group px-0 py-10 md:px-8"
+              className="service-card group px-0 py-10 md:px-8"
             >
               <div className="flex items-start gap-4">
                 <div
@@ -220,8 +220,14 @@ export default function StatsSection() {
                 <div
                   className="font-dm text-left"
                 >
-                  <div className="text-[clamp(1.15rem,1.6vw,1.5rem)] font-semibold leading-[1.15] tracking-[-0.02em] text-[#070707] transition-colors duration-300 group-hover:text-[#ff5fb4] dark:text-white dark:group-hover:text-[#ff5fb4]">
-                    {label}
+                  <div className="service-title relative inline-flex" style={{ "--accent": accent } as CSSProperties}>
+                    <div className="relative z-10 text-[clamp(1.15rem,1.6vw,1.5rem)] font-semibold leading-[1.15] tracking-[-0.02em] text-[#070707] transition-colors duration-200 group-hover:text-[var(--accent)] dark:text-white dark:group-hover:text-[var(--accent)]">
+                      {label}
+                    </div>
+                    <span
+                      aria-hidden
+                      className="service-underline pointer-events-none absolute -bottom-1 left-0 h-[2px] w-full origin-left scale-x-0 rounded-full"
+                    />
                   </div>
                   <div className="mt-2 text-[16px] leading-7 text-[#070707]/70 transition-colors duration-300 group-hover:text-[#070707]/85 dark:text-white/70 dark:group-hover:text-white/85">
                     {desc}
@@ -231,6 +237,44 @@ export default function StatsSection() {
             </div>
           ))}
         </div>
+        <style jsx>{`
+          .service-underline {
+            background-image: linear-gradient(
+              90deg,
+              transparent 0%,
+              var(--accent) 24%,
+              #7b5cff 50%,
+              var(--accent) 76%,
+              transparent 100%
+            );
+            background-size: 240% 100%;
+            background-position: 0% 50%;
+            transition: transform 180ms ease;
+          }
+
+          .service-card:hover .service-underline {
+            transform: scaleX(1);
+            animation: serviceUnderlineShimmer 900ms ease-in-out infinite;
+          }
+
+          @keyframes serviceUnderlineShimmer {
+            0% {
+              background-position: 0% 50%;
+            }
+            50% {
+              background-position: 100% 50%;
+            }
+            100% {
+              background-position: 0% 50%;
+            }
+          }
+
+          @media (prefers-reduced-motion: reduce) {
+            .service-card:hover .service-underline {
+              animation: none !important;
+            }
+          }
+        `}</style>
       </div>
     </section>
   );
