@@ -1,8 +1,11 @@
 "use client";
 
 import Image from "next/image";
+import { useI18n } from "./I18nProvider";
 
 export default function HeroSection() {
+  const { messages } = useI18n();
+
   return (
     <section id="inicio" className="bg-[#f2f4f8] dark:bg-[#070707] pt-24 pb-6">
       {/* Margen lateral pequeño, igual que en la referencia */}
@@ -29,43 +32,47 @@ export default function HeroSection() {
               className="object-cover object-center"
             />
           </div>
-          <div className="absolute inset-0 bg-[linear-gradient(135deg,#050815_0%,#061638_45%,#061a3f_70%,#040613_100%)] opacity-45 dark:opacity-55" />
+          <div className="absolute inset-0 bg-[linear-gradient(135deg,#050815_0%,#061638_45%,#061a3f_70%,#040613_100%)] opacity-30 dark:opacity-34" />
           <div className="hero-glow hero-glow-a" />
           <div className="hero-glow hero-glow-b" />
-          <div className="absolute inset-0 bg-gradient-to-r from-black/56 via-black/22 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-r from-black/40 via-black/12 to-transparent dark:from-black/34 dark:via-black/10" />
 
           <div className="relative z-10 flex h-full items-center">
-            <div className="w-full max-w-[680px] px-8 md:px-12">
-              <h1
-                className="hero-fade hero-delay-1 font-dm font-semibold leading-[0.98] tracking-[-0.04em] text-white"
-                suppressHydrationWarning
-              >
-                <span className="block text-[clamp(2.1rem,3.2vw,3.2rem)] text-white/90">
-                  Recuperá tu tiempo.
-                </span>
-                <span className="mt-2 block text-[clamp(2.8rem,4.6vw,4.6rem)]">
-                  <span className="hero-neon">Multiplicá</span> tus ingresos.
-                </span>
-              </h1>
-
-              <p className="hero-fade hero-delay-2 mt-5 max-w-[54ch] text-[15px] leading-7 text-white/58">
-                Automatizamos lo que te roba horas y construimos webs que convierten visitas en clientes.
-              </p>
-
-              <div className="hero-fade hero-delay-3 mt-9 flex flex-wrap items-center gap-3">
-                <a
-                  href="#contacto"
-                  className="inline-flex items-center justify-center rounded-full bg-white px-7 py-3.5 text-[15px] font-semibold text-[#0a0a14] transition-all duration-200 hover:-translate-y-px hover:shadow-[0_18px_40px_rgba(255,255,255,0.16)]"
+            <div className="mx-auto w-full max-w-6xl px-6">
+              <div className="w-full max-w-[720px] px-5">
+                <h1
+                  className="hero-fade hero-delay-1 font-dm font-semibold leading-[0.98] tracking-[-0.04em] text-white"
+                  suppressHydrationWarning
                 >
-                  Quiero resultados reales →
-                </a>
+                  <span className="block text-[clamp(2.3rem,3.4vw,3.4rem)] text-white/90">
+                    {messages.hero.line1}
+                  </span>
+                  <span className="mt-2 block text-[clamp(3rem,4.9vw,4.9rem)]">
+                    {messages.hero.line2Prefix}
+                    <span className="hero-neon">{messages.hero.line2Accent}</span>
+                    {messages.hero.line2Suffix}
+                  </span>
+                </h1>
 
-                <a
-                  href="#proceso"
-                  className="inline-flex items-center justify-center rounded-full border border-white/18 bg-white/6 px-7 py-3.5 text-[15px] font-medium text-white/82 backdrop-blur-md transition-all duration-200 hover:bg-white/10"
-                >
-                  Ver cómo lo hacemos
-                </a>
+                <p className="hero-fade hero-delay-2 mt-5 max-w-[56ch] text-[16px] leading-7 text-white/58">
+                  {messages.hero.subtitle}
+                </p>
+
+                <div className="hero-fade hero-delay-3 mt-9 flex flex-wrap items-center gap-3">
+                  <a
+                    href="#contacto"
+                    className="inline-flex items-center justify-center rounded-full bg-white px-7 py-3.5 text-[16px] font-semibold text-[#0a0a14] transition-all duration-200 hover:-translate-y-px hover:shadow-[0_18px_40px_rgba(255,255,255,0.16)]"
+                  >
+                    {messages.hero.ctaPrimary}
+                  </a>
+
+                  <a
+                    href="#proceso"
+                    className="inline-flex items-center justify-center rounded-full border border-white/18 bg-white/6 px-7 py-3.5 text-[16px] font-medium text-white/82 backdrop-blur-md transition-all duration-200 hover:bg-white/10"
+                  >
+                    {messages.hero.ctaSecondary}
+                  </a>
+                </div>
               </div>
             </div>
           </div>

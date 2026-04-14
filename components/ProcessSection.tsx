@@ -1,50 +1,19 @@
 "use client";
 
-import { useRef } from "react";
+import { useMemo, useRef } from "react";
 import { motion, useInView } from "framer-motion";
+import { useI18n } from "./I18nProvider";
 
-const steps = [
-  {
-    number: "01",
-    title: "Diagnóstico",
-    tag: "ANÁLISIS",
-    description:
-      "Analizamos tu mercado, competencia y audiencia para detectar oportunidades concretas y accionables.",
-    detail: "Auditoría digital · Benchmarking · Mapa de oportunidades",
-    image: "/procesos/diagnostico.avif",
-  },
-  {
-    number: "02",
-    title: "Estrategia",
-    tag: "PLANIFICACIÓN",
-    description:
-      "Definimos un plan claro, con objetivos medibles y criterios de éxito establecidos desde el inicio.",
-    detail: "Roadmap · KPIs · Priorización de acciones",
-    image: "/procesos/estrategia.avif",
-  },
-  {
-    number: "03",
-    title: "Ejecución",
-    tag: "DESARROLLO",
-    description:
-      "Desarrollamos e implementamos cada solución con foco en el detalle, la funcionalidad y la calidad.",
-    detail: "Diseño · Código · Integración · QA",
-    image: "/procesos/ejecucion.avif",
-  },
-  {
-    number: "04",
-    title: "Optimización",
-    tag: "MEJORA CONTINUA",
-    description:
-      "Evaluamos resultados, ajustamos y mejoramos de forma continua para lograr un mejor desempeño.",
-    detail: "Métricas · A/B testing · Iteración",
-    image: "/procesos/optimizacion.avif",
-  },
-];
+type Step = {
+  number: string;
+  title: string;
+  tag: string;
+  description: string;
+  detail: string;
+  image: string;
+};
 
-const totalSteps = steps.length;
-
-function getImageRadius(index: number, isReverse: boolean): string {
+function getImageRadius(index: number, totalSteps: number, isReverse: boolean): string {
   const first = index === 0;
   const last = index === totalSteps - 1;
 
@@ -65,11 +34,11 @@ function getImageRadius(index: number, isReverse: boolean): string {
   }
 }
 
-function StepRow({ step, index }: { step: (typeof steps)[0]; index: number }) {
+function StepRow({ step, index, totalSteps }: { step: Step; index: number; totalSteps: number }) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-80px" });
   const isReverse = index % 2 !== 0;
-  const imgRadius = getImageRadius(index, isReverse);
+  const imgRadius = getImageRadius(index, totalSteps, isReverse);
 
   return (
     <motion.div
@@ -77,11 +46,11 @@ function StepRow({ step, index }: { step: (typeof steps)[0]; index: number }) {
       initial={{ opacity: 0, y: 20 }}
       animate={isInView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1], delay: index * 0.08 }}
-      className={`grid grid-cols-1 md:grid-cols-2 ${isReverse ? "md:[direction:rtl]" : ""}`}
+      className="grid grid-cols-1 md:grid-cols-2"
     >
       {/* Imagen */}
       <div
-        className="relative overflow-hidden aspect-[4/3] bg-[#f0f2f5] dark:bg-[#1a1a1a]"
+        className={`relative overflow-hidden aspect-[4/3] bg-[#f0f2f5] dark:bg-[#1a1a1a] ${isReverse ? "md:order-2" : ""}`}
         style={{ borderRadius: imgRadius }}
       >
         <img
@@ -101,11 +70,7 @@ function StepRow({ step, index }: { step: (typeof steps)[0]; index: number }) {
 
       {/* Contenido: sin borde, sin fondo */}
       <div
-        className="flex flex-col justify-center gap-3"
-        style={{
-          direction: "ltr",
-          padding: isReverse ? "40px 48px 40px 0" : "40px 0 40px 48px",
-        }}
+        className={`flex flex-col justify-center gap-3 px-0 py-10 ${isReverse ? "md:order-1 md:pl-0 md:pr-12" : "md:order-2 md:pl-12 md:pr-0"}`}
       >
         <div className="flex items-center gap-2.5">
           <span className="text-[12px] font-medium tracking-[.18em] text-[#7b5cff]">
@@ -141,18 +106,21 @@ function StepRow({ step, index }: { step: (typeof steps)[0]; index: number }) {
 }
 
 export default function ProcessSection() {
+  const { messages } = useI18n();
+  const steps = useMemo<Step[]>(() => messages.process.steps.map((s) => ({ ...s })), [messages.process.steps]);
+
   return (
     <section id="proceso" className="pt-16 pb-24">
       <div className="mx-auto max-w-[1100px] px-6">
         {/* Header */}
         <div className="border-t border-black/[0.09] dark:border-white/[0.09] pt-8 mb-10">
           <span className="block text-[11px] font-medium tracking-[.22em] uppercase text-black/35 dark:text-white/35 mb-3">
-            {"// proceso"}
+            {messages.process.kicker}
           </span>
           <h2 className="text-[clamp(2.2rem,4vw,3.2rem)] font-medium leading-[0.98] tracking-[-0.03em] text-[#070707] dark:text-white m-0">
-            De la idea al{" "}
+            {messages.process.title1}
             <span className="border-b-[2.5px] border-[#7b5cff]/45 pb-0.5">
-              resultado real
+              {messages.process.title2}
             </span>
           </h2>
         </div>
@@ -160,7 +128,7 @@ export default function ProcessSection() {
         {/* Steps: gap 0 para que las imágenes se toquen */}
         <div className="flex flex-col gap-0">
           {steps.map((step, i) => (
-            <StepRow key={step.number} step={step} index={i} />
+            <StepRow key={step.number} step={step} index={i} totalSteps={steps.length} />
           ))}
         </div>
       </div>

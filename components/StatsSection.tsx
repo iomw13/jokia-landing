@@ -1,12 +1,14 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState, type CSSProperties } from "react";
+import { useI18n } from "./I18nProvider";
 
 type StatKey = "projects" | "clients" | "satisfaction" | "automations";
 
 const cubicOut = (t: number) => 1 - Math.pow(1 - t, 3);
 
 export default function StatsSection() {
+  const { messages } = useI18n();
   const containerRef = useRef<HTMLDivElement | null>(null);
   const rafRef = useRef<number | null>(null);
   const [reducedMotion, setReducedMotion] = useState(false);
@@ -141,16 +143,16 @@ export default function StatsSection() {
   }, [finalStrings, reducedMotion]);
 
   const STATS: { key: StatKey; label: string }[] = [
-    { key: "projects", label: "proyectos entregados" },
-    { key: "clients", label: "clientes activos" },
-    { key: "satisfaction", label: "satisfacción garantizada" },
-    { key: "automations", label: "automatizaciones" },
+    { key: "projects", label: messages.stats.items.projects },
+    { key: "clients", label: messages.stats.items.clients },
+    { key: "satisfaction", label: messages.stats.items.satisfaction },
+    { key: "automations", label: messages.stats.items.automations },
   ];
 
   const SERVICES = [
     {
-      label: "Página Web",
-      desc: "Sitios rápidos, modernos y optimizados para convertir visitas en clientes.",
+      label: messages.stats.services.web.label,
+      desc: messages.stats.services.web.desc,
       icon: (
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
           <rect x="2" y="3" width="20" height="14" rx="2" />
@@ -160,8 +162,8 @@ export default function StatsSection() {
       accent: "#7b5cff",
     },
     {
-      label: "Automatización",
-      desc: "Conectamos tus herramientas para que el trabajo repetitivo suceda solo.",
+      label: messages.stats.services.automation.label,
+      desc: messages.stats.services.automation.desc,
       icon: (
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
           <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83" />
@@ -178,9 +180,12 @@ export default function StatsSection() {
           <p
             className="font-dm mx-auto max-w-5xl text-[clamp(1.6rem,3.2vw,2.6rem)] font-medium leading-[1.18] tracking-[-0.02em] text-[#070707]/85 dark:text-white/85"
           >
-            <span className="font-semibold text-[#070707] dark:text-white">Páginas web</span> que convierten y{" "}
-            <span className="font-semibold text-[#070707] dark:text-white">automatizaciones</span> que liberan tu tiempo.{" "}
-            <span className="font-semibold text-[#1929e1]">Un solo objetivo:</span> que tu negocio crezca sin que vos tengas que estar en todo.
+            <span className="font-semibold text-[#070707] dark:text-white">{messages.stats.headline.prefix}</span>
+            {messages.stats.headline.mid}
+            <span className="font-semibold text-[#070707] dark:text-white">{messages.stats.headline.midStrong}</span>
+            {messages.stats.headline.afterStrong}
+            <span className="font-semibold text-[#1929e1]">{messages.stats.headline.accent}</span>
+            {messages.stats.headline.afterAccent}
           </p>
 
           <div className="mt-12 py-10">

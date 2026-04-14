@@ -1,19 +1,14 @@
-"use client";
-
-import dynamic from "next/dynamic";
 import HeroSection from "@/components/HeroSection";
 import Navbar from "@/components/Navbar";
-
-const StatsSection = dynamic(() => import("@/components/StatsSection"), { ssr: false });
-const ProcessSection = dynamic(() => import("@/components/ProcessSection"), { ssr: false });
-const ContactSection = dynamic(() => import("@/components/ContactSection"), { ssr: false });
-const Footer = dynamic(() => import("@/components/Footer"), { ssr: false });
-const Chatbot = dynamic(() => import("@/components/Chatbot"), { ssr: false });
+import StatsSection from "@/components/StatsSection";
+import ProcessSection from "@/components/ProcessSection";
+import ContactSection from "@/components/ContactSection";
+import Footer from "@/components/Footer";
+import Chatbot from "@/components/Chatbot";
 
 export default function Home() {
   return (
     <main className="relative min-h-screen overflow-x-hidden">
-
       <Navbar />
       <HeroSection />
       <StatsSection />

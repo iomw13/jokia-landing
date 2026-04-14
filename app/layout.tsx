@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { DM_Sans, Inter } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
+import { I18nProvider } from "@/components/I18nProvider";
 import { ThemeProvider } from "@/components/ThemeProvider";
 
 const inter = Inter({
@@ -78,9 +79,11 @@ export default function RootLayout({
         className={`${inter.className} antialiased`}
         suppressHydrationWarning
       >
-        <ThemeProvider>
-          {children}
-        </ThemeProvider>
+        <I18nProvider>
+          <ThemeProvider>
+            {children}
+          </ThemeProvider>
+        </I18nProvider>
       </body>
     </html>
   );

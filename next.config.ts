@@ -25,6 +25,15 @@ const nextConfig: NextConfig = {
   async headers() {
     return [
       {
+        source: "/hero/:path*(svg|jpg|png|webp|avif)",
+        headers: [
+          {
+            key: "Cache-Control",
+            value: "public, max-age=0, must-revalidate",
+          },
+        ],
+      },
+      {
         source: "/:all*(svg|jpg|png|webp|avif)",
         headers: [
           {

@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
+import { useI18n } from "./I18nProvider";
 
 type SubmitStatus = "idle" | "success" | "error";
 
@@ -39,21 +40,28 @@ const SOCIALS = [
 ];
 
 export default function ContactSection() {
+  const { locale, messages } = useI18n();
   const { ref: sectionRef, isInView } = useScrollReveal(0.08);
   const [formData, setFormData] = useState({
     nombre: "", apellido: "", email: "", telefono: "", mensaje: "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<SubmitStatus>("idle");
+  const [acceptedTerms, setAcceptedTerms] = useState(false);
+  const [termsTouched, setTermsTouched] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (!acceptedTerms) {
+      setTermsTouched(true);
+      return;
+    }
     setIsSubmitting(true);
     try {
       const res = await fetch("https://jokia-n8n.5rasmy.easypanel.host/webhook/jokia-formulario", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({ ...formData, language: locale }),
       });
       if (res.ok) {
         setSubmitStatus("success");
@@ -90,18 +98,6 @@ export default function ContactSection() {
             alt=""
             className="absolute inset-0 h-full w-full object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-black/10" />
-          <div className="absolute bottom-10 left-8 right-8 z-10">
-            <p className="text-[11px] font-semibold tracking-[0.2em] uppercase text-white/50 mb-3">
-              Jokia IA
-            </p>
-            <h3 className="text-[clamp(1.4rem,2.5vw,2rem)] font-bold leading-[1.2] tracking-[-0.02em] text-white">
-              Tu próximo cliente<br />empieza acá.
-            </h3>
-            <p className="mt-3 text-[13px] text-white/50 leading-relaxed max-w-[260px]">
-              Automatizamos tu negocio con inteligencia artificial.
-            </p>
-          </div>
         </div>
 
         {/* ── DERECHA: formulario ── */}
@@ -110,11 +106,11 @@ export default function ContactSection() {
 
             <div className="flex flex-col gap-5 sm:flex-row sm:items-start sm:justify-between sm:gap-8">
               <div>
-                <h2 className="text-[clamp(2.1rem,8vw,2.6rem)] font-extrabold tracking-[-0.04em] text-neutral-900 leading-[1.05] mb-3 dark:text-white">
-                  Hablemos de<br />tu negocio.
+                <h2 className="text-[clamp(2.1rem,8vw,2.6rem)] font-extrabold tracking-[-0.04em] text-neutral-900 leading-[1.05] mb-3 dark:text-white whitespace-pre-line">
+                  {messages.contact.title}
                 </h2>
                 <p className="text-[14px] text-[#7b5cff] leading-relaxed dark:text-white/55">
-                  Te respondemos en menos de 24 hs.
+                  {messages.contact.replyTime}
                 </p>
               </div>
 
@@ -143,43 +139,80 @@ export default function ContactSection() {
             <form onSubmit={handleSubmit} className="space-y-5">
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                 <div>
-                  <label className={labelClass}>Nombre</label>
+                  <label className={labelClass}>{messages.contact.labels.firstName}</label>
                   <input type="text" required value={formData.nombre}
                     onChange={(e) => setFormData({ ...formData, nombre: e.target.value })}
-                    className={inputClass} placeholder="Juan" />
+                    className={inputClass} placeholder={messages.contact.placeholders.firstName} />
                 </div>
                 <div>
-                  <label className={labelClass}>Apellido</label>
+                  <label className={labelClass}>{messages.contact.labels.lastName}</label>
                   <input type="text" required value={formData.apellido}
                     onChange={(e) => setFormData({ ...formData, apellido: e.target.value })}
-                    className={inputClass} placeholder="García" />
+                    className={inputClass} placeholder={messages.contact.placeholders.lastName} />
                 </div>
               </div>
 
               <div>
-                <label className={labelClass}>Email</label>
+                <label className={labelClass}>{messages.contact.labels.email}</label>
                 <input type="email" required value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  className={inputClass} placeholder="juan@email.com" />
+                  className={inputClass} placeholder={messages.contact.placeholders.email} />
               </div>
 
               <div>
-                <label className={labelClass}>Teléfono</label>
+                <label className={labelClass}>{messages.contact.labels.phone}</label>
                 <input type="tel" value={formData.telefono}
                   onChange={(e) => setFormData({ ...formData, telefono: e.target.value })}
-                  className={inputClass} placeholder="+54 9 351 xxxxxx" />
+                  className={inputClass} placeholder={messages.contact.placeholders.phone} />
               </div>
 
               <div>
-                <label className={labelClass}>¿En qué te podemos ayudar?</label>
+                <label className={labelClass}>{messages.contact.labels.help}</label>
                 <textarea required rows={4} value={formData.mensaje}
                   onChange={(e) => setFormData({ ...formData, mensaje: e.target.value })}
-                  className={inputClass} placeholder="Contanos sobre tu negocio..." />
+                  className={inputClass} placeholder={messages.contact.placeholders.help} />
+              </div>
+
+              <div className="space-y-1">
+                <label
+                  className={`flex cursor-pointer items-start gap-2 rounded-xl border px-3 py-2 text-[13px] ${
+                    !acceptedTerms && termsTouched
+                      ? "border-red-500"
+                      : "border-[#1929e1]/40 bg-[#1929e1]/[0.04] dark:border-[#7b5cff]/40 dark:bg-[#7b5cff]/[0.08]"
+                  }`}
+                >
+                  <input
+                    type="checkbox"
+                    checked={acceptedTerms}
+                    onChange={(e) => {
+                      setAcceptedTerms(e.target.checked);
+                      setTermsTouched(true);
+                    }}
+                    className="mt-0.5 h-4 w-4 rounded border-[#7b5cff]/50 bg-white text-[#7b5cff] focus:ring-[#7b5cff]/40 dark:border-[#7b5cff]/50 dark:bg-transparent dark:text-[#7b5cff] dark:focus:ring-[#7b5cff]/40"
+                  />
+                  <span className="text-neutral-700 dark:text-white/80">
+                    {messages.contact.termsPrefix}
+                    <a
+                      href="/terminos-y-condiciones"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="font-semibold text-[#1929e1] underline underline-offset-2 decoration-[#1929e1]/70 hover:text-[#0f1fcf] dark:text-[#7b5cff] dark:decoration-[#7b5cff]/70 dark:hover:text-[#9b83ff]"
+                    >
+                      {messages.contact.termsLink}
+                    </a>
+                    {messages.contact.termsSuffix}
+                  </span>
+                </label>
+                {!acceptedTerms && (
+                  <p className={`text-[12px] ${termsTouched ? "text-red-500" : "text-neutral-500 dark:text-white/55"}`}>
+                    {messages.contact.termsHint}
+                  </p>
+                )}
               </div>
 
               <button
                 type="submit"
-                disabled={isSubmitting}
+                disabled={isSubmitting || !acceptedTerms}
                 className={`w-full rounded-xl py-4 text-[15px] font-bold tracking-wide transition-all duration-200 disabled:opacity-50 ${
                   submitStatus === "success"
                     ? "bg-emerald-500 text-white"
@@ -187,15 +220,15 @@ export default function ContactSection() {
                 }`}
               >
                 {isSubmitting
-                  ? "Enviando..."
+                  ? messages.contact.submit.sending
                   : submitStatus === "success"
-                  ? "✓ Mensaje enviado"
-                  : "Empezar ahora →"}
+                  ? messages.contact.submit.sent
+                  : messages.contact.submit.idle}
               </button>
 
               {submitStatus === "error" && (
                 <p className="text-center text-[12px] text-red-500">
-                  Hubo un error. Escribinos por WhatsApp.
+                  {messages.contact.submit.error}
                 </p>
               )}
             </form>

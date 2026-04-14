@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useState, useRef, useEffect } from "react";
 import { createPortal } from "react-dom";
 import Image from "next/image";
+import { useI18n } from "./I18nProvider";
 
 const LOCAL_STORAGE_KEY = "jokia-chat-history";
 const WEBHOOK_URL = "https://jokia-n8n.5rasmy.easypanel.host/webhook/jokia-chat";
@@ -24,18 +25,31 @@ interface FormData {
 
 // ── Inline contact form ──────────────────────────────────────────
 function ContactForm({ sessionId }: { sessionId: string }) {
-  const [form, setForm] = useState<FormData>({ nombre: "", telefono: "", email: "", tipo: "Web / Landing" });
+  const { locale, messages } = useI18n();
+  const [form, setForm] = useState<FormData>({
+    nombre: "",
+    telefono: "",
+    email: "",
+    tipo: messages.chatbot.form.types[0],
+  });
   const [status, setStatus] = useState<"idle" | "loading" | "sent" | "error">("idle");
   const [errors, setErrors] = useState<Partial<FormData>>({});
+  const [acceptedTerms, setAcceptedTerms] = useState(false);
+  const [termsTouched, setTermsTouched] = useState(false);
+  const termsId = `jokia-terms-${sessionId}`;
 
   const validate = () => {
     const e: Partial<FormData> = {};
-    if (!form.nombre.trim()) e.nombre = "Requerido";
-    if (!form.telefono.trim()) e.telefono = "Requerido";
+    if (!form.nombre.trim()) e.nombre = messages.chatbot.form.required;
+    if (!form.telefono.trim()) e.telefono = messages.chatbot.form.required;
     return e;
   };
 
   const handleSubmit = async () => {
+    if (!acceptedTerms) {
+      setTermsTouched(true);
+      return;
+    }
     const e = validate();
     if (Object.keys(e).length > 0) { setErrors(e); return; }
     setStatus("loading");
@@ -49,6 +63,7 @@ function ContactForm({ sessionId }: { sessionId: string }) {
           email: form.email,
           tipo: form.tipo,
           sessionId,
+          language: locale,
           source: "jokia-landing", // Added source
           leadScore: 70,
           timestamp: new Date().toISOString(),
@@ -67,8 +82,8 @@ function ContactForm({ sessionId }: { sessionId: string }) {
         animate={{ opacity: 1, y: 0 }}
         className="mx-1 my-2 rounded-2xl border border-black/15 bg-white px-4 py-3 text-center text-[#070707] dark:border-white/15 dark:bg-white/5 dark:text-white"
       >
-        <p className="text-sm font-semibold">✅ ¡Enviado!</p>
-        <p className="mt-0.5 text-xs text-[#070707]/70 dark:text-white/70">Te respondemos en menos de 2 horas hábiles.</p>
+        <p className="text-sm font-semibold">{messages.chatbot.form.sentTitle}</p>
+        <p className="mt-0.5 text-xs text-[#070707]/70 dark:text-white/70">{messages.chatbot.form.sentSubtitle}</p>
       </motion.div>
     );
   }
@@ -80,14 +95,14 @@ function ContactForm({ sessionId }: { sessionId: string }) {
       className="mx-1 my-2 rounded-2xl border border-black/15 bg-transparent p-4 text-[#070707] dark:border-white/15 dark:text-white"
     >
       <p className="mb-3 flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-[0.12em] text-[#070707]/70 dark:text-white/70">
-        <span>📋</span> Dejanos tus datos
+        <span>📋</span> {messages.chatbot.form.title}
       </p>
       <div className="space-y-2">
         {/* Nombre */}
         <div>
           <input
             type="text"
-            placeholder="Tu nombre *"
+            placeholder={messages.chatbot.form.namePlaceholder}
             value={form.nombre}
             onChange={(e) => { setForm(f => ({ ...f, nombre: e.target.value })); setErrors(er => ({ ...er, nombre: undefined })); }}
             className={`w-full rounded-xl border bg-transparent px-3 py-2 text-xs text-[#070707] placeholder:text-[#070707]/45 focus:border-[#7b5cff] focus:outline-none dark:text-white dark:placeholder:text-white/40 ${errors.nombre ? "border-red-500" : "border-black/20 dark:border-white/20"}`}
@@ -98,7 +113,7 @@ function ContactForm({ sessionId }: { sessionId: string }) {
         <div>
           <input
             type="tel"
-            placeholder="Teléfono / WhatsApp *"
+            placeholder={messages.chatbot.form.phonePlaceholder}
             value={form.telefono}
             onChange={(e) => { setForm(f => ({ ...f, telefono: e.target.value })); setErrors(er => ({ ...er, telefono: undefined })); }}
             className={`w-full rounded-xl border bg-transparent px-3 py-2 text-xs text-[#070707] placeholder:text-[#070707]/45 focus:border-[#7b5cff] focus:outline-none dark:text-white dark:placeholder:text-white/40 ${errors.telefono ? "border-red-500" : "border-black/20 dark:border-white/20"}`}
@@ -108,7 +123,7 @@ function ContactForm({ sessionId }: { sessionId: string }) {
         {/* Email */}
         <input
           type="email"
-          placeholder="Email (opcional)"
+          placeholder={messages.chatbot.form.emailPlaceholder}
           value={form.email}
           onChange={(e) => setForm(f => ({ ...f, email: e.target.value }))}
           className="w-full rounded-xl border border-black/20 bg-transparent px-3 py-2 text-xs text-[#070707] placeholder:text-[#070707]/45 focus:border-[#1929e1] focus:outline-none dark:border-white/20 dark:text-white dark:placeholder:text-white/40"
@@ -119,22 +134,54 @@ function ContactForm({ sessionId }: { sessionId: string }) {
           onChange={(e) => setForm(f => ({ ...f, tipo: e.target.value }))}
           className="w-full rounded-xl border border-black/20 bg-transparent px-3 py-2 text-xs text-[#070707]/80 focus:border-[#7b5cff] focus:outline-none dark:border-white/20 dark:text-white/80"
         >
-          <option>Web / Landing</option>
-          <option>Automatización (n8n / Notion / IA)</option>
-          <option>Integraciones</option>
-          <option>Chatbot con IA</option>
-          <option>Otro</option>
+          {messages.chatbot.form.types.map((t) => (
+            <option key={t}>{t}</option>
+          ))}
         </select>
+        <div>
+          <div
+            className={`rounded-xl border px-3 py-2 ${
+              !acceptedTerms && termsTouched ? "border-red-500" : "border-black/20 dark:border-white/20"
+            }`}
+          >
+            <label htmlFor={termsId} className="flex cursor-pointer items-start gap-2 text-xs text-[#070707]/80 dark:text-white/80">
+              <input
+                id={termsId}
+                type="checkbox"
+                checked={acceptedTerms}
+                onChange={(e) => { setAcceptedTerms(e.target.checked); setTermsTouched(true); }}
+                className="mt-0.5 h-4 w-4 rounded border-black/30 text-[#7b5cff] focus:ring-[#7b5cff]/40 dark:border-white/30"
+              />
+              <span>
+                {messages.chatbot.form.termsPrefix}
+                <a
+                  href="/terminos-y-condiciones"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="font-semibold underline underline-offset-2 hover:opacity-90"
+                >
+                  {messages.chatbot.form.termsLink}
+                </a>
+                {messages.chatbot.form.termsSuffix}
+              </span>
+            </label>
+          </div>
+          {!acceptedTerms && (
+            <p className={`mt-1 text-xs ${termsTouched ? "text-red-400" : "text-[#070707]/55 dark:text-white/55"}`}>
+              {messages.chatbot.form.termsHint}
+            </p>
+          )}
+        </div>
         {/* Submit */}
         <button
           onClick={handleSubmit}
-          disabled={status === "loading"}
+          disabled={status === "loading" || !acceptedTerms}
           className="w-full rounded-xl bg-[#070707] py-2.5 text-[11px] font-semibold uppercase tracking-[0.12em] text-white transition-colors hover:bg-black/90 disabled:cursor-not-allowed disabled:opacity-60 dark:bg-white dark:text-[#070707] dark:hover:bg-white/90"
         >
-          {status === "loading" ? "Enviando..." : "Quiero que me contacten 📩"}
+          {status === "loading" ? messages.chatbot.form.submitLoading : messages.chatbot.form.submitIdle}
         </button>
         {status === "error" && (
-          <p className="text-center text-xs text-red-400">Hubo un error, intentá de nuevo.</p>
+          <p className="text-center text-xs text-red-400">{messages.chatbot.form.error}</p>
         )}
       </div>
     </motion.div>
@@ -143,6 +190,7 @@ function ContactForm({ sessionId }: { sessionId: string }) {
 
 // ── Main chatbot component ───────────────────────────────────────
 export default function Chatbot() {
+  const { locale, messages: i18n } = useI18n();
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
@@ -150,11 +198,8 @@ export default function Chatbot() {
   const [showScrollTop, setShowScrollTop] = useState(false);
   const [mounted, setMounted] = useState(false);
   const [showNudge, setShowNudge] = useState(false);
-  const [quickReplies, setQuickReplies] = useState<string[]>([
-    "Quiero automatizar procesos",
-    "Necesito una web que convierta",
-    "Quiero agendar una llamada",
-  ]);
+  const [nudgeIndex, setNudgeIndex] = useState(0);
+  const [quickReplies, setQuickReplies] = useState<string[]>([]);
   const [showForm, setShowForm] = useState(false);
   const [sessionId] = useState(() => `jokia-${Date.now()}-${Math.random().toString(36).slice(2)}`);
   const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -165,12 +210,14 @@ export default function Chatbot() {
 
   useEffect(() => { scrollToBottom(); }, [messages, showForm]);
 
+  const storageKey = `${LOCAL_STORAGE_KEY}-${locale}`;
+
   // Load history from localStorage
   useEffect(() => {
     if (typeof window === "undefined") return;
     setMounted(true);
     try {
-      const stored = window.localStorage.getItem(LOCAL_STORAGE_KEY);
+      const stored = window.localStorage.getItem(storageKey);
       if (stored) {
         const parsed = JSON.parse(stored) as Message[];
         if (Array.isArray(parsed) && parsed.length > 0) {
@@ -179,50 +226,68 @@ export default function Chatbot() {
         }
       }
     } catch { /* ignore */ }
-    setMessages([{
-      role: "assistant",
-      content: "¡Hola! 👋 Soy el asistente de Jokia. ¿Con quién hablo?",
-    }]);
-  }, []);
-
-  useEffect(() => {
-    if (!mounted) return;
-    if (isOpen && showNudge) setShowNudge(false);
-  }, [isOpen, mounted, showNudge]);
+    setMessages([{ role: "assistant", content: i18n.chatbot.initialMessage }]);
+    setQuickReplies([...i18n.chatbot.quickReplies]);
+  }, [i18n.chatbot.initialMessage, i18n.chatbot.quickReplies, storageKey]);
 
   useEffect(() => {
     if (!mounted) return;
     if (isOpen) { setShowNudge(false); return; }
 
-    let t: number | null = null;
+    const nudgeMessages = i18n.chatbot.nudges;
+    if (!nudgeMessages.length) return;
+
+    let hideTimer: number | null = null;
+    let showTimer: number | null = null;
+    let current = 0;
+
     const loop = () => {
+      setNudgeIndex(current);
       setShowNudge(true);
-      t = window.setTimeout(() => {
+      hideTimer = window.setTimeout(() => {
         setShowNudge(false);
-        t = window.setTimeout(loop, 3000);
+        showTimer = window.setTimeout(() => {
+          current = (current + 1) % nudgeMessages.length;
+          loop();
+        }, 15000);
       }, 5000);
     };
 
     loop();
     return () => {
-      if (t) window.clearTimeout(t);
+      if (hideTimer) window.clearTimeout(hideTimer);
+      if (showTimer) window.clearTimeout(showTimer);
     };
-  }, [isOpen, mounted]);
+  }, [i18n.chatbot.nudges, isOpen, mounted]);
 
   // Save history to localStorage
   useEffect(() => {
     if (typeof window === "undefined") return;
-    try { window.localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(messages)); }
+    try { window.localStorage.setItem(storageKey, JSON.stringify(messages)); }
     catch { /* ignore */ }
-  }, [messages]);
+  }, [messages, storageKey]);
 
   // Scroll to top button
   useEffect(() => {
     if (typeof window === "undefined") return;
-    const handleScroll = () => setShowScrollTop(window.scrollY > 1);
+    let raf: number | null = null;
+    let last = false;
+    const handleScroll = () => {
+      if (raf != null) return;
+      raf = window.requestAnimationFrame(() => {
+        raf = null;
+        const next = window.scrollY > 1;
+        if (next === last) return;
+        last = next;
+        setShowScrollTop(next);
+      });
+    };
     window.addEventListener("scroll", handleScroll, { passive: true });
     handleScroll();
-    return () => window.removeEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      if (raf != null) window.cancelAnimationFrame(raf);
+    };
   }, []);
 
   const handleScrollTop = () => window.scrollTo({ top: 0, behavior: "smooth" });
@@ -252,6 +317,7 @@ export default function Chatbot() {
           message: userMessage,
           conversationHistory: nextHistory,
           sessionId,
+          language: locale,
           timestamp: new Date().toISOString(),
         }),
       });
@@ -277,7 +343,7 @@ export default function Chatbot() {
     } catch {
       setMessages(prev => [...prev, {
         role: "assistant",
-        content: "Lo siento, hubo un error. ¿Podés intentarlo de nuevo? 😊",
+        content: i18n.chatbot.errorMessage,
       }]);
     } finally {
       setIsLoading(false);
@@ -297,10 +363,10 @@ export default function Chatbot() {
           {showScrollTop && !isOpen && (
             <button
               onClick={handleScrollTop}
-              className="flex h-12 w-12 items-center justify-center pointer-events-auto rounded-full bg-gradient-to-br from-[#1929e1] to-[#7b5cff] text-white shadow-[0_14px_40px_rgba(25,41,225,0.28)] transition-all duration-200 hover:-translate-y-px hover:shadow-[0_18px_55px_rgba(123,92,255,0.34)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#7b5cff]/50"
-              aria-label="Volver arriba"
+              className="mr-[6px] flex h-11 w-11 items-center justify-center pointer-events-auto rounded-full bg-[#070707] text-white shadow-[0_14px_40px_rgba(0,0,0,0.28)] transition-all duration-200 hover:-translate-y-px hover:bg-black/90 hover:shadow-[0_18px_55px_rgba(0,0,0,0.34)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#7b5cff]/50 dark:bg-white dark:text-[#070707] dark:hover:bg-white/90"
+              aria-label={i18n.chatbot.aria.scrollTop}
             >
-              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M12 5v14" /><path d="M6 11l6-6 6 6" />
               </svg>
             </button>
@@ -322,7 +388,7 @@ export default function Chatbot() {
                     transition={{ duration: 2.8, ease: "easeInOut", repeat: Infinity }}
                     className="rounded-full border border-[#1929e1]/20 bg-[linear-gradient(135deg,#ffffff_0%,#ffd1ea_22%,#ffbcd9_42%,#efe2ff_70%,#dbeeff_100%)] px-6 py-3 text-[13px] font-semibold text-[#070707] shadow-[0_22px_65px_rgba(0,0,0,0.16),0_0_0_1px_rgba(25,41,225,0.12),0_0_26px_rgba(255,95,180,0.16)] dark:border-white/18 dark:bg-[linear-gradient(135deg,#0b0b12_0%,#16183a_45%,#0b0b12_100%)] dark:text-white dark:shadow-[0_26px_90px_rgba(0,0,0,0.68),0_0_28px_rgba(255,95,180,0.16)]"
                   >
-                    Hola, escribime si necesitas ayuda :)
+                    {i18n.chatbot.nudges[nudgeIndex] ?? i18n.chatbot.nudge}
                   </motion.div>
                 </motion.button>
               )}
@@ -331,7 +397,7 @@ export default function Chatbot() {
             <button
               onClick={() => { dismissNudge(); setIsOpen(!isOpen); }}
               className="group relative flex h-14 w-14 items-center justify-center pointer-events-auto overflow-hidden rounded-full border border-black/15 bg-[#f2f4f8] p-0 shadow-[0_14px_40px_rgba(123,92,255,0.18)] transition-all duration-200 hover:-translate-y-px hover:shadow-[0_18px_55px_rgba(25,41,225,0.22)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#7b5cff]/40 dark:border-white/15 dark:bg-[#070707] dark:shadow-[0_14px_40px_rgba(0,0,0,0.45)]"
-              aria-label={isOpen ? "Cerrar chat" : "Abrir chat"}
+              aria-label={isOpen ? i18n.chatbot.aria.closeChat : i18n.chatbot.aria.openChat}
             >
               {isOpen ? (
                 <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className="text-[#070707] dark:text-white">
@@ -341,7 +407,7 @@ export default function Chatbot() {
               ) : (
                 <Image src="/bot.webp" alt="Bot" fill sizes="56px" className="object-cover" />
               )}
-              <span className="sr-only">Chat</span>
+              <span className="sr-only">{i18n.chatbot.title}</span>
             </button>
           </div>
         </div>,
@@ -354,7 +420,7 @@ export default function Chatbot() {
           <>
             <motion.button
               type="button"
-              aria-label="Cerrar chat"
+              aria-label={i18n.chatbot.aria.closeChat}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
@@ -377,23 +443,23 @@ export default function Chatbot() {
                 <Image src="/bot.webp" alt="Bot" width={22} height={22} className="h-[22px] w-[22px]" />
               </div>
               <div className="flex-1">
-                <div className="text-sm font-semibold text-[#070707] dark:text-white">Jokia Assistant</div>
+                <div className="text-sm font-semibold text-[#070707] dark:text-white">{i18n.chatbot.title}</div>
                 <div className="mt-0.5 text-[11px] font-medium uppercase tracking-[0.12em] text-[#070707]/55 dark:text-white/55">
-                  En línea · responde rápido
+                  {i18n.chatbot.status}
                 </div>
               </div>
               {/* Clear chat */}
               <button
                 onClick={() => {
-                  window.localStorage.removeItem(LOCAL_STORAGE_KEY);
-                  setMessages([{ role: "assistant", content: "¡Hola! 👋 Soy el asistente de Jokia. ¿Con quién hablo?" }]);
-                  setQuickReplies(["Quiero automatizar procesos", "Necesito una web que convierta", "Quiero agendar una llamada"]);
+                  window.localStorage.removeItem(storageKey);
+                  setMessages([{ role: "assistant", content: i18n.chatbot.initialMessage }]);
+                  setQuickReplies([...i18n.chatbot.quickReplies]);
                   setShowForm(false);
                 }}
                 className="ml-auto text-[11px] font-semibold uppercase tracking-[0.12em] text-[#070707]/45 hover:text-[#070707] dark:text-white/45 dark:hover:text-white transition-colors"
-                title="Limpiar conversación"
+                title={i18n.chatbot.clearTitle}
               >
-                ✕ limpiar
+                {i18n.chatbot.clear}
               </button>
             </div>
 
@@ -429,7 +495,7 @@ export default function Chatbot() {
                     <Image src="/bot.webp" alt="Bot" width={18} height={18} className="h-[18px] w-[18px]" />
                   </div>
                   <div className="flex gap-2 rounded-2xl border border-black/15 bg-white px-4 py-3 text-xs text-[#070707]/70 dark:border-white/15 dark:bg-white/5 dark:text-white/70">
-                    Escribiendo…
+                    {i18n.chatbot.typing}
                   </div>
                 </div>
               )}
@@ -472,7 +538,7 @@ export default function Chatbot() {
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
                   onKeyDown={(e) => { if (e.key === "Enter") { e.preventDefault(); void handleSend(); } }}
-                  placeholder="Escribí tu mensaje..."
+                  placeholder={i18n.chatbot.inputPlaceholder}
                   className="flex-1 rounded-2xl border border-black/20 bg-transparent px-4 py-3 text-sm text-[#070707] placeholder:text-[#070707]/45 focus:border-[#7b5cff] focus:outline-none dark:border-white/20 dark:text-white dark:placeholder:text-white/40"
                 />
                 <button

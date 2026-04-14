@@ -1,7 +1,13 @@
 "use client";
 
+import { usePathname } from "next/navigation";
+import { useI18n } from "./I18nProvider";
+
 export default function Footer() {
   const currentYear = new Date().getFullYear();
+  const { messages } = useI18n();
+  const pathname = usePathname();
+  const startHref = pathname === "/" ? "#contacto" : "/#contacto";
 
   return (
     <footer className="border-t border-black/15 bg-[#eceff6] py-10 text-[#070707] dark:border-white/15 dark:bg-[#0a0a0f] dark:text-white">
@@ -13,9 +19,8 @@ export default function Footer() {
           {/* Brand */}
           <div>
             <div className="text-[12px] font-semibold uppercase tracking-[0.22em]">JOKIA</div>
-            <p className="mt-3 max-w-[340px] text-[13px] leading-relaxed text-[#070707]/70 dark:text-white/70">
-              Diseñando futuros digitales. Branding, marketing y web de alto
-              impacto para marcas que no se conforman con lo ordinario.
+            <p className="mt-3 max-w-[360px] text-[14px] leading-relaxed text-[#070707]/70 dark:text-white/70">
+              {messages.footer.blurb}
             </p>
 
             <div className="mt-5 flex flex-wrap gap-2.5">
@@ -71,22 +76,27 @@ export default function Footer() {
 
           {/* Contacto */}
           <div className="lg:justify-self-end lg:text-right">
-            <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.18em] text-[#070707]/55 dark:text-white/55">
-              Contacto
+            <p className="mb-3 text-[12px] font-semibold uppercase tracking-[0.18em] text-[#070707]/55 dark:text-white/55">
+              {messages.footer.contactTitle}
             </p>
             <ul className="space-y-2">
               <li>
-                <a href="#contacto" className="text-[13px] text-[#070707]/70 transition-colors duration-150 hover:text-[#070707] dark:text-white/70 dark:hover:text-white">
-                  Iniciar proyecto
+                <a href={startHref} className="text-[14px] text-[#070707]/70 transition-colors duration-150 hover:text-[#070707] dark:text-white/70 dark:hover:text-white">
+                  {messages.footer.startProject}
                 </a>
               </li>
               <li>
-                <a href="mailto:contacto@jokia.agency" className="text-[13px] text-[#070707]/70 transition-colors duration-150 hover:text-[#070707] dark:text-white/70 dark:hover:text-white">
+                <a href="/terminos-y-condiciones" className="text-[14px] text-[#070707]/70 transition-colors duration-150 hover:text-[#070707] dark:text-white/70 dark:hover:text-white">
+                  {messages.footer.terms}
+                </a>
+              </li>
+              <li>
+                <a href="mailto:contacto@jokia.agency" className="text-[14px] text-[#070707]/70 transition-colors duration-150 hover:text-[#070707] dark:text-white/70 dark:hover:text-white">
                   contacto@jokia.agency
                 </a>
               </li>
               <li>
-                <a href="https://wa.me/5493547656447" target="_blank" rel="noopener noreferrer" className="text-[13px] text-[#070707]/70 transition-colors duration-150 hover:text-[#070707] dark:text-white/70 dark:hover:text-white">
+                <a href="https://wa.me/5493547656447" target="_blank" rel="noopener noreferrer" className="text-[14px] text-[#070707]/70 transition-colors duration-150 hover:text-[#070707] dark:text-white/70 dark:hover:text-white">
                   WhatsApp
                 </a>
               </li>
@@ -97,7 +107,7 @@ export default function Footer() {
 
         {/* Bottom bar */}
         <div className="mt-9 flex flex-col items-center justify-between gap-3 border-t border-black/15 pt-6 dark:border-white/15 sm:flex-row">
-          <p className="text-xs text-[#070707]/55 dark:text-white/55">
+          <p className="text-[13px] text-[#070707]/55 dark:text-white/55">
             © {currentYear} JOKIA · Córdoba, Argentina · V1.
           </p>
         </div>
