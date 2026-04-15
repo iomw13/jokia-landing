@@ -4,7 +4,6 @@ import { usePathname } from "next/navigation";
 import { useI18n } from "./I18nProvider";
 
 export default function Footer() {
-  const currentYear = new Date().getFullYear();
   const { messages } = useI18n();
   const pathname = usePathname();
   const startHref = pathname === "/" ? "#contacto" : "/#contacto";
@@ -108,7 +107,7 @@ export default function Footer() {
         {/* Bottom bar */}
         <div className="mt-9 flex flex-col items-center justify-between gap-3 border-t border-black/15 pt-6 dark:border-white/15 sm:flex-row">
           <p className="text-[13px] text-[#070707]/55 dark:text-white/55">
-            © {currentYear} JOKIA · Córdoba, Argentina · V1.
+            © 2026 JOKIA · Córdoba, Argentina
           </p>
         </div>
 

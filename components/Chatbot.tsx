@@ -202,13 +202,47 @@ export default function Chatbot() {
   const [quickReplies, setQuickReplies] = useState<string[]>([]);
   const [showForm, setShowForm] = useState(false);
   const [sessionId] = useState(() => `jokia-${Date.now()}-${Math.random().toString(36).slice(2)}`);
+  const messagesListRef = useRef<HTMLDivElement>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const lastAssistantMessageRef = useRef<HTMLDivElement>(null);
+  const stickToBottomRef = useRef(true);
+  const userJustSentRef = useRef(false);
+  const prevMessageCountRef = useRef(0);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
-  useEffect(() => { scrollToBottom(); }, [messages, showForm]);
+  useEffect(() => {
+    if (!mounted || !isOpen) return;
+    const last = messages[messages.length - 1];
+    const prevCount = prevMessageCountRef.current;
+    prevMessageCountRef.current = messages.length;
+    if (!last) return;
+    const didAddMessage = messages.length !== prevCount;
+    if (!didAddMessage && !showForm) return;
+    window.requestAnimationFrame(() => {
+      if (userJustSentRef.current) {
+        scrollToBottom();
+        return;
+      }
+      if (stickToBottomRef.current) {
+        if (last.role === "assistant") {
+          lastAssistantMessageRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+        } else {
+          scrollToBottom();
+        }
+      }
+    });
+  }, [isOpen, mounted, messages, showForm]);
+
+  const handleMessagesScroll = () => {
+    const el = messagesListRef.current;
+    if (!el) return;
+    const distanceFromBottom = el.scrollHeight - el.scrollTop - el.clientHeight;
+    stickToBottomRef.current = distanceFromBottom < 28;
+    if (stickToBottomRef.current) userJustSentRef.current = false;
+  };
 
   const storageKey = `${LOCAL_STORAGE_KEY}-${locale}`;
 
@@ -303,6 +337,7 @@ export default function Chatbot() {
     setShowForm(false);
 
     const nextHistory: Message[] = [...messages, { role: "user", content: userMessage }];
+    userJustSentRef.current = true;
     setMessages(nextHistory);
     setIsLoading(true);
 
@@ -332,6 +367,7 @@ export default function Chatbot() {
       };
 
       if (data.response) {
+        userJustSentRef.current = false;
         setMessages(prev => [...prev, { role: "assistant", content: data.response! }]);
       }
       if (data.quickReplies?.length) {
@@ -341,6 +377,7 @@ export default function Chatbot() {
         setTimeout(() => setShowForm(true), 500);
       }
     } catch {
+      userJustSentRef.current = false;
       setMessages(prev => [...prev, {
         role: "assistant",
         content: i18n.chatbot.errorMessage,
@@ -439,8 +476,8 @@ export default function Chatbot() {
             <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(700px_circle_at_85%_0%,rgba(123,92,255,0.16),transparent_52%)] opacity-70 dark:opacity-70" />
             {/* Header */}
             <div className="relative flex items-center gap-3 border-b border-black/15 p-4 dark:border-white/15">
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl border border-black/15 bg-white/70 dark:border-white/15 dark:bg-white/5">
-                <Image src="/bot.webp" alt="Bot" width={22} height={22} className="h-[22px] w-[22px]" />
+              <div className="flex h-10 w-10 items-center justify-center overflow-hidden rounded-xl border border-black/15 bg-white/70 dark:border-white/15 dark:bg-white/5">
+                <Image src="/bot.webp" alt="Bot" width={40} height={40} className="h-full w-full object-cover" />
               </div>
               <div className="flex-1">
                 <div className="text-sm font-semibold text-[#070707] dark:text-white">{i18n.chatbot.title}</div>
@@ -464,18 +501,24 @@ export default function Chatbot() {
             </div>
 
             {/* Messages */}
-            <div className="relative flex-1 space-y-3 overflow-y-auto p-4 bg-transparent" style={{ WebkitOverflowScrolling: "touch" } as React.CSSProperties}>
+            <div
+              ref={messagesListRef}
+              onScroll={handleMessagesScroll}
+              className="relative flex-1 space-y-3 overflow-y-auto p-4 bg-transparent"
+              style={{ WebkitOverflowScrolling: "touch" } as React.CSSProperties}
+            >
               {messages.map((message, index) => (
                 <motion.div
                   key={index}
+                  ref={index === messages.length - 1 && message.role === "assistant" ? lastAssistantMessageRef : undefined}
                   initial={{ opacity: 0, y: 8 }}
                   animate={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   className={`flex ${message.role === "user" ? "justify-end" : "justify-start"}`}
                 >
                   {message.role === "assistant" && (
-                    <div className="mr-2 flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-xl border border-black/15 bg-white/70 dark:border-white/15 dark:bg-white/5">
-                      <Image src="/bot.webp" alt="Bot" width={18} height={18} className="h-[18px] w-[18px]" />
+                    <div className="mr-2 flex h-8 w-8 flex-shrink-0 items-center justify-center overflow-hidden rounded-xl border border-black/15 bg-white/70 dark:border-white/15 dark:bg-white/5">
+                      <Image src="/bot.webp" alt="Bot" width={32} height={32} className="h-full w-full object-cover" />
                     </div>
                   )}
                   <div className={`max-w-[80%] rounded-2xl border px-4 py-2.5 ${
@@ -491,8 +534,8 @@ export default function Chatbot() {
               {/* Loading indicator */}
               {isLoading && (
                 <div className="flex items-center gap-2">
-                  <div className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-xl border border-black/15 bg-white/70 dark:border-white/15 dark:bg-white/5">
-                    <Image src="/bot.webp" alt="Bot" width={18} height={18} className="h-[18px] w-[18px]" />
+                  <div className="flex h-8 w-8 flex-shrink-0 items-center justify-center overflow-hidden rounded-xl border border-black/15 bg-white/70 dark:border-white/15 dark:bg-white/5">
+                    <Image src="/bot.webp" alt="Bot" width={32} height={32} className="h-full w-full object-cover" />
                   </div>
                   <div className="flex gap-2 rounded-2xl border border-black/15 bg-white px-4 py-3 text-xs text-[#070707]/70 dark:border-white/15 dark:bg-white/5 dark:text-white/70">
                     {i18n.chatbot.typing}

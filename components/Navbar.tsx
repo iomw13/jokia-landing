@@ -55,7 +55,7 @@ export default function Navbar() {
               : "border-transparent bg-transparent shadow-none"
           }`}
         >
-          <a href={`${homePrefix}#inicio`} className="text-sm font-semibold tracking-tight text-[#070707] dark:text-white">
+          <a href={`${homePrefix}#inicio`} className="text-[15px] font-semibold tracking-tight text-[#070707] dark:text-white">
             {messages.navbar.brand}
           </a>
 
@@ -64,7 +64,7 @@ export default function Navbar() {
               <a
                 key={item.href}
                 href={item.href}
-                className={`text-sm font-medium transition-colors ${
+                className={`text-[15px] font-medium transition-colors ${
                   isScrolled
                     ? "text-[#070707]/70 hover:text-[#070707] dark:text-white/70 dark:hover:text-white"
                     : "text-[#070707]/60 hover:text-[#070707] dark:text-white/60 dark:hover:text-white"
@@ -131,10 +131,10 @@ export default function Navbar() {
 
             <a
               href={`${homePrefix}#contacto`}
-              className={`hidden items-center justify-center rounded-xl px-5 py-2 text-sm font-semibold transition-colors md:inline-flex ${
+              className={`hidden items-center justify-center rounded-xl px-5 py-2 text-sm font-semibold transition-all duration-200 md:inline-flex ${
                 isScrolled
-                  ? "bg-[#070707] text-white hover:bg-black/90 dark:bg-white dark:text-[#070707] dark:hover:bg-white/90"
-                  : "border border-black/15 bg-white/40 text-[#070707] hover:bg-white/60 dark:border-white/15 dark:bg-white/5 dark:text-white dark:hover:bg-white/10"
+                  ? "bg-[#070707] text-white hover:bg-black/90 hover:shadow-[0_10px_28px_rgba(123,92,255,0.22)] dark:bg-white dark:text-[#070707] dark:hover:bg-white/95 dark:hover:shadow-[0_10px_28px_rgba(255,255,255,0.18)]"
+                  : "border border-black/15 bg-white/40 text-[#070707] hover:bg-white/70 hover:shadow-[0_16px_46px_rgba(123,92,255,0.28)] dark:border-white/15 dark:bg-white/5 dark:text-white dark:hover:bg-white/10 dark:hover:shadow-[0_10px_28px_rgba(255,255,255,0.16)]"
               }`}
             >
               {messages.navbar.startProject}

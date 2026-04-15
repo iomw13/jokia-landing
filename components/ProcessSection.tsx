@@ -39,6 +39,8 @@ function StepRow({ step, index, totalSteps }: { step: Step; index: number; total
   const isInView = useInView(ref, { once: true, margin: "-80px" });
   const isReverse = index % 2 !== 0;
   const imgRadius = getImageRadius(index, totalSteps, isReverse);
+  const badgeHoverClass =
+    "group-hover:scale-110 group-hover:bg-black/35 group-hover:text-white group-hover:ring-2 group-hover:ring-white/30 group-hover:shadow-[0_0_0_1px_rgba(255,255,255,0.20),0_0_22px_rgba(255,255,255,0.22)]";
 
   return (
     <motion.div
@@ -50,7 +52,7 @@ function StepRow({ step, index, totalSteps }: { step: Step; index: number; total
     >
       {/* Imagen */}
       <div
-        className={`relative overflow-hidden aspect-[4/3] bg-[#f0f2f5] dark:bg-[#1a1a1a] ${isReverse ? "md:order-2" : ""}`}
+        className={`group relative overflow-hidden aspect-[4/3] bg-[#f0f2f5] dark:bg-[#1a1a1a] ${isReverse ? "md:order-2" : ""}`}
         style={{ borderRadius: imgRadius }}
       >
         <img
@@ -61,7 +63,7 @@ function StepRow({ step, index, totalSteps }: { step: Step; index: number; total
           decoding="async"
         />
         <div
-          className={`absolute top-3.5 ${isReverse ? "right-3.5" : "left-3.5"} w-[34px] h-[34px] rounded-full bg-black/50 backdrop-blur-md flex items-center justify-center text-white text-[11px] font-medium tracking-widest`}
+          className={`absolute top-3.5 ${isReverse ? "right-3.5" : "left-3.5"} flex h-[34px] w-[34px] items-center justify-center rounded-full bg-black/50 text-[11px] font-medium tracking-widest text-white backdrop-blur-md transition-all duration-200 ${badgeHoverClass}`}
           style={{ direction: "ltr" }}
         >
           {step.number}
@@ -81,7 +83,7 @@ function StepRow({ step, index, totalSteps }: { step: Step; index: number; total
           </span>
         </div>
 
-        <h3 className="text-[clamp(1.8rem,3vw,2.4rem)] font-medium leading-[1.05] tracking-[-0.025em] text-[#070707] dark:text-white m-0">
+        <h3 className="text-[clamp(1.8rem,3vw,2.4rem)] font-medium leading-[1.05] tracking-[-0.025em] text-[#070707] dark:text-white m-0 dark:[text-shadow:0_0_14px_rgba(255,255,255,0.18),0_0_34px_rgba(255,255,255,0.10)]">
           {step.title}
         </h3>
 

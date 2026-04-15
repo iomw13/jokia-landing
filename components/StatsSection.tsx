@@ -189,9 +189,9 @@ export default function StatsSection() {
           </p>
 
           <div className="mt-12 py-10">
-            <div className="grid grid-cols-2 gap-x-8 gap-y-10 md:grid-cols-4">
+            <div className="mx-auto grid w-full max-w-5xl grid-cols-2 justify-items-center gap-x-8 gap-y-10 md:grid-cols-4">
               {STATS.map(({ key, label }) => (
-                <div key={key} className="px-2 text-left md:px-6">
+                <div key={key} className="text-center">
                   <div className="text-[clamp(2.3rem,3.6vw,3.2rem)] font-extrabold leading-none tracking-[-0.03em] text-[#1929e1] tabular-nums">
                     <span className="inline-block" style={{ minWidth: `${finalStrings[key].length}ch` }}>
                       {displayValues[key]}
@@ -214,7 +214,7 @@ export default function StatsSection() {
             >
               <div className="flex items-start gap-4">
                 <div
-                  className="flex h-11 w-11 items-center justify-center rounded-xl border border-black/10 text-[#070707]/80 dark:border-white/10 dark:text-white/80"
+                  className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg border border-black/10 text-[#070707]/80 dark:border-white/10 dark:text-white/80 dark:[filter:drop-shadow(0_0_14px_rgba(123,92,255,0.22))]"
                   style={{
                     color: accent,
                     boxShadow: "0 0 0 0 rgba(0,0,0,0)",
@@ -226,7 +226,7 @@ export default function StatsSection() {
                   className="font-dm text-left"
                 >
                   <div className="service-title relative inline-flex" style={{ "--accent": accent } as CSSProperties}>
-                    <div className="relative z-10 text-[clamp(1.15rem,1.6vw,1.5rem)] font-semibold leading-[1.15] tracking-[-0.02em] text-[#070707] transition-colors duration-200 group-hover:text-[var(--accent)] dark:text-white dark:group-hover:text-[var(--accent)]">
+                    <div className="relative z-10 text-[clamp(1.15rem,1.6vw,1.5rem)] font-semibold leading-[1.15] tracking-[-0.02em] text-[#070707] transition-colors duration-200 group-hover:text-[var(--accent)] dark:text-white dark:group-hover:text-[var(--accent)] dark:[text-shadow:0_0_14px_rgba(255,255,255,0.16),0_0_34px_rgba(255,255,255,0.08)]">
                       {label}
                     </div>
                     <span

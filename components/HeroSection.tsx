@@ -41,7 +41,7 @@ export default function HeroSection() {
             <div className="mx-auto w-full max-w-6xl px-6">
               <div className="w-full max-w-[720px] px-5">
                 <h1
-                  className="hero-fade hero-delay-1 font-dm font-semibold leading-[0.98] tracking-[-0.04em] text-white"
+                  className="hero-title hero-fade hero-delay-1 font-dm font-semibold leading-[0.98] tracking-[-0.04em] text-white"
                   suppressHydrationWarning
                 >
                   <span className="block text-[clamp(2.3rem,3.4vw,3.4rem)] text-white/90">
@@ -54,21 +54,42 @@ export default function HeroSection() {
                   </span>
                 </h1>
 
-                <p className="hero-fade hero-delay-2 mt-5 max-w-[56ch] text-[16px] leading-7 text-white/58">
+                <p className="hero-subtitle hero-fade hero-delay-2 mt-5 max-w-[56ch] text-[16px] leading-7 text-white/70">
                   {messages.hero.subtitle}
                 </p>
 
                 <div className="hero-fade hero-delay-3 mt-9 flex flex-wrap items-center gap-3">
                   <a
                     href="#contacto"
-                    className="inline-flex items-center justify-center rounded-full bg-white px-7 py-3.5 text-[16px] font-semibold text-[#0a0a14] transition-all duration-200 hover:-translate-y-px hover:shadow-[0_18px_40px_rgba(255,255,255,0.16)]"
+                    className="cta-btn group inline-flex items-center justify-between rounded-full border border-white/12 bg-[#0b1020]/92 px-2 py-2 pl-6 pr-2 text-[15px] font-semibold tracking-[0.02em] text-white shadow-[0_18px_40px_rgba(0,0,0,0.22)] backdrop-blur-md transition-all duration-200 hover:-translate-y-px hover:bg-[#0b1020] hover:shadow-[0_22px_55px_rgba(0,0,0,0.28)] sm:pl-7 sm:text-[16px]"
                   >
-                    {messages.hero.ctaPrimary}
+                    <span className="cta-text whitespace-nowrap">{messages.hero.ctaPrimary}</span>
+                    <span className="cta-icon ml-4 inline-flex h-10 w-10 items-center justify-center rounded-full bg-[linear-gradient(135deg,#7b5cff_0%,#1929e1_100%)] shadow-[0_10px_22px_rgba(123,92,255,0.28)] ring-2 ring-[#0b1020] transition-transform duration-200 group-hover:scale-105 sm:h-11 sm:w-11">
+                      <svg
+                        width="16"
+                        height="19"
+                        viewBox="0 0 16 19"
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="cta-dots text-white/95"
+                        aria-hidden="true"
+                      >
+                        <circle cx="1.61321" cy="1.61321" r="1.5" fill="currentColor" />
+                        <circle cx="5.73583" cy="1.61321" r="1.5" fill="currentColor" />
+                        <circle cx="5.73583" cy="5.5566" r="1.5" fill="currentColor" />
+                        <circle cx="9.85851" cy="5.5566" r="1.5" fill="currentColor" />
+                        <circle cx="9.85851" cy="9.5" r="1.5" fill="currentColor" />
+                        <circle cx="13.9811" cy="9.5" r="1.5" fill="currentColor" />
+                        <circle cx="5.73583" cy="13.4434" r="1.5" fill="currentColor" />
+                        <circle cx="9.85851" cy="13.4434" r="1.5" fill="currentColor" />
+                        <circle cx="1.61321" cy="17.3868" r="1.5" fill="currentColor" />
+                        <circle cx="5.73583" cy="17.3868" r="1.5" fill="currentColor" />
+                      </svg>
+                    </span>
                   </a>
 
                   <a
                     href="#proceso"
-                    className="inline-flex items-center justify-center rounded-full border border-white/18 bg-white/6 px-7 py-3.5 text-[16px] font-medium text-white/82 backdrop-blur-md transition-all duration-200 hover:bg-white/10"
+                    className="inline-flex items-center justify-center rounded-full border border-white/18 bg-white/6 px-6 py-3 text-[15px] font-medium text-white/82 backdrop-blur-md transition-all duration-200 hover:bg-white/10 sm:px-7 sm:py-3.5 sm:text-[16px]"
                   >
                     {messages.hero.ctaSecondary}
                   </a>
@@ -78,6 +99,16 @@ export default function HeroSection() {
           </div>
 
           <style jsx>{`
+            .cta-dots {
+              transform: translateX(0);
+              opacity: 0.95;
+              will-change: transform, opacity;
+            }
+
+            .cta-btn:hover .cta-dots {
+              animation: ctaDots 1s linear infinite;
+            }
+
             .hero-glow {
               position: absolute;
               pointer-events: none;
@@ -105,18 +136,32 @@ export default function HeroSection() {
               animation-delay: -1.5s;
             }
 
+            .hero-title {
+              text-shadow: 0 18px 60px rgba(0, 0, 0, 0.42);
+            }
+
+            .hero-subtitle {
+              text-shadow: 0 14px 44px rgba(0, 0, 0, 0.34);
+            }
+
             .hero-neon {
               display: inline-block;
-              background-image: linear-gradient(90deg, #2a7fff 0%, #7b5cff 45%, #00e1ff 100%);
+              background-image: linear-gradient(90deg, #0057ff 0%, #7b00ff 45%, #00e0ff 100%);
               background-size: 220% 100%;
               background-position: 0% 50%;
               -webkit-background-clip: text;
               background-clip: text;
               color: transparent;
-              filter: drop-shadow(0 10px 28px rgba(123, 92, 255, 0.22))
-                drop-shadow(0 0 22px rgba(0, 225, 255, 0.14));
+              filter: drop-shadow(0 18px 44px rgba(0, 0, 0, 0.32))
+                drop-shadow(0 0 26px rgba(123, 0, 255, 0.28));
               will-change: background-position, filter;
               animation: heroNeonSweep 8s ease-in-out infinite;
+            }
+
+            :global(.dark) .hero-neon {
+              background-image: linear-gradient(90deg, #2a7fff 0%, #7b5cff 45%, #00e1ff 100%);
+              filter: drop-shadow(0 10px 28px rgba(123, 92, 255, 0.22))
+                drop-shadow(0 0 22px rgba(0, 225, 255, 0.14));
             }
 
             .hero-fade {
@@ -164,10 +209,25 @@ export default function HeroSection() {
               }
             }
 
+            @keyframes ctaDots {
+              0% {
+                opacity: 0.25;
+                transform: translateX(0);
+              }
+              60% {
+                opacity: 1;
+              }
+              100% {
+                opacity: 0.9;
+                transform: translateX(8px);
+              }
+            }
+
             @media (prefers-reduced-motion: reduce) {
               .hero-glow,
               .hero-neon,
-              .hero-fade {
+              .hero-fade,
+              .cta-dots {
                 animation: none !important;
                 opacity: 1 !important;
                 transform: none !important;

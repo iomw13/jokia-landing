@@ -10,7 +10,7 @@ const messages = {
       brand: "JOKIA",
       items: {
         home: "Inicio",
-        results: "Resultados",
+        results: "Servicios",
         process: "Proceso",
         contact: "Contacto",
       },
@@ -26,7 +26,7 @@ const messages = {
       line2Suffix: " tus ingresos.",
       subtitle:
         "Automatizamos lo que te roba horas y construimos webs que convierten visitas en clientes.",
-      ctaPrimary: "Quiero resultados reales →",
+      ctaPrimary: "Quiero resultados reales",
       ctaSecondary: "Ver cómo lo hacemos",
     },
     stats: {
@@ -130,8 +130,7 @@ const messages = {
       },
     },
     footer: {
-      blurb:
-        "Diseñando futuros digitales. Branding, marketing y web de alto impacto para marcas que no se conforman con lo ordinario.",
+      blurb: "Diseñando experiencias web y automatizaciones eficientes para marcas que buscan crecer sin complicaciones.",
       contactTitle: "Contacto",
       startProject: "Iniciar proyecto",
       terms: "Términos y condiciones",
@@ -191,7 +190,7 @@ const messages = {
       brand: "JOKIA",
       items: {
         home: "Home",
-        results: "Results",
+        results: "Services",
         process: "Process",
         contact: "Contact",
       },
@@ -207,7 +206,7 @@ const messages = {
       line2Suffix: " your revenue.",
       subtitle:
         "We automate what steals your hours and build websites that turn visits into customers.",
-      ctaPrimary: "I want real results →",
+      ctaPrimary: "I want real results",
       ctaSecondary: "See how we do it",
     },
     stats: {
@@ -312,8 +311,7 @@ const messages = {
       },
     },
     footer: {
-      blurb:
-        "Designing digital futures. High-impact branding, marketing, and web for brands that won’t settle for ordinary.",
+      blurb: "Designing web experiences and efficient automations for brands that want to grow without complications.",
       contactTitle: "Contact",
       startProject: "Start project",
       terms: "Terms & Conditions",
