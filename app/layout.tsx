@@ -42,6 +42,9 @@ export const metadata: Metadata = {
     title: "JOKIA | Agencia Digital Premium",
     description: "Diseñamos futuros digitales con IA y automatización",
   },
+  alternates: {
+    canonical: "https://jokia.agency/.",
+  },
 };
 
 export default function RootLayout({

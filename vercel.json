@@ -1,0 +1,15 @@
+{
+  "redirects": [
+    {
+      "source": "/(.*)",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.jokia.agency"
+        }
+      ],
+      "destination": "https://jokia.agency/$1",
+      "permanent": true
+    }
+  ]
+}
