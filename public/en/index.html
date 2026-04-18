@@ -1,137 +1,344 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Jokia Agency | English Presentation</title>
-  <meta
-    name="description"
-    content="Jokia Agency helps businesses grow with AI automations, high-converting landing pages, and fast delivery."
-  />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>JOKIA — Smart Web Solutions</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <style>
-    :root {
-      --bg: #0b1020;
-      --card: rgba(255, 255, 255, 0.08);
-      --text: #ffffff;
-      --muted: rgba(255, 255, 255, 0.78);
-      --accent: #7b5cff;
-      --accent-2: #2563eb;
-    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { width: 100%; font-family: 'Inter', sans-serif; }
+    body { overflow-x: hidden; }
 
-    * {
-      box-sizing: border-box;
-    }
-
-    body {
-      margin: 0;
+    .hero {
+      position: relative;
+      width: 100vw;
       min-height: 100vh;
-      font-family: Inter, Arial, sans-serif;
-      color: var(--text);
-      background:
-        radial-gradient(900px circle at 10% 0%, rgba(123, 92, 255, 0.35), transparent 50%),
-        radial-gradient(900px circle at 90% 20%, rgba(37, 99, 235, 0.35), transparent 55%),
-        linear-gradient(180deg, #0b1020 0%, #070707 100%);
-      display: grid;
-      place-items: center;
-      padding: 24px;
-    }
-
-    .card {
-      width: min(760px, 100%);
-      border: 1px solid rgba(255, 255, 255, 0.16);
-      background: var(--card);
-      backdrop-filter: blur(10px);
-      border-radius: 20px;
-      padding: 28px;
-      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
-    }
-
-    h1 {
-      margin: 0 0 10px;
-      font-size: clamp(2rem, 5vw, 2.8rem);
-      line-height: 1.05;
-      letter-spacing: -0.02em;
-    }
-
-    p {
-      margin: 0;
-      color: var(--muted);
-      font-size: 1.02rem;
-      line-height: 1.6;
-    }
-
-    .services {
-      margin: 22px 0 28px;
-      display: grid;
-      gap: 10px;
-    }
-
-    .service {
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      border-radius: 12px;
-      padding: 12px 14px;
-      background: rgba(255, 255, 255, 0.04);
-      color: #fff;
-      font-weight: 600;
-    }
-
-    .buttons {
       display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-    }
-
-    .btn {
-      display: inline-flex;
       align-items: center;
       justify-content: center;
-      min-height: 46px;
-      padding: 0 18px;
-      border-radius: 999px;
-      text-decoration: none;
+
+      background: linear-gradient(
+        135deg,
+        #ffffff 0%,
+        #eef2ff 30%,
+        #c7d2fe 60%,
+        #8b5cf6 85%,
+        #4b2fd4 100%
+      );
+
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+
+      background: radial-gradient(
+        circle at 85% 50%,
+        rgba(75, 47, 212, 0.35),
+        transparent 60%
+      );
+
+      z-index: 0;
+    }
+
+    /* DESKTOP */
+    .hero-inner {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 1140px;
+      padding: 60px 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 48px;
+      min-height: 100vh;
+    }
+
+    .hero-content {
+      flex: 1;
+      max-width: 460px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 28px;
+    }
+    .brand-star { color: #4b2fd4; font-size: 13px; }
+    .brand-name {
+      font-size: 0.7rem;
       font-weight: 700;
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: #6b6b8a;
     }
 
-    .btn:hover {
-      transform: translateY(-1px);
+    .headline {
+      font-size: clamp(2rem, 3.2vw, 2.9rem);
+      font-weight: 900;
+      color: #0a0d2e;
+      line-height: 1.07;
+      letter-spacing: -0.025em;
+      margin-bottom: 32px;
     }
 
-    .btn-primary {
+    .service { margin-bottom: 22px; }
+
+    .service-title {
+      font-size: clamp(1.3rem, 2.2vw, 1.8rem);
+      font-weight: 700;
+      color: #2b2cf5;
+      line-height: 1.1;
+      margin-bottom: 7px;
+    }
+
+    .service-desc {
+      font-size: 0.875rem;
+      color: #3d3d5c;
+      line-height: 1.65;
+      font-weight: 400;
+      max-width: 320px;
+    }
+
+    .divider {
+      height: 1px;
+      background: rgba(10,13,46,0.12);
+      margin: 28px 0;
+    }
+
+    /* BUTTONS */
+    .btns { display: flex; flex-direction: column; gap: 11px; }
+
+    .btn {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      padding: 14px 20px;
+      border-radius: 11px;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.88rem;
+      font-weight: 600;
+      text-decoration: none;
+      cursor: pointer;
+      border: none;
+      transition: transform 0.16s, box-shadow 0.16s, background 0.16s;
+    }
+    .btn:hover { transform: translateY(-2px); }
+    .btn-text { flex: 1; }
+    .btn-arrow {
+      font-size: 0.72rem;
+      opacity: 0.5;
+      transition: transform 0.16s, opacity 0.16s;
+    }
+    .btn:hover .btn-arrow { transform: translateX(3px); opacity: 1; }
+    .btn-icon {
+      width: 30px; height: 30px;
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 13px;
+      flex-shrink: 0;
+    }
+
+    /* PRIMARY — solid gradient */
+    .btn-website {
+      background: linear-gradient(135deg, #2b2cf5, #4b2fd4);
       color: #fff;
-      background: linear-gradient(135deg, var(--accent) 0%, var(--accent-2) 100%);
-      box-shadow: 0 10px 28px rgba(123, 92, 255, 0.35);
+      box-shadow: 0 4px 20px rgba(43,44,245,0.3);
+    }
+    .btn-website:hover { box-shadow: 0 8px 32px rgba(75,47,212,0.45); }
+    .btn-website .btn-icon { background: rgba(255,255,255,0.18); color: #fff; }
+
+    /* SECONDARY — dark outlined */
+    .btn-projects {
+      background: rgba(43,44,245,0.07);
+      color: #2b2cf5;
+      border: 1.5px solid rgba(43,44,245,0.3);
+    }
+    .btn-projects:hover {
+      background: rgba(43,44,245,0.13);
+      border-color: rgba(43,44,245,0.6);
+      box-shadow: 0 4px 16px rgba(43,44,245,0.12);
+    }
+    .btn-projects .btn-icon { background: rgba(43,44,245,0.1); color: #2b2cf5; }
+
+    /* WHATSAPP */
+    .btn-whatsapp {
+      background: rgba(37,211,102,0.08);
+      color: #15803d;
+      border: 1.5px solid rgba(37,211,102,0.4);
+    }
+    .btn-whatsapp:hover {
+      background: rgba(37,211,102,0.15);
+      border-color: rgba(37,211,102,0.65);
+      box-shadow: 0 4px 16px rgba(37,211,102,0.15);
+    }
+    .btn-whatsapp .btn-icon { background: rgba(37,211,102,0.12); color: #25d366; font-size: 15px; }
+
+    /* PHONE */
+    .hero-phone {
+      flex-shrink: 0;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      align-self: flex-end;
+    }
+    .hero-phone img {
+      height: min(90vh, 720px);
+      width: auto;
+      object-fit: contain;
+      filter: drop-shadow(0 24px 60px rgba(75,47,212,0.35)) drop-shadow(0 0 40px rgba(43,44,245,0.2));
+      animation: float 5s ease-in-out infinite;
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50%       { transform: translateY(-16px); }
     }
 
-    .btn-secondary {
-      color: #fff;
-      background: rgba(255, 255, 255, 0.08);
-    }
+@media (max-width: 1024px) {
+  .hero-inner {
+    padding: 48px 36px;
+    gap: 32px;
+  }
+
+  .hero-phone img {
+    height: min(86vh, 680px);
+  }
+}
+
+@media (max-width: 820px) {
+  .hero {
+    min-height: 100svh;
+    align-items: flex-start;
+  }
+
+  .hero-inner {
+    flex-direction: column;
+    align-items: center;
+    padding: 44px 24px 0;
+    gap: 0;
+    min-height: 100svh;
+    justify-content: flex-start;
+  }
+
+  .hero-content {
+    max-width: 100%;
+    width: 100%;
+  }
+
+  /* 🔤 HEADLINE MÁS GRANDE Y PRO */
+.headline {
+  font-size: 2.7rem;
+  font-weight: 800;       /* un poco menos pesado que 900 */
+  line-height: 1.1;
+  letter-spacing: -0.04em;
+  margin-bottom: 32px;
+}
+  .service {
+    margin-bottom: 14px;
+  }
+
+  .service-title {
+    font-size: 1.2rem;
+  }
+
+  .service-desc {
+    font-size: 0.85rem;
+    max-width: 100%;
+    color: #4b5563;
+  }
+
+  .divider {
+    margin: 18px 0;
+  }
+
+  .btn {
+    padding: 13px 16px;
+    font-size: 0.85rem;
+  }
+
+  .btn-icon {
+    width: 28px;
+    height: 28px;
+    font-size: 13px;
+  }
+
+  /* 📱 TELÉFONO MÁS GRANDE Y PROTAGONISTA */
+  .hero-phone {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+  }
+
+  .hero-phone img {
+    width: 115%;
+    max-width: 520px;
+    height: auto;
+    transform: translateY(30px);
+    animation: float-mobile 5s ease-in-out infinite;
+  }
+
+  @keyframes float-mobile {
+    0%, 100% { transform: translateY(30px); }
+    50% { transform: translateY(20px); }
+  }
+}
   </style>
 </head>
 <body>
-  <main class="card">
-    <h1>Jokia Agency</h1>
-    <p>
-      We help businesses save time and increase revenue through practical AI systems,
-      high-converting pages, and fast execution.
-    </p>
+  <section class="hero">
+    <div class="hero-inner">
 
-    <section class="services" aria-label="Services">
-      <div class="service">AI Automations</div>
-      <div class="service">Landing Pages</div>
-      <div class="service">Fast Delivery</div>
-    </section>
+      <div class="hero-content">
+        <div class="brand">
+          <span class="brand-star">✦</span>
+          <span class="brand-name">JOKIA</span>
+        </div>
 
-    <div class="buttons">
-      <a class="btn btn-primary" href="https://jokia.agency" target="_blank" rel="noopener noreferrer">
-        Visit Jokia.agency
-      </a>
-      <a class="btn btn-secondary" href="https://wa.me/5403547654477" target="_blank" rel="noopener noreferrer">
-        WhatsApp
-      </a>
+        <h1 class="headline">Smart Web<br>Solutions.</h1>
+
+        <div class="service">
+          <div class="service-title">Landing Pages</div>
+          <p class="service-desc">Focused pages designed to turn visitors into leads.</p>
+        </div>
+
+        <div class="service">
+          <div class="service-title">AI Automations</div>
+          <p class="service-desc">Automations that save time by handling repetitive tasks and responding to clients.</p>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="btns">
+          <a href="https://jokia.agency/." target="_blank" class="btn btn-website">
+            <span class="btn-icon"><i class="fa-solid fa-globe"></i></span>
+            <span class="btn-text">Go to our website</span>
+            <span class="btn-arrow"><i class="fa-solid fa-arrow-right"></i></span>
+          </a>
+          <a href="https://drive.google.com/drive/folders/1jGGfvt7wBS66N18ogQKfVqVXgqmUsnxc" class="btn btn-projects">
+            <span class="btn-icon"><i class="fa-regular fa-images"></i></span>
+            <span class="btn-text">Some of our projects</span>
+            <span class="btn-arrow"><i class="fa-solid fa-arrow-right"></i></span>
+          </a>
+          <a href="https://wa.me/5493547656447" target="_blank" class="btn btn-whatsapp">
+            <span class="btn-icon"><i class="fa-brands fa-whatsapp"></i></span>
+            <span class="btn-text">Message us on WhatsApp</span>
+            <span class="btn-arrow"><i class="fa-solid fa-arrow-right"></i></span>
+          </a>
+        </div>
+      </div>
+
+      <div class="hero-phone">
+        <img src="phone.png" alt="JOKIA on mobile" />
+      </div>
+
     </div>
-  </main>
+  </section>
 </body>
 </html>
