@@ -14,7 +14,7 @@ export default function HeroSection() {
         <div className="relative h-[clamp(600px,82vh,940px)] w-full overflow-hidden rounded-3xl shadow-2xl dark:shadow-black/50">
           <div className="absolute inset-0 dark:hidden">
             <Image
-              src="/hero/mc.avif"
+              src="/hero/mc.jpg"
               alt="Hero background"
               fill
               priority
