@@ -14,7 +14,7 @@ export default function HeroSection() {
         <div className="relative h-[clamp(600px,82vh,940px)] w-full overflow-hidden rounded-3xl shadow-2xl dark:shadow-black/50">
           <div className="absolute inset-0 dark:hidden">
             <Image
-              src="/hero/mc.jpg"
+              src="/hero/mc.avif"
               alt="Hero background"
               fill
               priority
@@ -32,7 +32,7 @@ export default function HeroSection() {
               className="object-cover object-center"
             />
           </div>
-          <div className="pointer-events-none absolute inset-0 hidden dark:block bg-[linear-gradient(135deg,#050815_0%,#061638_45%,#061a3f_70%,#040613_100%)] opacity-34" />
+          <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(135deg,#050815_0%,#061638_45%,#061a3f_70%,#040613_100%)] opacity-18 dark:opacity-34" />
 
           <div className="relative z-10 flex h-full items-center">
             <div className="mx-auto w-full max-w-6xl px-6">
@@ -116,10 +116,25 @@ export default function HeroSection() {
 
             .hero-neon {
               display: inline-block;
-              color: #3b82f6;
-              text-shadow: 0 18px 48px rgba(0, 0, 0, 0.28);
-              will-change: color, text-shadow;
-              animation: heroAccentColor 4.2s ease-in-out infinite;
+              background-image: linear-gradient(
+                90deg,
+                #0057ff 0%,
+                #1d4ed8 22%,
+                #2563eb 40%,
+                #6d28d9 62%,
+                #7b00ff 82%,
+                #00a3ff 100%
+              );
+              background-size: 280% 100%;
+              background-position: 0% 50%;
+              -webkit-background-clip: text;
+              background-clip: text;
+              color: transparent;
+              text-shadow: none;
+              filter: drop-shadow(0 10px 24px rgba(0, 0, 0, 0.42))
+                drop-shadow(0 0 16px rgba(37, 99, 235, 0.26));
+              will-change: background-position, filter;
+              animation: heroAccentSweep 5.4s ease-in-out infinite;
             }
 
             :global(.dark) .hero-neon {
@@ -133,7 +148,7 @@ export default function HeroSection() {
               filter: drop-shadow(0 10px 24px rgba(0, 0, 0, 0.48))
                 drop-shadow(0 0 20px rgba(123, 92, 255, 0.35));
               will-change: background-position, filter;
-              animation: heroNeonSweep 8s ease-in-out infinite;
+              animation: heroAccentSweep 6.2s ease-in-out infinite;
             }
 
             .hero-fade {
@@ -170,16 +185,15 @@ export default function HeroSection() {
               }
             }
 
-            @keyframes heroAccentColor {
-              0%,
+            @keyframes heroAccentSweep {
+              0% {
+                background-position: 0% 50%;
+              }
+              50% {
+                background-position: 100% 50%;
+              }
               100% {
-                color: #3b82f6;
-              }
-              33% {
-                color: #2563eb;
-              }
-              66% {
-                color: #1d4ed8;
+                background-position: 0% 50%;
               }
             }
 
