@@ -32,10 +32,7 @@ export default function HeroSection() {
               className="object-cover object-center"
             />
           </div>
-          <div className="absolute inset-0 bg-[linear-gradient(135deg,#050815_0%,#061638_45%,#061a3f_70%,#040613_100%)] opacity-30 dark:opacity-34" />
-          <div className="hero-glow hero-glow-a" />
-          <div className="hero-glow hero-glow-b" />
-          <div className="absolute inset-0 bg-gradient-to-r from-black/40 via-black/12 to-transparent dark:from-black/34 dark:via-black/10" />
+          <div className="pointer-events-none absolute inset-0 hidden dark:block bg-[linear-gradient(135deg,#050815_0%,#061638_45%,#061a3f_70%,#040613_100%)] opacity-34" />
 
           <div className="relative z-10 flex h-full items-center">
             <div className="mx-auto w-full max-w-6xl px-6">
@@ -109,33 +106,6 @@ export default function HeroSection() {
               animation: ctaDots 1s linear infinite;
             }
 
-            .hero-glow {
-              position: absolute;
-              pointer-events: none;
-              border-radius: 9999px;
-              filter: blur(52px);
-              opacity: 0.9;
-              transform: translateZ(0);
-              will-change: transform, opacity;
-              animation: heroGlowFloat 9s ease-in-out infinite alternate;
-            }
-            .hero-glow-a {
-              right: -160px;
-              top: -140px;
-              width: 640px;
-              height: 640px;
-              background: radial-gradient(circle at 40% 40%, rgba(123, 92, 255, 0.42), transparent 62%);
-            }
-            .hero-glow-b {
-              right: -220px;
-              bottom: -220px;
-              width: 720px;
-              height: 720px;
-              background: radial-gradient(circle at 35% 35%, rgba(0, 225, 255, 0.22), rgba(25, 41, 225, 0.18) 28%, transparent 64%);
-              animation-duration: 10.5s;
-              animation-delay: -1.5s;
-            }
-
             .hero-title {
               text-shadow: 0 18px 60px rgba(0, 0, 0, 0.42);
             }
@@ -153,15 +123,15 @@ export default function HeroSection() {
             }
 
             :global(.dark) .hero-neon {
-              background-image: linear-gradient(90deg, #2a7fff 0%, #7b5cff 45%, #00e1ff 100%);
+              background-image: linear-gradient(90deg, #8fd1ff 0%, #b89bff 45%, #7ff2ff 100%);
               background-size: 220% 100%;
               background-position: 0% 50%;
               -webkit-background-clip: text;
               background-clip: text;
               color: transparent;
               text-shadow: none;
-              filter: drop-shadow(0 10px 28px rgba(123, 92, 255, 0.22))
-                drop-shadow(0 0 22px rgba(0, 225, 255, 0.14));
+              filter: drop-shadow(0 10px 24px rgba(0, 0, 0, 0.48))
+                drop-shadow(0 0 20px rgba(123, 92, 255, 0.35));
               will-change: background-position, filter;
               animation: heroNeonSweep 8s ease-in-out infinite;
             }
@@ -190,17 +160,6 @@ export default function HeroSection() {
               }
               100% {
                 background-position: 0% 50%;
-              }
-            }
-
-            @keyframes heroGlowFloat {
-              0% {
-                transform: translate3d(0, 0, 0) scale(1);
-                opacity: 0.85;
-              }
-              100% {
-                transform: translate3d(-22px, 18px, 0) scale(1.04);
-                opacity: 1;
               }
             }
 
@@ -239,7 +198,6 @@ export default function HeroSection() {
             }
 
             @media (prefers-reduced-motion: reduce) {
-              .hero-glow,
               .hero-neon,
               .hero-fade,
               .cta-dots {
