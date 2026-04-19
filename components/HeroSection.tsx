@@ -58,7 +58,7 @@ export default function HeroSection() {
                 <div className="hero-fade hero-delay-3 mt-9 flex flex-wrap items-center gap-3">
                   <a
                     href="#contacto"
-                    className="cta-btn group inline-flex h-12 items-center gap-3 rounded-full border border-black/10 bg-[linear-gradient(135deg,rgba(255,255,255,0.16)_0%,rgba(123,92,255,0.16)_48%,rgba(25,41,225,0.14)_100%)] pl-6 pr-2 text-[15px] font-semibold leading-none tracking-[0.02em] text-[#0b1020]/90 shadow-[0_18px_40px_rgba(0,0,0,0.14)] backdrop-blur-md transition-all duration-200 hover:-translate-y-px hover:bg-[linear-gradient(135deg,rgba(255,255,255,0.22)_0%,rgba(123,92,255,0.20)_48%,rgba(25,41,225,0.16)_100%)] hover:shadow-[0_22px_55px_rgba(0,0,0,0.18)] dark:border-white/18 dark:text-white dark:shadow-[0_18px_40px_rgba(0,0,0,0.18)] sm:h-[52px] sm:pl-7 sm:pr-2.5 sm:text-[16px]"
+                    className="cta-btn group inline-flex h-12 items-center gap-3 rounded-full border border-black/10 bg-[linear-gradient(135deg,rgba(255,255,255,0.16)_0%,rgba(123,92,255,0.16)_48%,rgba(25,41,225,0.14)_100%)] pl-6 pr-2 text-[15px] font-semibold leading-none tracking-[0.02em] text-[#0b1020]/90 shadow-none backdrop-blur-md transition-all duration-200 hover:-translate-y-px hover:bg-[linear-gradient(135deg,rgba(255,255,255,0.22)_0%,rgba(123,92,255,0.20)_48%,rgba(25,41,225,0.16)_100%)] hover:shadow-none dark:border-white/18 dark:text-white dark:shadow-[0_18px_40px_rgba(0,0,0,0.18)] dark:hover:shadow-[0_22px_55px_rgba(0,0,0,0.22)] sm:h-[52px] sm:pl-7 sm:pr-2.5 sm:text-[16px]"
                   >
                     <span className="cta-text whitespace-nowrap">{messages.hero.ctaPrimary}</span>
                     <span className="cta-icon inline-flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-[linear-gradient(135deg,#7b5cff_0%,#1929e1_100%)] shadow-[0_10px_22px_rgba(123,92,255,0.28)] ring-inset ring-1 ring-white/25 transition-transform duration-200 group-hover:scale-105 sm:h-9 sm:w-9">
@@ -86,7 +86,7 @@ export default function HeroSection() {
 
                   <a
                     href="#proceso"
-                    className="inline-flex h-12 items-center justify-center rounded-full border border-black/10 bg-white/16 px-6 text-[15px] font-medium text-[#0b1020]/80 backdrop-blur-md transition-all duration-200 hover:bg-white/22 dark:border-white/18 dark:bg-white/6 dark:text-white/82 dark:hover:bg-white/10 sm:h-[52px] sm:px-7 sm:text-[16px]"
+                    className="inline-flex h-12 items-center justify-center rounded-full border border-black/10 bg-white/16 px-6 text-[15px] font-medium text-[#0b1020]/80 shadow-none backdrop-blur-md transition-all duration-200 hover:bg-white/22 dark:border-white/18 dark:bg-white/6 dark:text-white/82 dark:hover:bg-white/10 sm:h-[52px] sm:px-7 sm:text-[16px]"
                   >
                     {messages.hero.ctaSecondary}
                   </a>
@@ -108,48 +108,28 @@ export default function HeroSection() {
             }
 
             .hero-title {
-              text-shadow: 0 18px 60px rgba(0, 0, 0, 0.42);
+              text-shadow: none;
             }
 
             .hero-subtitle {
-              text-shadow: 0 14px 44px rgba(0, 0, 0, 0.34);
+              text-shadow: none;
             }
 
             .hero-neon {
               display: inline-block;
-              background-image: linear-gradient(
-                90deg,
-                #0057ff 0%,
-                #1d4ed8 22%,
-                #2563eb 40%,
-                #6d28d9 62%,
-                #7b00ff 82%,
-                #00a3ff 100%
-              );
-              background-size: 280% 100%;
-              background-position: 0% 50%;
-              -webkit-background-clip: text;
-              background-clip: text;
-              color: transparent;
-              text-shadow: none;
-              filter: drop-shadow(0 10px 24px rgba(0, 0, 0, 0.42))
-                drop-shadow(0 0 16px rgba(37, 99, 235, 0.26));
-              will-change: background-position, filter;
-              animation: heroAccentSweep 5.4s ease-in-out infinite;
+              color: #2563eb;
+            }
+
+            :global(.dark) .hero-title {
+              text-shadow: 0 18px 60px rgba(0, 0, 0, 0.42);
+            }
+
+            :global(.dark) .hero-subtitle {
+              text-shadow: 0 14px 44px rgba(0, 0, 0, 0.34);
             }
 
             :global(.dark) .hero-neon {
-              background-image: linear-gradient(90deg, #8fd1ff 0%, #b89bff 45%, #7ff2ff 100%);
-              background-size: 220% 100%;
-              background-position: 0% 50%;
-              -webkit-background-clip: text;
-              background-clip: text;
-              color: transparent;
-              text-shadow: none;
-              filter: drop-shadow(0 10px 24px rgba(0, 0, 0, 0.48))
-                drop-shadow(0 0 20px rgba(123, 92, 255, 0.35));
-              will-change: background-position, filter;
-              animation: heroAccentSweep 6.2s ease-in-out infinite;
+              color: #b89bff;
             }
 
             .hero-fade {
@@ -183,18 +163,6 @@ export default function HeroSection() {
               to {
                 opacity: 1;
                 transform: translateY(0);
-              }
-            }
-
-            @keyframes heroAccentSweep {
-              0% {
-                background-position: 0% 50%;
-              }
-              50% {
-                background-position: 100% 50%;
-              }
-              100% {
-                background-position: 0% 50%;
               }
             }
 
