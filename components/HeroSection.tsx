@@ -38,10 +38,10 @@ export default function HeroSection() {
             <div className="mx-auto w-full max-w-6xl px-6">
               <div className="w-full max-w-[720px] px-5">
                 <h1
-                  className="hero-title hero-fade hero-delay-1 font-dm font-semibold leading-[0.98] tracking-[-0.04em] text-white"
+                  className="hero-title hero-fade hero-delay-1 font-dm font-semibold leading-[0.98] tracking-[-0.04em] text-[#070707] dark:text-white"
                   suppressHydrationWarning
                 >
-                  <span className="block text-[clamp(2.3rem,3.4vw,3.4rem)] text-white/90">
+                  <span className="block text-[clamp(2.3rem,3.4vw,3.4rem)] text-[#070707]/90 dark:text-white/90">
                     {messages.hero.line1}
                   </span>
                   <span className="mt-2 block text-[clamp(3rem,4.9vw,4.9rem)]">
@@ -51,14 +51,14 @@ export default function HeroSection() {
                   </span>
                 </h1>
 
-                <p className="hero-subtitle hero-fade hero-delay-2 mt-5 max-w-[56ch] text-[16px] leading-7 text-white/70">
+                <p className="hero-subtitle hero-fade hero-delay-2 mt-5 max-w-[56ch] text-[16px] leading-7 text-[#070707]/70 dark:text-white/70">
                   {messages.hero.subtitle}
                 </p>
 
                 <div className="hero-fade hero-delay-3 mt-9 flex flex-wrap items-center gap-3">
                   <a
                     href="#contacto"
-                    className="cta-btn group inline-flex h-12 items-center gap-3 rounded-full border border-white/18 bg-[linear-gradient(135deg,rgba(255,255,255,0.10)_0%,rgba(123,92,255,0.14)_48%,rgba(25,41,225,0.12)_100%)] pl-6 pr-2 text-[15px] font-semibold leading-none tracking-[0.02em] text-white shadow-[0_18px_40px_rgba(0,0,0,0.18)] backdrop-blur-md transition-all duration-200 hover:-translate-y-px hover:bg-[linear-gradient(135deg,rgba(255,255,255,0.14)_0%,rgba(123,92,255,0.18)_48%,rgba(25,41,225,0.14)_100%)] hover:shadow-[0_22px_55px_rgba(0,0,0,0.22)] sm:h-[52px] sm:pl-7 sm:pr-2.5 sm:text-[16px]"
+                    className="cta-btn group inline-flex h-12 items-center gap-3 rounded-full border border-black/10 bg-[linear-gradient(135deg,rgba(255,255,255,0.16)_0%,rgba(123,92,255,0.16)_48%,rgba(25,41,225,0.14)_100%)] pl-6 pr-2 text-[15px] font-semibold leading-none tracking-[0.02em] text-[#0b1020]/90 shadow-[0_18px_40px_rgba(0,0,0,0.14)] backdrop-blur-md transition-all duration-200 hover:-translate-y-px hover:bg-[linear-gradient(135deg,rgba(255,255,255,0.22)_0%,rgba(123,92,255,0.20)_48%,rgba(25,41,225,0.16)_100%)] hover:shadow-[0_22px_55px_rgba(0,0,0,0.18)] dark:border-white/18 dark:text-white dark:shadow-[0_18px_40px_rgba(0,0,0,0.18)] sm:h-[52px] sm:pl-7 sm:pr-2.5 sm:text-[16px]"
                   >
                     <span className="cta-text whitespace-nowrap">{messages.hero.ctaPrimary}</span>
                     <span className="cta-icon inline-flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-[linear-gradient(135deg,#7b5cff_0%,#1929e1_100%)] shadow-[0_10px_22px_rgba(123,92,255,0.28)] ring-inset ring-1 ring-white/25 transition-transform duration-200 group-hover:scale-105 sm:h-9 sm:w-9">
@@ -86,7 +86,7 @@ export default function HeroSection() {
 
                   <a
                     href="#proceso"
-                    className="inline-flex h-12 items-center justify-center rounded-full border border-white/18 bg-white/6 px-6 text-[15px] font-medium text-white/82 backdrop-blur-md transition-all duration-200 hover:bg-white/10 sm:h-[52px] sm:px-7 sm:text-[16px]"
+                    className="inline-flex h-12 items-center justify-center rounded-full border border-black/10 bg-white/16 px-6 text-[15px] font-medium text-[#0b1020]/80 backdrop-blur-md transition-all duration-200 hover:bg-white/22 dark:border-white/18 dark:bg-white/6 dark:text-white/82 dark:hover:bg-white/10 sm:h-[52px] sm:px-7 sm:text-[16px]"
                   >
                     {messages.hero.ctaSecondary}
                   </a>
@@ -100,10 +100,11 @@ export default function HeroSection() {
               transform: translateX(0);
               opacity: 0.95;
               will-change: transform, opacity;
+              animation: ctaDots 1.35s linear infinite;
             }
 
             .cta-btn:hover .cta-dots {
-              animation: ctaDots 1s linear infinite;
+              animation-duration: 1s;
             }
 
             .hero-title {
