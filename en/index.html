@@ -34,6 +34,7 @@
       align-items: center;
       overflow: hidden;
       background: linear-gradient(125deg, #a8c8dc 0%, #b4aad8 45%, #c8a0d4 100%);
+      padding-bottom: 64px;
     }
 
     /* Depth overlay */
@@ -245,34 +246,12 @@
     }
     .btn-whatsapp:hover .sparkle { fill: #fff; transform: scale(1.2); }
 
-    /* ── PHONE ── */
-    .hero-phone {
-      position: relative;
-      z-index: 1;
-      width: 100%;
-      display: flex;
-      justify-content: center;
-      margin-top: 52px;
-    }
-    .hero-phone img {
-      width: min(300px, 68vw);
-      height: auto;
-      object-fit: contain;
-      filter: drop-shadow(0 36px 72px rgba(0,0,0,0.15));
-      animation: float 5.5s ease-in-out infinite;
-    }
-    @keyframes float {
-      0%, 100% { transform: translateY(0); }
-      50%       { transform: translateY(-11px); }
-    }
-
     /* ── RESPONSIVE ── */
     @media (max-width: 600px) {
       .headline { font-size: 2.3rem; }
       .cards { max-width: 100%; padding: 0 0; }
       .btns  { max-width: 100%; }
       .hero-content { padding: 24px 20px 0; }
-      .hero-phone img { width: min(260px, 82vw); }
     }
   </style>
 </head>
@@ -326,11 +305,6 @@
           <span class="btn-text">Message us on WhatsApp</span>
         </a>
       </div>
-    </div>
-
-    <!-- Phone at the very bottom -->
-    <div class="hero-phone">
-      <img src="/en/phone.png" alt="JOKIA on mobile" />
     </div>
 
   </div>
