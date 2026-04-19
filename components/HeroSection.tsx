@@ -32,16 +32,17 @@ export default function HeroSection() {
               className="object-cover object-center"
             />
           </div>
+          <div className="pointer-events-none absolute inset-0 dark:hidden bg-[radial-gradient(720px_circle_at_14%_18%,rgba(255,105,180,0.14),transparent_58%),radial-gradient(680px_circle_at_86%_28%,rgba(255,159,67,0.12),transparent_60%)] opacity-60" />
           <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(135deg,#050815_0%,#061638_45%,#061a3f_70%,#040613_100%)] opacity-18 dark:opacity-34" />
 
           <div className="relative z-10 flex h-full items-center">
             <div className="mx-auto w-full max-w-6xl px-6">
               <div className="w-full max-w-[720px] px-5">
                 <h1
-                  className="hero-title hero-fade hero-delay-1 font-dm font-semibold leading-[0.98] tracking-[-0.04em] text-[#070707] dark:text-white"
+                  className="hero-title hero-fade hero-delay-1 font-dm font-semibold leading-[0.98] tracking-[-0.04em] text-[#121826] dark:text-white"
                   suppressHydrationWarning
                 >
-                  <span className="block text-[clamp(2.3rem,3.4vw,3.4rem)] text-[#070707]/90 dark:text-white/90">
+                  <span className="block text-[clamp(2.3rem,3.4vw,3.4rem)] text-[#121826]/85 dark:text-white/90">
                     {messages.hero.line1}
                   </span>
                   <span className="mt-2 block text-[clamp(3rem,4.9vw,4.9rem)]">
@@ -51,7 +52,7 @@ export default function HeroSection() {
                   </span>
                 </h1>
 
-                <p className="hero-subtitle hero-fade hero-delay-2 mt-5 max-w-[56ch] text-[16px] leading-7 text-[#070707]/70 dark:text-white/70">
+                <p className="hero-subtitle hero-fade hero-delay-2 mt-5 max-w-[56ch] text-[16px] leading-7 text-[#121826]/70 dark:text-white/70">
                   {messages.hero.subtitle}
                 </p>
 
@@ -117,7 +118,24 @@ export default function HeroSection() {
 
             .hero-neon {
               display: inline-block;
-              color: #2563eb;
+              background-image: linear-gradient(
+                90deg,
+                #1d4ed8 0%,
+                #2563eb 22%,
+                #6d28d9 44%,
+                #be185d 66%,
+                #c2410c 84%,
+                #1d4ed8 100%
+              );
+              background-size: 320% 100%;
+              background-position: 0% 50%;
+              -webkit-background-clip: text;
+              background-clip: text;
+              color: transparent;
+              text-shadow: none;
+              filter: none;
+              will-change: background-position;
+              animation: heroAccentSweep 7.5s ease-in-out infinite;
             }
 
             :global(.dark) .hero-title {
@@ -129,7 +147,24 @@ export default function HeroSection() {
             }
 
             :global(.dark) .hero-neon {
-              color: #b89bff;
+              background-image: linear-gradient(
+                90deg,
+                #8fd1ff 0%,
+                #b89bff 22%,
+                #ff85d6 44%,
+                #ffd08a 66%,
+                #7ff2ff 84%,
+                #8fd1ff 100%
+              );
+              background-size: 320% 100%;
+              background-position: 0% 50%;
+              -webkit-background-clip: text;
+              background-clip: text;
+              color: transparent;
+              text-shadow: none;
+              filter: none;
+              will-change: background-position;
+              animation: heroAccentSweep 8.6s ease-in-out infinite;
             }
 
             .hero-fade {
@@ -163,6 +198,18 @@ export default function HeroSection() {
               to {
                 opacity: 1;
                 transform: translateY(0);
+              }
+            }
+
+            @keyframes heroAccentSweep {
+              0% {
+                background-position: 0% 50%;
+              }
+              50% {
+                background-position: 100% 50%;
+              }
+              100% {
+                background-position: 0% 50%;
               }
             }
 
