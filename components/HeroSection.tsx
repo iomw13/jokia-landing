@@ -123,8 +123,8 @@ export default function HeroSection() {
                 #1d4ed8 0%,
                 #2563eb 22%,
                 #6d28d9 44%,
-                #be185d 66%,
-                #c2410c 84%,
+                #4f46e5 66%,
+                #22d3ee 84%,
                 #1d4ed8 100%
               );
               background-size: 320% 100%;
@@ -151,8 +151,8 @@ export default function HeroSection() {
                 90deg,
                 #8fd1ff 0%,
                 #b89bff 22%,
-                #ff85d6 44%,
-                #ffd08a 66%,
+                #7c3aed 44%,
+                #a78bfa 66%,
                 #7ff2ff 84%,
                 #8fd1ff 100%
               );
