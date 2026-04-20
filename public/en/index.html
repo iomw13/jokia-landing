@@ -24,7 +24,6 @@
       overflow-x: hidden;
     }
 
-    /* ── HERO ── */
     .hero {
       position: relative;
       width: 100%;
@@ -37,7 +36,6 @@
       padding-bottom: 64px;
     }
 
-    /* Depth overlay */
     .glow {
       position: absolute;
       inset: 0;
@@ -54,7 +52,49 @@
       z-index: 0;
     }
 
-    /* ── BRAND ── */
+    .bottom-wash {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 55%;
+      background: linear-gradient(
+        to top,
+        rgba(255, 195, 225, 0.60) 0%,
+        rgba(175, 230, 255, 0.50) 38%,
+        transparent 100%
+      );
+      filter: blur(24px);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .blob-left {
+      position: absolute;
+      bottom: -70px;
+      left: -90px;
+      width: 360px;
+      height: 360px;
+      border-radius: 50%;
+      background: rgba(140, 220, 255, 0.50);
+      filter: blur(75px);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .blob-right {
+      position: absolute;
+      bottom: -70px;
+      right: -90px;
+      width: 360px;
+      height: 360px;
+      border-radius: 50%;
+      background: rgba(255, 175, 215, 0.50);
+      filter: blur(75px);
+      pointer-events: none;
+      z-index: 0;
+    }
+
     .brand {
       position: relative;
       z-index: 2;
@@ -76,7 +116,6 @@
       color: var(--black);
     }
 
-    /* ── COPY ── */
     .hero-content {
       position: relative;
       z-index: 1;
@@ -112,7 +151,36 @@
       margin: 0 auto 32px;
     }
 
-    /* ── GLASS CARDS ── */
+    /* ── COLOR SWEEP — izquierda a derecha, suave y lento ── */
+    @keyframes colorSweep {
+      0%   { background-position: 0% 50%; }
+      100% { background-position: 200% 50%; }
+    }
+
+    .color-word {
+      display: inline-block;
+      background: linear-gradient(
+        90deg,
+        #4f46e5 0%,
+        #7c3aed 20%,
+        #2563eb 40%,
+        #6d28d9 60%,
+        #1d4ed8 80%,
+        #4f46e5 100%
+      );
+      background-size: 200% auto;
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      color: transparent;
+      animation: colorSweep 5s linear infinite;
+    }
+
+    .color-word-2 {
+      animation-delay: -2.5s;
+    }
+
+    /* GLASS CARDS */
     .cards {
       display: flex;
       gap: 12px;
@@ -168,7 +236,7 @@
       font-weight: 400;
     }
 
-    /* ── BUTTONS ── */
+    /* BUTTONS */
     .btns {
       display: flex;
       flex-direction: column;
@@ -210,7 +278,6 @@
       transition: color 400ms ease;
     }
 
-    /* Website — Purple */
     .btn-website:hover {
       background: linear-gradient(135deg, #7c3aed, #4f46e5);
       box-shadow:
@@ -222,7 +289,6 @@
     }
     .btn-website:hover .sparkle { fill: #fff; transform: scale(1.2); }
 
-    /* Projects — Blue */
     .btn-projects:hover {
       background: linear-gradient(135deg, #2563eb, #0891b2);
       box-shadow:
@@ -234,7 +300,6 @@
     }
     .btn-projects:hover .sparkle { fill: #fff; transform: scale(1.2); }
 
-    /* WhatsApp — Green */
     .btn-whatsapp:hover {
       background: linear-gradient(135deg, #16a34a, #059669);
       box-shadow:
@@ -246,7 +311,6 @@
     }
     .btn-whatsapp:hover .sparkle { fill: #fff; transform: scale(1.2); }
 
-    /* ── RESPONSIVE ── */
     @media (max-width: 600px) {
       .headline { font-size: 2.3rem; }
       .cards { max-width: 100%; padding: 0 0; }
@@ -264,13 +328,15 @@
     </div>
 
     <div class="glow"></div>
+    <div class="bottom-wash"></div>
+    <div class="blob-left"></div>
+    <div class="blob-right"></div>
 
     <div class="hero-content">
       <p class="tagline">Smart Web Solutions</p>
-      <h1 class="headline">Build Smarter.<br>Grow Faster.</h1>
+      <h1 class="headline">Build <span class="color-word">Smarter.</span><br><span class="color-word color-word-2">Grow</span> Faster.</h1>
       <p class="sub">Landing pages and AI automations designed to convert visitors into clients, automatically.</p>
 
-      <!-- Glass cards -->
       <div class="cards">
         <div class="card">
           <div class="card-icon"><i class="fa-solid fa-layer-group"></i></div>
@@ -284,7 +350,6 @@
         </div>
       </div>
 
-      <!-- Buttons -->
       <div class="btns">
         <a href="https://jokia.agency/." target="_blank" rel="noopener noreferrer" class="btn btn-website">
           <svg class="sparkle" viewBox="0 0 24 24">
@@ -310,4 +375,3 @@
   </div>
 </body>
 </html>
-
